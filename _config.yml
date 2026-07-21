@@ -41,6 +41,12 @@ exclude:
   - node_modules
   - ".github"
 
+# Bobathon submission form (MS Forms / Google Forms).
+# Leave empty until the form exists - the submit button renders disabled and
+# says so, rather than linking somewhere broken.
+bobathon:
+  submit_url: ""
+
 plugins:
   - jekyll-seo-tag
 

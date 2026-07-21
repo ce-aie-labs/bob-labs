@@ -442,3 +442,97 @@ a {
     transition: background-color 120ms ease;
   }
 }
+
+.event-body h2 {
+  margin: 40px 0 12px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.33;
+}
+
+.event-body h3 {
+  margin: 28px 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.16px;
+}
+
+.event-body p,
+.event-body li {
+  font-size: 16px;
+  max-width: 68ch;
+}
+
+.event-body table {
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+
+.event-body th,
+.event-body td {
+  border: 1px solid var(--hairline);
+  padding: 8px 16px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.event-body th {
+  font-weight: 600;
+}
+
+.event-body td:last-child {
+  font-variant-numeric: tabular-nums;
+}
+
+.submit-panel {
+  border-top: 1px solid var(--hairline);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.submit-panel h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+/* The one primary action on the page, so this is where IBM Blue belongs. */
+.submit-button {
+  display: inline-block;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: 0;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.submit-button:hover:not([disabled]) {
+  background: var(--primary-hover);
+}
+
+.submit-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.submit-button[disabled] {
+  background: var(--surface-1);
+  color: var(--ink-subtle);
+  border: 1px solid var(--hairline);
+  cursor: not-allowed;
+}
+
+.submit-pending {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-muted);
+  max-width: 60ch;
+}

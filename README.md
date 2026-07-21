@@ -36,14 +36,16 @@ Every content decision is made against these five.
 
 ```
 🏠 Asset Library            Every lab, filtered by work replaced, stack, and difficulty
-🧩 Challenge Labs           /challenge/ - the same library scoped to difficulty: Challenge
+🏃 Bobathon                 /bobathon/ - the event itself: process, rubric, and submission
 ⚙️  Setup                    Install · login · permissions · one first prompt
 💡 Prompt Cookbook          Prompts by situation (one copy button)
-🚀 Bring Your Own Work      Participants run their own repetitive work through Bob
-🏆 Showcase                 Share · evaluate · feed back into the asset library
 ```
 
-Guided and Challenge are **difficulties, not separate content**. `/challenge/` is the same collection scoped to one difficulty, not a second copy of the labs - a lab is written once and appears wherever it qualifies. It has its own URL because the event agenda has a named Challenge block, and "go to this page" beats "go to the homepage and set a filter" when a room of people needs to move at once.
+**Bobathon is the event page**, and it absorbs what earlier drafts split across "Challenge Labs", "Bring Your Own Work" and "Showcase" - one page holding the process a participant follows, how the work is judged, and the submit button. Those were three names for one thing, and a participant mid-session should not have to work out which one they are on.
+
+**Guided and Challenge are lab difficulties, unrelated to the Bobathon.** A `difficulty: Challenge` lab states the goal and hides the prompt behind `<details>` so you write it yourself; it is practice, not the event. The homepage filter surfaces them.
+
+The submit button points at an external form (Microsoft or Google Forms), set in `_config.yml` under `bobathon.submit_url`. GitHub Pages is a static site with no backend, and requiring a GitHub account would exclude the customers this event is for. While the URL is empty the button renders disabled with a note, rather than linking somewhere broken.
 
 ---
 
@@ -167,10 +169,12 @@ There is one sentence we give participants:
 | 0:00–0:30 | Setup + first success - clear every environment problem here |
 | 0:30–1:30 | Guided Labs |
 | 1:30–1:50 | Challenge Labs - the bridge to writing your own prompt |
-| 1:50–2:05 | Pick your work |
+| 1:50–2:05 | Pick your work - **Bobathon** starts here |
 | 2:05–5:00 | **Bring Your Own Work** (the main event) |
 | 5:00–5:30 | Write up submission (Before/After) |
 | 5:30–6:30 | Showcase |
+
+Everything from "Pick your work" onward runs off the [Bobathon page](/bobathon/): the process, the rubric, and the submission.
 
 For a half-day event, cut Guided Labs rather than the Challenge block - the bridge is what makes Bring Your Own Work survivable.
 
@@ -182,7 +186,7 @@ Keep the burden minimal. Only one thing is required.
 Usually 30 min  →  Bob 7 min
 ```
 
-If there is time, add `Prompt → Output → Screenshot → Reflection`.
+Everything else - Bob chat history, repository link, what went wrong and what fixed it - is optional but is what turns a submission into a reusable lab. The full list and the submit button live on the [Bobathon page](/bobathon/).
 
 ### Rubric
 
