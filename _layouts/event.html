@@ -1,0 +1,26 @@
+---
+layout: default
+---
+{% assign page_lang = page.lang | default: "en" %}
+{% assign ui = site.data.ui[page_lang] %}
+
+<div class="page">
+  <div class="intro">
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.description }}</p>
+  </div>
+
+  <div class="event-body">
+    {{ content }}
+  </div>
+
+  <div class="submit-panel">
+    <h2>{{ ui.submit_heading }}</h2>
+    {% if site.bobathon.submit_url and site.bobathon.submit_url != "" %}
+      <a class="submit-button" href="{{ site.bobathon.submit_url }}" target="_blank" rel="noopener noreferrer">{{ ui.submit_button }}</a>
+    {% else %}
+      <button class="submit-button" type="button" disabled>{{ ui.submit_button }}</button>
+      <p class="submit-pending">{{ ui.submit_pending }}</p>
+    {% endif %}
+  </div>
+</div>

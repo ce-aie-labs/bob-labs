@@ -68,7 +68,7 @@ Get Bob to <goal>, without being told the prompt.
 
 `markdown="1"` is required. Without it Kramdown leaves the fenced block unprocessed, so no `<pre>` is produced and the prompt gets no copy button - which defeats the point.
 
-A challenge lab also appears at `/challenge/`, which is the same collection scoped to `difficulty: Challenge`. Nothing extra to do: set the difficulty and it shows up.
+`difficulty: Challenge` is a lab attribute and has nothing to do with the **Bobathon** (`/bobathon/`), which is the event page - process, rubric and submission. Earlier drafts used "Challenge Labs" for both; they are separate things.
 
 Do not leave `## Prompt` empty to make it a challenge - CI rejects an empty section, and an empty section helps nobody. Challenge labs are the bridge from Guided to Bring Your Own Work, so they matter most for the least experienced participant in the room.
 

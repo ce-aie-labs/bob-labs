@@ -28,12 +28,12 @@
     <a href="{% if page.lang == 'ko' %}{{ '/ko/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}">IBM Bob Labs</a>
     <nav class="site-header-nav">
       {% if page_lang == "ko" %}
-        {% assign home_path = "/ko/" %}{% assign challenge_path = "/ko/challenge/" %}
+        {% assign home_path = "/ko/" %}{% assign bobathon_path = "/ko/bobathon/" %}
       {% else %}
-        {% assign home_path = "/" %}{% assign challenge_path = "/challenge/" %}
+        {% assign home_path = "/" %}{% assign bobathon_path = "/bobathon/" %}
       {% endif %}
       <a href="{{ home_path | relative_url }}"{% if page.url == home_path %} aria-current="page"{% endif %}>{{ ui.nav_all_labs }}</a>
-      <a href="{{ challenge_path | relative_url }}"{% if page.url == challenge_path %} aria-current="page"{% endif %}>{{ ui.nav_challenge }}</a>
+      <a href="{{ bobathon_path | relative_url }}"{% if page.url == bobathon_path %} aria-current="page"{% endif %}>{{ ui.nav_bobathon }}</a>
       <span class="nav-sep" aria-hidden="true"></span>
       <a href="{{ other_lang_url | relative_url }}">{{ ui.lang_switch_label }}</a>
       <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
