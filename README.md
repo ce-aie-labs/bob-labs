@@ -87,6 +87,7 @@ P0 alone is enough to run the first event (~40 labs).
 
 | Domain | P0 | P1 | P2 |
 |---|---|---|---|
+| Bob Features | Architecture diagrams, subagents, skills, MCP (5) | | |
 | Java | Spring Boot (8), Legacy Monolith (6) | Maven/Gradle (4) | |
 | Python | FastAPI (6) | Data Pipeline (5) | Flask (4) |
 | Frontend | React (5) | | Angular (4), Vue (4) |
@@ -95,7 +96,7 @@ P0 alone is enough to run the first event (~40 labs).
 | Database | | PostgreSQL (5), Oracle (4) | MongoDB (4) |
 | Documents | Excel (4), API Spec (5) | PDF (4) | |
 
-Numbers in parentheses are target lab counts.
+Numbers in parentheses are target lab counts. **Bob Features** is stack-agnostic (`stack: Any`) - it demos what makes Bob itself worth using (subagents, skills, MCP, diagram/report generation), not a language or framework. Every other domain still needs its own "why Bob" moment inside the lab, but this domain is where that's the entire point.
 
 ---
 
@@ -170,11 +171,12 @@ Current status: **Phase 1 started** — Jekyll site scaffolding, deployed to Git
 
 These need to be settled before real work starts.
 
-- [ ] **Bob's actual capability surface** — agent execution / context injection / external tool integration. Settle this before producing assets; it determines lab difficulty and subject matter.
+- [x] **Bob's actual capability surface** — agent execution / context injection / external tool integration. Reference is [bob.ibm.com/docs/ide](https://bob.ibm.com/docs/ide) and [bob.ibm.com/docs/shell](https://bob.ibm.com/docs/shell) - use it when writing a lab's Prompt/Expected Output. A local Markdown mirror exists at `docs/bob/` for whoever has fetched it (gitignored, not shipped with the repo - `docs/` is local-only, see "Repository" below).
 - [ ] **Target audience** — internal developers or customers? This decides whether we supply practice repos or use participants' own code.
 - [ ] **Practice repositories** — build one per stack, or point at public open source?
 - [ ] **Event size and duration** — the timeline above assumes a 6.5-hour day.
 - [x] **Site implementation** — Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
+- [ ] **Java Modernization assets** — deferred. Bob's Java Modernization is a paid **premium package** ([bob.ibm.com/docs/ide/premium-packages/java-modernization](https://bob.ibm.com/docs/ide/premium-packages/java-modernization)), not part of base Bob - 4 workflows (Java upgrade, Liberty replatforming, UI modernization, unit test generation). We don't have access yet; revisit once it's confirmed.
 
 ---
 
@@ -186,14 +188,14 @@ AGENTS.md       Working rules for coding agents
 CLAUDE.md       Imports AGENTS.md for Claude Code
 CONTRIBUTING.md Full contributing guide (branches, bilingual asset workflow, PR checklist)
 NOTE.md         Original planning note (local only, gitignored)
-docs/        Design system and reference docs (local only, gitignored)
-_labs/       English Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
-_labs_ko/    Korean mirror of _labs/, same relative paths
-_data/       ui.yml - site-chrome translation strings (badge labels, nav)
-_layouts/    Jekyll page templates
-_includes/   Jekyll partials (e.g. the lab card)
-assets/      Site CSS and fonts
-ko/          Korean homepage (index.md), served at /ko/
+docs/           Design system + a local Bob docs mirror in docs/bob/ (local only, gitignored)
+_labs/          English Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
+_labs_ko/       Korean mirror of _labs/, same relative paths
+_data/          ui.yml - site-chrome translation strings (badge labels, nav)
+_layouts/       Jekyll page templates
+_includes/      Jekyll partials (e.g. the lab card)
+assets/         Site CSS and fonts
+ko/             Korean homepage (index.md), served at /ko/
 ```
 
 Design follows the IBM Carbon Design System (`docs/DESIGN.md`).
