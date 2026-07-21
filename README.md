@@ -59,15 +59,17 @@ Tips             Where it commonly goes wrong, and how to correct it
 Variations       2–3 ways to adapt it
 ```
 
-Metadata, shown as badges on the card and used for filtering:
+Metadata, shown as badges on the card and used for filtering. Stored as YAML front matter at the top of the asset file (parseable by the GitHub Pages/Jekyll build):
 
-| Field | Example |
-|---|---|
-| Difficulty | Guided / Challenge |
-| Duration | 5 min |
-| Stack | Java, Spring Boot |
-| Work replaced | Code review |
-| Expected saving | 30 min → 7 min |
+```yaml
+---
+difficulty: Guided       # Guided / Challenge
+duration: 5 min
+stack: Java, Spring Boot
+work_replaced: Code review
+expected_saving: 30 min → 7 min
+---
+```
 
 Challenge Labs present the Goal only and push hints to the Prompt Cookbook.
 
@@ -167,7 +169,7 @@ These need to be settled before real work starts.
 - [ ] **Target audience** — internal developers or customers? This decides whether we supply practice repos or use participants' own code.
 - [ ] **Practice repositories** — build one per stack, or point at public open source?
 - [ ] **Event size and duration** — the timeline above assumes a 6.5-hour day.
-- [ ] **Site implementation** — a static site generator + Markdown makes adding an asset a single PR, which favors the asset-count goal.
+- [x] **Hosting** — GitHub Pages. The specific static site generator (Jekyll's native GitHub Pages support vs. a custom build published via GitHub Actions) is still open; either way, adding an asset stays a single PR.
 
 ---
 
@@ -179,9 +181,13 @@ AGENTS.md    Working rules for coding agents
 CLAUDE.md    Imports AGENTS.md for Claude Code
 NOTE.md      Original planning note (local only, gitignored)
 docs/        Design system and reference docs (local only, gitignored)
+content/     Lab / Recipe assets, one file per asset: content/<stack>/<slug>.md
 ```
 
 Design follows the IBM Carbon Design System (`docs/DESIGN.md`).
+
+Every asset lives at `content/<stack>/<slug>.md` — e.g. `content/spring-boot/explain-repo.md`.
+See that file for a complete reference example of the content spec below, fully filled in.
 
 ---
 

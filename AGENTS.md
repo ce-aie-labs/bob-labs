@@ -7,7 +7,7 @@ See `README.md` for the project overview and content spec, `NOTE.md` for the ori
 
 ## Current state
 
-No implementation code yet. Phase 1 (skeleton) has not started, and the **site implementation approach is undecided**.
+No implementation code yet. Phase 1 (skeleton) has not started. Hosting is decided (GitHub Pages); the **specific static site generator / build setup is still undecided**.
 Do not introduce a framework or build tooling on your own — ask first.
 
 ## Working rules
@@ -22,10 +22,14 @@ Do not introduce a framework or build tooling on your own — ask first.
 To add one Lab / Recipe:
 
 1. Write in one line **which repetitive task this replaces**. If you can't, don't build it.
-2. Fill in the spec — `Problem → Prompt → Expected Output → Tips → Variations`. **Never skip a section.**
-3. Attach all five metadata fields — difficulty / duration / stack / work replaced / expected saving.
-4. Actually run the prompt through Bob and write Expected Output from **what you observed**, not from what you assume.
-5. One asset = one commit (or one PR). Don't mix several assets into one commit.
+2. Place the file at `content/<stack>/<slug>.md` — one file per asset, grouped by stack directory.
+   The branch name uses the same stack/slug but hyphenated (`content/<stack>-<slug>`), e.g. branch `content/spring-boot-explain-repo` holds file `content/spring-boot/explain-repo.md`.
+3. Fill in the spec — `Problem → Prompt → Expected Output → Tips → Variations`. **Never skip a section.**
+4. Attach all five metadata fields as YAML front matter at the top of the file — difficulty / duration / stack / work_replaced / expected_saving.
+5. Actually run the prompt through Bob and write Expected Output from **what you observed**, not from what you assume.
+6. One asset = one commit (or one PR). Don't mix several assets into one commit.
+
+See `content/spring-boot/explain-repo.md` for a complete reference example.
 
 ## Git workflow
 
