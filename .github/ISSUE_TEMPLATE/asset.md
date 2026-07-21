@@ -15,7 +15,13 @@ labels: asset
 
 ## Where the files go
 
-Two files, one asset - `_labs/<stack>/<slug>.md` (English) and `_labs_ko/<stack>/<slug>.md` (Korean), same relative path. See `_labs/spring-boot/explain-repo.md` + `_labs_ko/spring-boot/explain-repo.md` for a complete reference pair. (Branch name still uses the hyphenated `content/<stack>-<slug>` form - that's a label only, it doesn't need to match the folders.)
+Two files, one asset - `_labs/<stack>/<slug>.md` (English) and `_labs_ko/<stack>/<slug>.md` (Korean), same relative path. Use `<stack>` = `bob-features` for Bob-capability demos, or `stack: Any` in front matter for any lab that isn't genuinely tied to one language/framework. (Branch name still uses the hyphenated `content/<stack>-<slug>` form - that's a label only, it doesn't need to match the folders.)
+
+Reference pairs to copy from - see CONTRIBUTING.md for which shape fits:
+
+- `_labs/spring-boot/explain-repo.md` - stack-tied, single prompt
+- `_labs/bob-features/generate-architecture-diagram.md` - `stack: Any`, single prompt
+- `_labs/bob-features/plan-then-build.md` - multi-step, `### Step N` inside `## Prompt`
 
 ## Checklist (both language files)
 

@@ -35,12 +35,17 @@ To add one Lab / Recipe, you're always producing **two files**, one asset:
    If you can't run Bob yet (drafting from [bob.ibm.com/docs](https://bob.ibm.com/docs) or the local `docs/bob/` mirror instead), that's fine as a starting draft - but say so explicitly with a `<!-- Bob-verify: ... -->` comment on the Expected Output, and get a real Bob pass before the asset is used with actual participants.
 8. One asset = one commit (or one PR) = **both language files together**. Don't mix several assets into one commit.
 
-Two reference pairs, two different shapes:
+Three reference pairs, three different shapes:
 
-- `_labs/spring-boot/explain-repo.md` + `_labs_ko/…` - a stack-tied lab (`stack: Java, Spring Boot`), Expected Output verified by an actual dry run.
-- `_labs/bob-features/generate-architecture-diagram.md` + `_labs_ko/…` - a **Bob Features** lab (`stack: Any`) - demos a capability of Bob itself rather than a language/framework, drafted from Bob's own docs and flagged `Bob-verify` pending a real run.
+- `_labs/spring-boot/explain-repo.md` + `_labs_ko/…` - a stack-tied lab (`stack: Java, Spring Boot`), single prompt, Expected Output verified by an actual dry run.
+- `_labs/bob-features/generate-architecture-diagram.md` + `_labs_ko/…` - a **Bob Features** lab (`stack: Any`), single prompt - demos a capability of Bob itself rather than a language/framework.
+- `_labs/bob-features/plan-then-build.md` + `_labs_ko/…` - a **multi-step** lab: four sequential prompts as `### Step N` subheadings inside the single `## Prompt` section, each with its own checkpoint. The 5-section spec is unchanged - `###` subheadings don't affect it, so multi-step labs need no special handling.
 
-Use `stack: Any` for labs that aren't tied to one language or framework - subagents, skills, MCP, diagram/report generation, and similar Bob-capability demos belong in the `bob-features` folder, not under a stack name.
+### Write stack-agnostic first
+
+Use `stack: Any` whenever the lab isn't genuinely tied to one language or framework, and put per-stack differences in the asset's own **Variations** section. "Explain this repo" or "review this diff" is the same lab in Java and Python - writing it five times per stack is exactly the duplication the reusability principle exists to prevent. Write a stack-specific lab only when the stack really changes the prompt (a Spring Boot 2→3 migration does; "explain this repo" doesn't).
+
+Bob-capability demos - subagents, skills, MCP, Plan mode, diagram/report generation - go in `bob-features/`, not under a stack name.
 
 ## Git workflow
 
@@ -60,7 +65,8 @@ When unsure whether a piece of content or a feature belongs, check in this order
 1. Does copy-paste produce a first result within 5 minutes?
 2. Does it convert to a Before/After in minutes?
 3. Can someone else pick it up as-is?
-4. Is it P0? **While P0 items remain, don't touch P1/P2.**
+4. Could this be one `stack: Any` lab instead of one per stack? If yes, write it that way.
+5. Is it P0? **While P0 items remain, don't touch P1/P2.**
 
 If any of the first three is "no", don't build it. Reusability beats asset count.
 

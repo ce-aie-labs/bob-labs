@@ -31,7 +31,21 @@ Each file needs:
 
 The `validate-content` CI check enforces all of this automatically, including that both language files exist - a PR adding only one language fails.
 
-See `_labs/spring-boot/explain-repo.md` + `_labs_ko/spring-boot/explain-repo.md` for a complete reference pair, and `README.md`'s "Content unit spec" for the full field/section reference.
+### Reference assets
+
+Three complete pairs to copy from, covering three different shapes:
+
+| Reference | Shape |
+|---|---|
+| `_labs/spring-boot/explain-repo.md` | Stack-tied (`stack: Java, Spring Boot`), single prompt |
+| `_labs/bob-features/generate-architecture-diagram.md` | Stack-agnostic (`stack: Any`), single prompt, demos a Bob capability |
+| `_labs/bob-features/plan-then-build.md` | Multi-step - four sequential prompts as `### Step N` subheadings inside `## Prompt`, each with a checkpoint |
+
+Each has a `_labs_ko/` counterpart at the same path. `README.md`'s "Content unit spec" has the full field/section reference.
+
+### Prefer `stack: Any`
+
+Most repetitive work isn't stack-specific - "explain this repo" is the same lab in Java and Python. Write it once with `stack: Any` and put per-stack differences in the **Variations** section, rather than writing five near-duplicates. Reserve stack-specific labs for cases where the stack genuinely changes the prompt (a Spring Boot 2→3 migration does).
 
 ## Other changes (docs, site, tooling)
 
