@@ -83,6 +83,8 @@ Open <http://127.0.0.1:4000/bob-labs/>. **Note the `/bob-labs/`** - the bare roo
 
 Jekyll needs **Ruby 3.0 or newer and macOS ships 2.6**, so on a Mac you will likely need `brew install ruby` first - the script will say so if you do.
 
+If you work with a coding agent in this repository, `.claude/skills/preview/` tells it how to run the site and what to look at - so "check this renders" does not turn into it rediscovering the Ruby version trap.
+
 ### Or skip installing anything
 
 The repository has a dev container, so you can run the site without Ruby on your machine:
