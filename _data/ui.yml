@@ -4,7 +4,7 @@ en:
   stack_label: "Stack"
   work_replaced_label: "Work replaced"
   saving_label: "Saving"
-  lang_switch_label: "한국어"
+  lang_switch_label: "KO"
 ko:
   difficulty_label: "난이도"
   duration_label: "소요 시간"
