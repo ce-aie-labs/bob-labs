@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<div class="page">
+  <div class="intro">
+    <h1>{{ site.title }}</h1>
+    <p>{{ site.description }}</p>
+  </div>
+
+  <div class="lab-grid">
+    {% for lab in site.labs %}
+      {% include lab-card.html lab=lab %}
+    {% endfor %}
+  </div>
+</div>

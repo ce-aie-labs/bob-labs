@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {% seo %}
+</head>
+<body>
+  <header class="site-header">
+    <a href="{{ '/' | relative_url }}">IBM Bob Labs</a>
+  </header>
+  {{ content }}
+  <script>
+    document.querySelectorAll("pre").forEach(function (block) {
+      var button = document.createElement("button");
+      button.className = "copy-btn";
+      button.type = "button";
+      button.textContent = "Copy";
+      button.addEventListener("click", function () {
+        navigator.clipboard.writeText(block.innerText).then(function () {
+          button.textContent = "Copied";
+          setTimeout(function () { button.textContent = "Copy"; }, 1500);
+        });
+      });
+      block.appendChild(button);
+    });
+  </script>
+</body>
+</html>
