@@ -181,10 +181,11 @@ These need to be settled before real work starts.
 ## Repository
 
 ```
-README.md    This document — project overview
-AGENTS.md    Working rules for coding agents
-CLAUDE.md    Imports AGENTS.md for Claude Code
-NOTE.md      Original planning note (local only, gitignored)
+README.md       This document — project overview
+AGENTS.md       Working rules for coding agents
+CLAUDE.md       Imports AGENTS.md for Claude Code
+CONTRIBUTING.md Full contributing guide (branches, bilingual asset workflow, PR checklist)
+NOTE.md         Original planning note (local only, gitignored)
 docs/        Design system and reference docs (local only, gitignored)
 _labs/       English Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
 _labs_ko/    Korean mirror of _labs/, same relative paths
@@ -205,30 +206,6 @@ The `_labs/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recog
 
 ## Contributing
 
-Every change goes through a PR. `main` is never committed to directly.
+Every change goes through a PR - `main` is never committed to directly, and it's enforced by branch protection.
 
-1. **Branch off `main`.**
-   `content/<stack>-<slug>` for assets — e.g. `content/spring-boot-explain-repo`.
-   `feat/`, `fix/`, `docs/` for everything else.
-2. **One asset per commit, both languages together.** Don't mix several labs into one commit — each asset (its English *and* Korean file) should be reviewable, and revertable, as one unit.
-3. **Fill the content spec completely, in both languages.** `Problem → Prompt → Expected Output → Tips → Variations` (or `문제 → 프롬프트 → 기대 결과 → 팁 → 응용`), plus `title`, `lang`, and all five metadata fields. A section or field left blank, or a missing bilingual sibling, fails the `validate-content` check and blocks the PR.
-4. **Verify each language's prompt against Bob before opening the PR.** Expected Output describes what you actually saw in that language, not a translation of the other file's output.
-5. **Open the PR:** `git push -u origin <branch>` then `gh pr create`. Requires one approval and passing status checks before it can merge.
-
-Commit messages are in English, imperative mood.
-
-### Before you commit
-
-`NOTE.md` and `docs/` are local-only working documents and are gitignored.
-Run `git status` and confirm neither is staged.
-
-### What gets merged
-
-A PR is judged by the same checklist we use for the content itself:
-
-- Does copy-paste produce a first result within 5 minutes?
-- Does it convert to a Before/After in minutes?
-- Can someone else pick it up as-is?
-- Is it P0? While P0 items remain, P1/P2 waits.
-
-Reusability beats asset count. A rejected lab is cheaper than a lab nobody reopens.
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide: branch naming, the bilingual asset workflow, front matter fields, and what gets merged. Opening a PR picks up `.github/PULL_REQUEST_TEMPLATE.md` automatically.
