@@ -1,0 +1,14 @@
+en:
+  difficulty_label: "Difficulty"
+  duration_label: "Duration"
+  stack_label: "Stack"
+  work_replaced_label: "Work replaced"
+  saving_label: "Saving"
+  lang_switch_label: "한국어"
+ko:
+  difficulty_label: "난이도"
+  duration_label: "소요 시간"
+  stack_label: "스택"
+  work_replaced_label: "대체 작업"
+  saving_label: "절감"
+  lang_switch_label: "EN"

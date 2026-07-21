@@ -1,16 +1,35 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ page.lang | default: 'en' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% seo %}
 </head>
 <body>
+  {% assign page_lang = page.lang | default: "en" %}
+  {% assign ui = site.data.ui[page_lang] %}
+  {% if page.lang == "ko" %}
+    {% assign other_lang_url = page.url | remove_first: "/ko" %}
+  {% else %}
+    {% assign other_lang_url = "/ko" | append: page.url %}
+  {% endif %}
   <header class="site-header">
-    <a href="{{ '/' | relative_url }}">IBM Bob Labs</a>
+    <a href="{% if page.lang == 'ko' %}{{ '/ko/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}">IBM Bob Labs</a>
+    <nav class="site-header-nav">
+      <a href="{{ other_lang_url | relative_url }}">{{ ui.lang_switch_label }}</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
   </header>
   {{ content }}
   <script>
@@ -26,6 +45,17 @@
         });
       });
       block.appendChild(button);
+    });
+
+    var toggle = document.getElementById("theme-toggle");
+    toggle.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme");
+      if (!current) {
+        current = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
     });
   </script>
 </body>

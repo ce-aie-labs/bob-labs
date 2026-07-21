@@ -49,21 +49,25 @@ Every content decision is made against these five.
 
 ## Content unit spec
 
-Every Lab / Recipe follows this shape. **No exceptions.**
+Every Lab / Recipe is **bilingual, mandatory** — an English file and a Korean file, added together as one asset. Korean customers paste Bob prompts in Korean, so the Prompt itself is translated too, not just the surrounding explanation.
+
+Both follow the same shape, headings in their own language. **No exceptions, in either language.**
 
 ```
-Problem          When do you use this (1–2 lines)
-Prompt           [Copy] button. Works as-is when pasted
-Expected Output  Checklist of what Bob should give back
-Tips             Where it commonly goes wrong, and how to correct it
-Variations       2–3 ways to adapt it
+English                Korean
+Problem                문제
+Prompt                 프롬프트
+Expected Output        기대 결과
+Tips                   팁
+Variations             응용
 ```
 
-Metadata, shown as badges on the card and used for filtering. Stored as YAML front matter at the top of the asset file, parsed by the Jekyll build:
+Metadata, shown as badges on the card and used for filtering. Stored as YAML front matter at the top of each asset file, parsed by the Jekyll build. Front matter **keys** stay in English in both files — only the values and body content are written in each file's language:
 
 ```yaml
 ---
-title: Explain This Repository   # the page heading
+title: Explain This Repository   # the page heading, in the file's own language
+lang: en                          # en or ko - this is what templates/CI key off
 difficulty: Guided                # Guided / Challenge
 duration: 5 min
 stack: Java, Spring Boot
@@ -182,17 +186,20 @@ AGENTS.md    Working rules for coding agents
 CLAUDE.md    Imports AGENTS.md for Claude Code
 NOTE.md      Original planning note (local only, gitignored)
 docs/        Design system and reference docs (local only, gitignored)
-_labs/       Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
+_labs/       English Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
+_labs_ko/    Korean mirror of _labs/, same relative paths
+_data/       ui.yml - site-chrome translation strings (badge labels, nav)
 _layouts/    Jekyll page templates
 _includes/   Jekyll partials (e.g. the lab card)
 assets/      Site CSS and fonts
+ko/          Korean homepage (index.md), served at /ko/
 ```
 
 Design follows the IBM Carbon Design System (`docs/DESIGN.md`).
 
-Every asset lives at `_labs/<stack>/<slug>.md` — e.g. `_labs/spring-boot/explain-repo.md`.
-See that file for a complete reference example of the content spec below, fully filled in.
-The `_labs/` underscore prefix is required (it's how Jekyll recognizes the collection) — the asset's *branch* name still uses the hyphenated `content/<stack>-<slug>` form, that's just a label and doesn't need to match the folder.
+Every asset lives at `_labs/<stack>/<slug>.md` plus its mirror `_labs_ko/<stack>/<slug>.md` — e.g. `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
+See that pair for a complete reference example of the content spec below, fully filled in.
+The `_labs/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recognizes the collections) — the asset's *branch* name still uses the hyphenated `content/<stack>-<slug>` form, that's just a label and doesn't need to match the folders.
 
 ---
 
@@ -203,9 +210,9 @@ Every change goes through a PR. `main` is never committed to directly.
 1. **Branch off `main`.**
    `content/<stack>-<slug>` for assets — e.g. `content/spring-boot-explain-repo`.
    `feat/`, `fix/`, `docs/` for everything else.
-2. **One asset per commit.** Don't mix several labs into one commit — each asset should be reviewable, and revertable, on its own.
-3. **Fill the content spec completely.** `Problem → Prompt → Expected Output → Tips → Variations`, plus all five metadata fields and `title`. A section or field left blank fails the `validate-content` check and blocks the PR.
-4. **Verify the prompt against Bob before opening the PR.** Expected Output describes what you actually saw, not what you expect Bob to do.
+2. **One asset per commit, both languages together.** Don't mix several labs into one commit — each asset (its English *and* Korean file) should be reviewable, and revertable, as one unit.
+3. **Fill the content spec completely, in both languages.** `Problem → Prompt → Expected Output → Tips → Variations` (or `문제 → 프롬프트 → 기대 결과 → 팁 → 응용`), plus `title`, `lang`, and all five metadata fields. A section or field left blank, or a missing bilingual sibling, fails the `validate-content` check and blocks the PR.
+4. **Verify each language's prompt against Bob before opening the PR.** Expected Output describes what you actually saw in that language, not a translation of the other file's output.
 5. **Open the PR:** `git push -u origin <branch>` then `gh pr create`. Requires one approval and passing status checks before it can merge.
 
 Commit messages are in English, imperative mood.

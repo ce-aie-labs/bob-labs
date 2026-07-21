@@ -7,11 +7,19 @@ collections:
   labs:
     output: true
     permalink: /labs/:path/
+  labs_ko:
+    output: true
+    permalink: /ko/labs/:path/
 
 defaults:
   - scope:
       path: ""
       type: labs
+    values:
+      layout: lab
+  - scope:
+      path: ""
+      type: labs_ko
     values:
       layout: lab
   - scope:
