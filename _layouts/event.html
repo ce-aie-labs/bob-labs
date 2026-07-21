@@ -4,23 +4,86 @@ layout: default
 {% assign page_lang = page.lang | default: "en" %}
 {% assign ui = site.data.ui[page_lang] %}
 
-<div class="page">
-  <div class="intro">
-    <h1>{{ page.title }}</h1>
-    <p>{{ page.description }}</p>
-  </div>
+<article class="event">
 
-  <div class="event-body">
-    {{ content }}
-  </div>
+  <section class="event-hero">
+    <div class="wrap">
+      <h1>{{ page.title }}</h1>
+      <p class="lead">{{ page.description }}</p>
+    </div>
+  </section>
 
-  <div class="submit-panel">
-    <h2>{{ ui.submit_heading }}</h2>
-    {% if site.bobathon.submit_url and site.bobathon.submit_url != "" %}
-      <a class="submit-button" href="{{ site.bobathon.submit_url }}" target="_blank" rel="noopener noreferrer">{{ ui.submit_button }}</a>
-    {% else %}
-      <button class="submit-button" type="button" disabled>{{ ui.submit_button }}</button>
-      <p class="submit-pending">{{ ui.submit_pending }}</p>
-    {% endif %}
-  </div>
-</div>
+  <section class="event-section">
+    <div class="wrap wrap-prose">
+      <h2>{{ page.need_heading }}</h2>
+      {{ page.need_body | markdownify }}
+    </div>
+  </section>
+
+  <section class="event-section is-band">
+    <div class="wrap">
+      <h2>{{ page.process_heading }}</h2>
+      <ol class="step-grid">
+        {% for step in page.steps %}
+          <li class="step-card">
+            <span class="step-number">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+            <h3>{{ step.title }}</h3>
+            {{ step.body | markdownify }}
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <section class="event-section">
+    <div class="wrap wrap-prose">
+      <h2>{{ page.rubric_heading }}</h2>
+      <table class="rubric">
+        <thead>
+          <tr>
+            <th scope="col">{{ ui.rubric_criterion }}</th>
+            <th scope="col">{{ ui.rubric_points }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in page.rubric %}
+            <tr>
+              <td>{{ row.criterion }}</td>
+              <td class="points">{{ row.points }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {{ page.rubric_note | markdownify }}
+    </div>
+  </section>
+
+  <section class="event-section is-band">
+    <div class="wrap wrap-prose">
+      <h2>{{ page.deliverables_heading }}</h2>
+      <ul class="deliverables">
+        {% for item in page.deliverables %}
+          <li{% if item.required %} class="is-required"{% endif %}>
+            <strong>{{ item.title }}</strong>
+            {%- if item.required %} <span class="tag">{{ ui.required }}</span>{% endif %}
+            <span class="deliverable-body">{{ item.body }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      {{ page.deliverables_note | markdownify }}
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="wrap">
+      <h2>{{ ui.submit_heading }}</h2>
+      {% if site.bobathon.submit_url and site.bobathon.submit_url != "" %}
+        <a class="cta-button" href="{{ site.bobathon.submit_url }}" target="_blank" rel="noopener noreferrer">{{ ui.submit_button }}</a>
+      {% else %}
+        <button class="cta-button" type="button" disabled>{{ ui.submit_button }}</button>
+        <p class="cta-note">{{ ui.submit_pending }}</p>
+      {% endif %}
+    </div>
+  </section>
+
+</article>
