@@ -443,67 +443,211 @@ a {
   }
 }
 
-.event-body h2 {
-  margin: 40px 0 12px;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 1.33;
+/* ---- Bobathon event page ------------------------------------------------
+   Sections alternate canvas / surface-1: DESIGN.md calls the two-surface
+   rhythm "the rhythm", and says sections separate via thin gray rows rather
+   than large vertical gaps. Each section is full-bleed with an inner wrap so
+   the bands actually read as bands.
+   ------------------------------------------------------------------------ */
+
+.event {
+  background: var(--canvas);
 }
 
-.event-body h3 {
-  margin: 28px 0 8px;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.16px;
+.wrap {
+  max-width: 1056px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.event-body p,
-.event-body li {
-  font-size: 16px;
+.wrap-prose > * {
   max-width: 68ch;
 }
 
-.event-body table {
-  border-collapse: collapse;
-  margin: 12px 0;
+.event-hero {
+  background: var(--canvas);
+  border-bottom: 1px solid var(--hairline);
+  padding: 72px 0 56px;
 }
 
-.event-body th,
-.event-body td {
+/* Plex Sans at weight 300 on display sizes is the brand's typographic
+   signature - DESIGN.md is explicit that bolding it makes the page generic. */
+.event-hero h1 {
+  margin: 0 0 16px;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 300;
+  line-height: 1.17;
+  letter-spacing: -0.4px;
+  text-wrap: balance;
+}
+
+.event-hero .lead {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+  max-width: 60ch;
+}
+
+.event-section {
+  background: var(--canvas);
+  padding: 56px 0;
+}
+
+.event-section.is-band {
+  background: var(--surface-1);
+}
+
+.event-section h2 {
+  margin: 0 0 24px;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.event-section p,
+.event-section li {
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.16px;
+}
+
+.event-section > .wrap > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Steps are a real sequence, so the numbering encodes order rather than
+   decorating. Cards follow the feature-card token: canvas, 1px hairline,
+   0px corners, 24px padding, no shadow. */
+.step-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--hairline);
   border: 1px solid var(--hairline);
-  padding: 8px 16px;
-  text-align: left;
+}
+
+.step-card {
+  background: var(--canvas);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step-number {
   font-size: 14px;
-}
-
-.event-body th {
-  font-weight: 600;
-}
-
-.event-body td:last-child {
+  letter-spacing: 0.16px;
+  color: var(--primary);
   font-variant-numeric: tabular-nums;
 }
 
-.submit-panel {
-  border-top: 1px solid var(--hairline);
-  padding-top: 24px;
+.step-card h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.step-card p {
+  margin: 0 0 12px;
+  color: var(--ink-muted);
+}
+
+.step-card p:last-child {
+  margin-bottom: 0;
+}
+
+.step-card code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+
+.rubric {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 0 24px;
+}
+
+.rubric th,
+.rubric td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 14px;
+  letter-spacing: 0.16px;
+}
+
+.rubric thead th {
+  font-weight: 600;
+  color: var(--ink-subtle);
+  border-bottom-color: var(--hairline-strong);
+}
+
+.rubric .points {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  width: 6ch;
+}
+
+.deliverables {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
 }
 
-.submit-panel h2 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 400;
+.deliverables li {
+  border-top: 1px solid var(--hairline);
+  padding: 16px 0;
 }
 
-/* The one primary action on the page, so this is where IBM Blue belongs. */
-.submit-button {
+.deliverables li:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.deliverable-body {
+  display: block;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+
+.tag {
   display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  font-size: 12px;
+  letter-spacing: 0.32px;
+  vertical-align: 1px;
+}
+
+/* The cta-banner token: full-width IBM Blue panel near the foot of the page,
+   48px padding. This is one of the few places DESIGN.md sanctions blue as a
+   surface, and it is the page's single primary action. */
+.cta-banner {
   background: var(--primary);
   color: var(--on-primary);
+  padding: 48px 0;
+}
+
+.cta-banner h2 {
+  margin: 0 0 24px;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.cta-button {
+  display: inline-block;
+  background: var(--canvas);
+  color: var(--primary);
   border: none;
   border-radius: 0;
   padding: 12px 16px;
@@ -514,25 +658,29 @@ a {
   cursor: pointer;
 }
 
-.submit-button:hover:not([disabled]) {
-  background: var(--primary-hover);
+.cta-button:hover:not([disabled]) {
+  background: var(--surface-1);
 }
 
-.submit-button:focus-visible {
-  outline: 2px solid var(--primary);
+.cta-button:focus-visible {
+  outline: 2px solid var(--canvas);
   outline-offset: 2px;
 }
 
-.submit-button[disabled] {
-  background: var(--surface-1);
-  color: var(--ink-subtle);
-  border: 1px solid var(--hairline);
+/* Disabled without opacity: dimming text that already sits on a saturated
+   banner pushes it under the contrast floor. A ghost treatment reads as less
+   prominent than the solid enabled state while staying legible. */
+.cta-button[disabled] {
+  background: transparent;
+  border: 1px solid var(--on-primary);
+  color: var(--on-primary);
   cursor: not-allowed;
 }
 
-.submit-pending {
-  margin: 0;
+.cta-note {
+  margin: 16px 0 0;
   font-size: 14px;
-  color: var(--ink-muted);
-  max-width: 60ch;
+  letter-spacing: 0.16px;
+  color: var(--on-primary);
+  max-width: 56ch;
 }
