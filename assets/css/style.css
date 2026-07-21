@@ -156,29 +156,37 @@ a {
 .filters {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  border-top: 1px solid var(--hairline);
+  gap: 10px;
   border-bottom: 1px solid var(--hairline);
-  padding: 20px 0;
+  padding-bottom: 20px;
 }
 
 .filter-group {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
+  gap: 8px 12px;
+}
+
+/* Sentence case, not all-caps: DESIGN.md is explicit that Carbon resists
+   all-caps tracked eyebrows and section labels. */
+.filter-label {
+  font-size: 14px;
+  letter-spacing: 0.16px;
+  color: var(--ink-subtle);
+  flex: none;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
-.filter-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.32px;
-  text-transform: uppercase;
-  color: var(--ink-subtle);
-  min-width: 72px;
-}
-
 .chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
   background: var(--canvas);
   color: var(--ink-muted);
   border: 1px solid var(--hairline);
@@ -190,9 +198,9 @@ a {
   cursor: pointer;
 }
 
-.chip:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+.chip:hover:not(.is-active):not([disabled]) {
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
 .chip:focus-visible {
@@ -200,18 +208,61 @@ a {
   outline-offset: 2px;
 }
 
+/* Selected state is charcoal, matching Carbon's selectable tag. IBM Blue is
+   reserved for links, the primary CTA and focus rings - DESIGN.md calls
+   anything beyond that drift, and several blue chips at once would spend the
+   one accent the system has. */
 .chip.is-active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--on-primary);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--canvas);
+}
+
+.chip[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.chip-count {
+  font-size: 12px;
+  letter-spacing: 0.32px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+.filter-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 2px;
 }
 
 .filter-count {
-  margin: 0;
-  font-size: 12px;
-  letter-spacing: 0.32px;
+  font-size: 14px;
+  letter-spacing: 0.16px;
   color: var(--ink-subtle);
   font-variant-numeric: tabular-nums;
+}
+
+.filter-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.16px;
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.filter-reset:hover {
+  color: var(--primary-hover);
+}
+
+.filter-reset:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .no-match {
@@ -312,10 +363,9 @@ a {
 
 .lab-detail h2 {
   margin: 24px 0 8px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.32px;
-  text-transform: uppercase;
+  letter-spacing: 0.16px;
   color: var(--ink-subtle);
 }
 

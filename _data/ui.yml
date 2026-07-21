@@ -11,6 +11,7 @@ en:
   count_one: "1 lab"
   count_other: "{n} labs"
   no_match: "No labs match this filter."
+  filter_reset: "Reset"
 ko:
   difficulty_label: "난이도"
   duration_label: "소요 시간"
@@ -24,3 +25,4 @@ ko:
   count_one: "랩 1개"
   count_other: "랩 {n}개"
   no_match: "조건에 맞는 랩이 없습니다."
+  filter_reset: "초기화"
