@@ -83,24 +83,49 @@ Challenge Labs present the Goal only and push hints to the Prompt Cookbook.
 ## Asset Library priority
 
 **Build P0 first. Trying to fill everything finishes nothing.**
-P0 alone is enough to run the first event (~40 labs).
+P0 is ~18 labs, which is enough to run the first event.
 
-| Domain | P0 | P1 | P2 |
+Assets are prioritized by **the repetitive work they replace**, not by tech stack. A participant arrives thinking "I lose three hours a week to code review," not "I want a Spring Boot lab." Stack is a filter, not a category - see [Stack coverage](#stack-coverage) below.
+
+| Work replaced | P0 | P1 | P2 |
 |---|---|---|---|
-| Bob Features | Architecture diagrams, subagents, skills, MCP (5) | | |
-| Java | Spring Boot (8), Legacy Monolith (6) | Maven/Gradle (4) | |
-| Python | FastAPI (6) | Data Pipeline (5) | Flask (4) |
-| Frontend | React (5) | | Angular (4), Vue (4) |
-| DevOps | | Docker (5), Kubernetes (6) | Terraform (4) |
-| AI | | RAG (5) | LangGraph (4), MCP (4) |
-| Database | | PostgreSQL (5), Oracle (4) | MongoDB (4) |
-| Documents | Excel (4), API Spec (5) | PDF (4) | |
+| Bob Features (`stack: Any`) | Architecture diagrams, plan→build, subagents, skills, MCP (5) | | |
+| Repository Understanding | (2) | | |
+| Code Review | (2) | | |
+| Test Generation | (2) | | |
+| Documentation | (2) | | |
+| Migration | Spring Boot 2→3, Legacy Monolith (3) | Python 2→3 (2) | |
+| Debug & Performance | | (3) | |
+| Security | | (2) | |
+| Data & Documents | Excel, API Spec (2) | PDF (2) | |
 
-Numbers in parentheses are target lab counts. **Bob Features** is stack-agnostic (`stack: Any`) - it demos what makes Bob itself worth using (subagents, skills, MCP, diagram/report generation), not a language or framework. Every other domain still needs its own "why Bob" moment inside the lab, but this domain is where that's the entire point.
+Numbers in parentheses are target lab counts.
+
+**Bob Features** demos what makes Bob itself worth using - Plan mode, subagents, skills, MCP, diagram and report generation. Every other row still needs its own "why Bob" moment inside the lab, but here that *is* the lab.
+
+### Write stack-agnostic first
+
+Most repetitive work isn't stack-specific. "Explain this repository," "review this diff," "generate tests for this module" are the same lab whether the code is Java or Python - only the repo you point at changes. Write those once with `stack: Any` and put the per-stack differences in the asset's own **Variations** section, which exists for exactly this.
+
+Write a stack-specific lab only when the stack genuinely changes the prompt - a Spring Boot 2→3 migration is real Spring knowledge; "explain this repo" is not.
+
+This is the design principle "an example that only works in its own context is not an asset" applied to the build plan itself. One reusable lab beats five near-duplicates.
+
+### Stack coverage
+
+`stack` is a front matter field, so the site filters on it. Use this as a coverage checklist, not a build queue - the goal is that a participant from any of these can find something, not that every cell has its own lab.
+
+| Priority | Stacks |
+|---|---|
+| Must cover | Java (Spring Boot, Legacy Monolith), Python (FastAPI), Frontend (React) |
+| Nice to have | Docker, Kubernetes, PostgreSQL, Oracle, Data Pipeline |
+| Later | Angular, Vue, Terraform, MongoDB, RAG, LangGraph |
 
 ---
 
 ## Prompt Cookbook categories
+
+Same axis as the Asset Library priority above - the difference is depth, not subject. A **Lab** walks you through a worked example with Expected Output and Tips; a **Cookbook prompt** is one copy button with no walkthrough, for someone who already knows what they want.
 
 Target is 20 prompts per category. Each prompt is **one copy button** — never make people read an explanation first.
 
