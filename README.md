@@ -244,6 +244,7 @@ _layouts/       Jekyll page templates
 _includes/      Jekyll partials (e.g. the lab card)
 assets/         Site CSS and fonts
 ko/             Korean homepage (index.md), served at /ko/
+script/preview  Build and serve the site locally
 ```
 
 Design follows the IBM Carbon Design System (`DESIGN.md`).

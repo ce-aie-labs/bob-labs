@@ -69,25 +69,28 @@ You do not need any of that, because everything a lab PR needs checking for is a
 
 Spend your time on the last row. It is the only one that is genuinely at risk, and the only one no tool will catch.
 
-### Running the site locally
+That said, seeing your own work is worth something, and some things genuinely are invisible until built: how your title wraps in the card grid, where the auto-truncated preview text cuts off, whether a long metadata value breaks the badge row, and both themes. If you are touching layouts, CSS or anything under `_layouts/`, `_includes/` or `assets/`, a preview is not optional.
 
-Needed if you are changing layouts, CSS, or anything under `_layouts/`, `_includes/` or `assets/` - and optional if you just want to see your lab in place.
-
-```sh
-bundle install
-bundle exec jekyll serve
-```
-
-Then open <http://127.0.0.1:4000/bob-labs/>. Note the `/bob-labs/` - the root URL alone will 404, because the site is built for a project path.
-
-**Ruby 3.0 or newer is required, and macOS ships 2.6.** With the system Ruby, `bundle install` fails on `ffi ... requires ruby version >= 3.0`. On macOS:
+### Running the site
 
 ```sh
-brew install ruby
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"   # add to your shell profile to keep it
+script/preview
 ```
 
-Preview both languages - `/bob-labs/` and `/bob-labs/ko/` - and both themes, using the toggle in the header.
+That is it. The script checks your Ruby version, installs dependencies on first run, and prints the URLs. If something is missing it tells you exactly what to do rather than failing on a gem you have never heard of.
+
+Open <http://127.0.0.1:4000/bob-labs/>. **Note the `/bob-labs/`** - the bare root 404s, because the site is built for a project path rather than a domain root. Check both languages (`/bob-labs/` and `/bob-labs/ko/`) and both themes, using the toggle in the header.
+
+Jekyll needs **Ruby 3.0 or newer and macOS ships 2.6**, so on a Mac you will likely need `brew install ruby` first - the script will say so if you do.
+
+### Or skip installing anything
+
+The repository has a dev container, so you can run the site without Ruby on your machine:
+
+- **In the browser**: on GitHub, `Code` → `Codespaces` → create one. Codespaces has to be enabled for the organisation first, so this cannot bill anyone by surprise.
+- **Locally**: VS Code with Docker, then `Reopen in Container`.
+
+Then `script/preview` as above. See `.devcontainer/README.md`.
 
 ## Other changes (docs, site, tooling)
 
