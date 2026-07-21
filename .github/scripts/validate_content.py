@@ -119,8 +119,12 @@ def validate_file(path, categories=None):
         sections = []
 
     for section in sections:
+        # `.*?` rather than `.+?`: with `.+?` an empty section would be forced
+        # to consume at least one character, swallow the next heading, and pass
+        # as non-empty. Allowing an empty capture lets the lookahead match
+        # immediately so a heading with nothing under it is caught.
         heading_re = re.compile(
-            rf"^##\s+{re.escape(section)}\s*$\n+(.+?)(?=^##\s|\Z)",
+            rf"^##\s+{re.escape(section)}\s*$\n+(.*?)(?=^##\s|\Z)",
             re.MULTILINE | re.DOTALL,
         )
         match = heading_re.search(body)
