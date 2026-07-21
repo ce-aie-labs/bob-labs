@@ -24,11 +24,11 @@ Every run of the event grows the asset base. That is what separates this from on
 
 Every content decision is made against these five.
 
-1. **Start with copy-paste** — the shorter the time to first success, the better.
-2. **Must be measurable** — every lab converts to a Before/After in minutes.
-3. **Must be reusable** — an example that only works in its own context is not an asset.
-4. **Judged on applicability, not correctness** — can someone else pick this up as-is?
-5. **A cookbook, not a lab** — not a curriculum to work through in order, but recipes to look up when needed.
+1. **Start with copy-paste** - the shorter the time to first success, the better.
+2. **Must be measurable** - every lab converts to a Before/After in minutes.
+3. **Must be reusable** - an example that only works in its own context is not an asset.
+4. **Judged on applicability, not correctness** - can someone else pick this up as-is?
+5. **A cookbook, not a lab** - not a curriculum to work through in order, but recipes to look up when needed.
 
 ---
 
@@ -49,7 +49,7 @@ Every content decision is made against these five.
 
 ## Content unit spec
 
-Every Lab / Recipe is **bilingual, mandatory** — an English file and a Korean file, added together as one asset. Korean customers paste Bob prompts in Korean, so the Prompt itself is translated too, not just the surrounding explanation.
+Every Lab / Recipe is **bilingual, mandatory** - an English file and a Korean file, added together as one asset. Korean customers paste Bob prompts in Korean, so the Prompt itself is translated too, not just the surrounding explanation.
 
 Both follow the same shape, headings in their own language. **No exceptions, in either language.**
 
@@ -62,7 +62,7 @@ Tips                   팁
 Variations             응용
 ```
 
-Metadata, shown as badges on the card and used for filtering. Stored as YAML front matter at the top of each asset file, parsed by the Jekyll build. Front matter **keys** stay in English in both files — only the values and body content are written in each file's language:
+Metadata, shown as badges on the card and used for filtering. Stored as YAML front matter at the top of each asset file, parsed by the Jekyll build. Front matter **keys** stay in English in both files - only the values and body content are written in each file's language:
 
 ```yaml
 ---
@@ -83,23 +83,31 @@ Challenge Labs present the Goal only and push hints to the Prompt Cookbook.
 ## Asset Library priority
 
 **Build P0 first. Trying to fill everything finishes nothing.**
-P0 is ~18 labs, which is enough to run the first event.
 
 Assets are prioritized by **the repetitive work they replace**, not by tech stack. A participant arrives thinking "I lose three hours a week to code review," not "I want a Spring Boot lab." Stack is a filter, not a category - see [Stack coverage](#stack-coverage) below.
 
-| Work replaced | P0 | P1 | P2 |
-|---|---|---|---|
-| Bob Features (`stack: Any`) | Architecture diagrams, plan→build, subagents, skills, MCP (5) | | |
-| Repository Understanding | (2) | | |
-| Code Review | (2) | | |
-| Test Generation | (2) | | |
-| Documentation | (2) | | |
-| Migration | Spring Boot 2→3, Legacy Monolith (3) | Python 2→3 (2) | |
-| Debug & Performance | | (3) | |
-| Security | | (2) | |
-| Data & Documents | Excel, API Spec (2) | PDF (2) | |
+**P0 - build these first.** 18 labs, enough to run the first event.
 
-Numbers in parentheses are target lab counts.
+| Work replaced | Target labs | Status and ideas |
+|---|---|---|
+| Bob Features (`stack: Any`) | 5 | **2 built** - architecture diagrams, plan→build. Ideas: subagents, skills, MCP |
+| Repository Understanding | 2 | **1 built** - explain this repository |
+| Code Review | 2 | Review a diff, catch issues before opening a PR |
+| Test Generation | 2 | Generate tests for an untested module |
+| Documentation | 2 | README, API docs, onboarding docs from code |
+| Migration | 3 | Spring Boot 2→3, legacy monolith - genuinely stack-specific |
+| Data & Documents | 2 | Excel, API spec |
+
+**P1 - only after P0 is done.** 9 labs.
+
+| Work replaced | Target labs | Ideas |
+|---|---|---|
+| Debug & Performance | 3 | Trace a failure, find a bottleneck |
+| Security | 2 | Audit for common vulnerabilities |
+| Migration | 2 | Python 2→3 |
+| Data & Documents | 2 | PDF |
+
+"Target labs" is a ceiling, not a quota - three labs people actually reopen beat eight nobody does.
 
 **Bob Features** demos what makes Bob itself worth using - Plan mode, subagents, skills, MCP, diagram and report generation. Every other row still needs its own "why Bob" moment inside the lab, but here that *is* the lab.
 
@@ -127,7 +135,7 @@ This is the design principle "an example that only works in its own context is n
 
 Same axis as the Asset Library priority above - the difference is depth, not subject. A **Lab** walks you through a worked example with Expected Output and Tips; a **Cookbook prompt** is one copy button with no walkthrough, for someone who already knows what they want.
 
-Target is 20 prompts per category. Each prompt is **one copy button** — never make people read an explanation first.
+Target is 20 prompts per category. Each prompt is **one copy button** - never make people read an explanation first.
 
 ```
 Repository Understanding   Code Review      Test Generation
@@ -148,7 +156,7 @@ There is one sentence we give participants:
 
 | Time | Session |
 |---|---|
-| 0:00–0:30 | Setup + first success — clear every environment problem here |
+| 0:00–0:30 | Setup + first success - clear every environment problem here |
 | 0:30–1:30 | Guided Labs |
 | 1:30–2:15 | Challenge Labs |
 | 2:15–2:30 | Pick your work |
@@ -178,17 +186,17 @@ If there is time, add `Prompt → Output → Screenshot → Reflection`.
 | Can someone else reuse it | 30 |
 
 The weighting toward reusability (30) and applicability (30) is deliberate.
-What this event produces is not a ranking of people — it is **assets**.
+What this event produces is not a ranking of people - it is **assets**.
 
 ---
 
 ## Roadmap
 
-- **Phase 1 — Skeleton**: Setup page · 10 Guided Labs · 3 Cookbook categories · Bring Your Own Work template · rubric
-- **Phase 2 — Asset build-out**: All P0 (~40 labs) · 5 Challenge Labs · all Cookbook categories · Showcase
-- **Phase 3 — Ongoing operation**: Feedback pipeline · P1/P2 assets · stack filters and search
+- **Phase 1 - Skeleton**: Setup page · 10 Guided Labs · 3 Cookbook categories · Bring Your Own Work template · rubric
+- **Phase 2 - Asset build-out**: All P0 (~40 labs) · 5 Challenge Labs · all Cookbook categories · Showcase
+- **Phase 3 - Ongoing operation**: Feedback pipeline · P1/P2 assets · stack filters and search
 
-Current status: **Phase 1 started** — Jekyll site scaffolding, deployed to GitHub Pages via GitHub Actions, live with the first lab.
+Current status: **Phase 1 started** - Jekyll site scaffolding, deployed to GitHub Pages via GitHub Actions, live with the first lab.
 
 ---
 
@@ -196,19 +204,19 @@ Current status: **Phase 1 started** — Jekyll site scaffolding, deployed to Git
 
 These need to be settled before real work starts.
 
-- [x] **Bob's actual capability surface** — agent execution / context injection / external tool integration. Reference is [bob.ibm.com/docs/ide](https://bob.ibm.com/docs/ide) and [bob.ibm.com/docs/shell](https://bob.ibm.com/docs/shell) - use it when writing a lab's Prompt/Expected Output. A local Markdown mirror exists at `docs/bob/` for whoever has fetched it (gitignored, not shipped with the repo - `docs/` is local-only, see "Repository" below).
-- [ ] **Target audience** — internal developers or customers? This decides whether we supply practice repos or use participants' own code.
-- [ ] **Practice repositories** — build one per stack, or point at public open source?
-- [ ] **Event size and duration** — the timeline above assumes a 6.5-hour day.
-- [x] **Site implementation** — Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
-- [ ] **Java Modernization assets** — deferred. Bob's Java Modernization is a paid **premium package** ([bob.ibm.com/docs/ide/premium-packages/java-modernization](https://bob.ibm.com/docs/ide/premium-packages/java-modernization)), not part of base Bob - 4 workflows (Java upgrade, Liberty replatforming, UI modernization, unit test generation). We don't have access yet; revisit once it's confirmed.
+- [x] **Bob's actual capability surface** - agent execution / context injection / external tool integration. Reference is [bob.ibm.com/docs/ide](https://bob.ibm.com/docs/ide) and [bob.ibm.com/docs/shell](https://bob.ibm.com/docs/shell) - use it when writing a lab's Prompt/Expected Output. A local Markdown mirror exists at `docs/bob/` for whoever has fetched it (gitignored, not shipped with the repo - `docs/` is local-only, see "Repository" below).
+- [ ] **Target audience** - internal developers or customers? This decides whether we supply practice repos or use participants' own code.
+- [ ] **Practice repositories** - build one per stack, or point at public open source?
+- [ ] **Event size and duration** - the timeline above assumes a 6.5-hour day.
+- [x] **Site implementation** - Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
+- [ ] **Java Modernization assets** - deferred. Bob's Java Modernization is a paid **premium package** ([bob.ibm.com/docs/ide/premium-packages/java-modernization](https://bob.ibm.com/docs/ide/premium-packages/java-modernization)), not part of base Bob - 4 workflows (Java upgrade, Liberty replatforming, UI modernization, unit test generation). We don't have access yet; revisit once it's confirmed.
 
 ---
 
 ## Repository
 
 ```
-README.md       This document — project overview
+README.md       This document - project overview
 AGENTS.md       Working rules for coding agents
 CLAUDE.md       Imports AGENTS.md for Claude Code
 CONTRIBUTING.md Full contributing guide (branches, bilingual asset workflow, PR checklist)
@@ -225,9 +233,9 @@ ko/             Korean homepage (index.md), served at /ko/
 
 Design follows the IBM Carbon Design System (`docs/DESIGN.md`).
 
-Every asset lives at `_labs/<stack>/<slug>.md` plus its mirror `_labs_ko/<stack>/<slug>.md` — e.g. `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
+Every asset lives at `_labs/<stack>/<slug>.md` plus its mirror `_labs_ko/<stack>/<slug>.md` - e.g. `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
 See that pair for a complete reference example of the content spec below, fully filled in.
-The `_labs/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recognizes the collections) — the asset's *branch* name still uses the hyphenated `content/<stack>-<slug>` form, that's just a label and doesn't need to match the folders.
+The `_labs/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recognizes the collections) - the asset's *branch* name still uses the hyphenated `content/<stack>-<slug>` form, that's just a label and doesn't need to match the folders.
 
 ---
 
