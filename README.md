@@ -35,15 +35,14 @@ Every content decision is made against these five.
 ## Site structure
 
 ```
-🏠 Home                    Entry point that delivers first success in 10 minutes
-⚙️  Setup (Step 0)          Install · login · permissions · one first prompt
-📖 Guided Labs (Step 1)     10–20 copy-paste walkthroughs
-🧩 Challenge Labs (Step 2)  Goal only, no prompt provided
-📚 Asset Library (Step 3)   Pick a stack, get that stack's lab set
+🏠 Asset Library            Every lab, filtered by work replaced, stack, and difficulty
+⚙️  Setup                    Install · login · permissions · one first prompt
 💡 Prompt Cookbook          Prompts by situation (one copy button)
 🚀 Bring Your Own Work      Participants run their own repetitive work through Bob
 🏆 Showcase                 Share · evaluate · feed back into the asset library
 ```
+
+Guided and Challenge are **difficulties, not sections**. They are the same labs in the same library, told apart by a front matter field and reachable through the same filter - a numbered Step 1 / Step 2 split would make the site read as a curriculum, which principle 5 rules out.
 
 ---
 
@@ -77,7 +76,9 @@ expected_saving: 30 min → 7 min
 ---
 ```
 
-Challenge Labs present the Goal only and push hints to the Prompt Cookbook.
+**Challenge labs** use the same five sections at `difficulty: Challenge` - they are not a separate content type. Their `## Prompt` section states the goal, then hides the help behind `<details>`: a prompt skeleton first, the full prompt second. Anyone who can write it unaided never opens them; anyone stuck is unblocked in seconds instead of losing the session.
+
+They exist to bridge Guided labs, where the prompt is handed to you, and Bring Your Own Work, where nothing is. That makes them matter **most** for less experienced participants, not least - without the bridge, the jump to your own problem on a blank page is a cliff.
 
 ---
 
@@ -164,13 +165,13 @@ There is one sentence we give participants:
 |---|---|
 | 0:00–0:30 | Setup + first success - clear every environment problem here |
 | 0:30–1:30 | Guided Labs |
-| 1:30–2:15 | Challenge Labs |
-| 2:15–2:30 | Pick your work |
-| 2:30–5:00 | **Bring Your Own Work** (the main event) |
+| 1:30–1:50 | Challenge Labs - the bridge to writing your own prompt |
+| 1:50–2:05 | Pick your work |
+| 2:05–5:00 | **Bring Your Own Work** (the main event) |
 | 5:00–5:30 | Write up submission (Before/After) |
 | 5:30–6:30 | Showcase |
 
-For a half-day event, drop Challenge Labs.
+For a half-day event, cut Guided Labs rather than the Challenge block - the bridge is what makes Bring Your Own Work survivable.
 
 ### Submission
 
@@ -198,8 +199,8 @@ What this event produces is not a ranking of people - it is **assets**.
 
 ## Roadmap
 
-- **Phase 1 - Skeleton**: Setup page · 10 Guided Labs · 3 Cookbook categories · Bring Your Own Work template · rubric
-- **Phase 2 - Asset build-out**: All P0 (~40 labs) · 5 Challenge Labs · all Cookbook categories · Showcase
+- **Phase 1 - Skeleton**: Setup page · 10 Guided Labs · 2 Challenge Labs · 3 Cookbook categories · Bring Your Own Work template · rubric
+- **Phase 2 - Asset build-out**: All P0 (18 labs) · more Challenge Labs · all Cookbook categories · Showcase
 - **Phase 3 - Ongoing operation**: Feedback pipeline · P1/P2 assets · stack filters and search
 
 Current status: **Phase 1 started** - Jekyll site scaffolding, deployed to GitHub Pages via GitHub Actions, live with the first lab.
@@ -213,7 +214,7 @@ These need to be settled before real work starts.
 - [x] **Bob's actual capability surface** - agent execution / context injection / external tool integration. Reference is [bob.ibm.com/docs/ide](https://bob.ibm.com/docs/ide) and [bob.ibm.com/docs/shell](https://bob.ibm.com/docs/shell) - use it when writing a lab's Prompt/Expected Output. A local Markdown mirror exists at `docs/bob/` for whoever has fetched it (gitignored, not shipped with the repo - `docs/` is local-only, see "Repository" below).
 - [x] **Target audience** - **customers**, and not currently highly technical. This is why P0 skews toward low-floor repetitive work (documents, repository understanding, code review) rather than advanced infrastructure or AI topics, and why everything outside "Must cover" in [Stack coverage](#stack-coverage) is out of scope for the first event.
 - [ ] **Practice repositories** - build one per stack, or point at public open source? Now unblocked by the audience decision above: customers may not be able to bring their own code to a shared event for IP reasons, which argues for supplying practice repos.
-- [ ] **Challenge Labs** - Step 2 gives participants a goal with no prompt. That assumes a level of comfort the current audience may not have. Decide whether to keep them, soften them (goal plus a hint), or drop them from the first event and reallocate the 45 minutes.
+- [x] **Challenge Labs** - kept, but as a `difficulty` value rather than a site section, with help behind progressive disclosure instead of withheld entirely. They are the bridge from Guided to Bring Your Own Work, so dropping them would make the main event harder for this audience, not easier. The first-event block is 20 minutes rather than 45, and the 25 minutes go to Bring Your Own Work.
 - [ ] **Event size and duration** - the timeline above assumes a 6.5-hour day.
 - [x] **Site implementation** - Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
 - [ ] **Java Modernization assets** - deferred. Bob's Java Modernization is a paid **premium package** ([java-modernization-index](https://bob.ibm.com/docs/ide/premium-packages/java-modernization/java-modernization-index)), not part of base Bob - 4 workflows (Java upgrade, Liberty replatforming, UI modernization, unit test generation). We don't have access yet; revisit once it's confirmed.

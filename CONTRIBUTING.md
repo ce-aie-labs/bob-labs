@@ -44,6 +44,10 @@ Three complete pairs to copy from, covering three different shapes:
 
 Each has a `_labs_ko/` counterpart at the same path. `README.md`'s "Content unit spec" has the full field/section reference.
 
+### Challenge labs
+
+`difficulty: Challenge` is a value, not a separate content type. Same five sections; the difference is that `## Prompt` states the goal and hides the help behind `<details>` - a skeleton first, a working prompt second. Don't leave `## Prompt` empty to make it harder; CI rejects that, and it helps nobody. See AGENTS.md for the shape.
+
 ### Prefer `stack: Any`
 
 Most repetitive work isn't stack-specific - "explain this repo" is the same lab in Java and Python. Write it once with `stack: Any` and put per-stack differences in the **Variations** section, rather than writing five near-duplicates. Reserve stack-specific labs for cases where the stack genuinely changes the prompt (a Spring Boot 2→3 migration does).
