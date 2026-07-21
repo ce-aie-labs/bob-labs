@@ -153,10 +153,87 @@ a {
   max-width: 62ch;
 }
 
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  padding: 20px 0;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.32px;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+  min-width: 72px;
+}
+
+.chip {
+  background: var(--canvas);
+  color: var(--ink-muted);
+  border: 1px solid var(--hairline);
+  border-radius: 0;
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.16px;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.chip.is-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.filter-count {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.32px;
+  color: var(--ink-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.no-match {
+  margin: 0;
+  font-size: 16px;
+  color: var(--ink-muted);
+}
+
 .lab-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
+}
+
+.lab-card[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chip {
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  }
 }
 
 .lab-card {

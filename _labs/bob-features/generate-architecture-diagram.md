@@ -1,6 +1,7 @@
 ---
 title: Generate an Architecture Diagram
 lang: en
+category: Bob Features
 difficulty: Guided
 duration: 10 min
 stack: Any

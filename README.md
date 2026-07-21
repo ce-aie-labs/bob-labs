@@ -68,6 +68,7 @@ Metadata, shown as badges on the card and used for filtering. Stored as YAML fro
 ---
 title: Explain This Repository   # the page heading, in the file's own language
 lang: en                          # en or ko - this is what templates/CI key off
+category: Repository Understanding # must match a row in the priority tables below
 difficulty: Guided                # Guided / Challenge
 duration: 5 min
 stack: Java, Spring Boot

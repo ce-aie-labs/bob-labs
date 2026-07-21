@@ -22,7 +22,8 @@ Both are required. Korean customers paste Bob prompts in Korean too, so the Kore
 
 Each file needs:
 
-1. **Front matter**: `title`, `lang` (`en`/`ko`), `difficulty`, `duration`, `stack`, `work_replaced`, `expected_saving`. Values are written in the file's own language; the YAML keys stay in English in both files.
+1. **Front matter**: `title`, `lang` (`en`/`ko`), `category`, `difficulty`, `duration`, `stack`, `work_replaced`, `expected_saving`. Values are written in the file's own language; the YAML keys stay in English in both files.
+   `category` is the one exception - its *value* stays English in both files too, because it is a machine key the homepage filter and CI validate against. Pick one from `_data/categories.yml`; the Korean label is looked up for display.
 2. **The full content spec, headings in the file's own language**:
    - English: `Problem → Prompt → Expected Output → Tips → Variations`
    - Korean: `문제 → 프롬프트 → 기대 결과 → 팁 → 응용`

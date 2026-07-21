@@ -5,15 +5,127 @@ layout: default
 {% if page.lang == "ko" %}
   {% assign labs = site.labs_ko %}
 {% endif %}
+{% assign page_lang = page.lang | default: "en" %}
+{% assign ui = site.data.ui[page_lang] %}
+
+{% comment %}
+  Filter options are derived from the labs that actually exist, so a category
+  or stack never appears until something uses it. Stacks are comma-separated
+  in front matter ("Java, Spring Boot"), so they are flattened here.
+  `stack: Any` is not offered as an option - those labs match every stack.
+{% endcomment %}
+{% assign categories = labs | map: "category" | uniq | sort %}
+{% assign stack_blob = "" %}
+{% for lab in labs %}
+  {% unless lab.stack == "Any" %}
+    {% assign stack_blob = stack_blob | append: lab.stack | append: "," %}
+  {% endunless %}
+{% endfor %}
+{% assign stacks = stack_blob | replace: ", ", "," | split: "," | uniq | sort %}
+
 <div class="page">
   <div class="intro">
     <h1>{{ page.title }}</h1>
     <p>{{ page.description }}</p>
   </div>
 
+  {% if categories.size > 1 or stacks.size > 1 %}
+    <div class="filters"
+         data-count-one="{{ ui.count_one }}"
+         data-count-other="{{ ui.count_other }}"
+         data-no-match="{{ ui.no_match }}">
+      {% if categories.size > 1 %}
+        <div class="filter-group">
+          <span class="filter-label">{{ ui.filter_work_label }}</span>
+          <button type="button" class="chip is-active" data-filter="category" data-value="all" aria-pressed="true">{{ ui.filter_all }}</button>
+          {% for category in categories %}
+            <button type="button" class="chip" data-filter="category" data-value="{{ category }}" aria-pressed="false">
+              {%- if page_lang == "ko" -%}{{ site.data.categories[category] | default: category }}{%- else -%}{{ category }}{%- endif -%}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if stacks.size > 1 %}
+        <div class="filter-group">
+          <span class="filter-label">{{ ui.filter_stack_label }}</span>
+          <button type="button" class="chip is-active" data-filter="stack" data-value="all" aria-pressed="true">{{ ui.filter_all }}</button>
+          {% for stack in stacks %}
+            <button type="button" class="chip" data-filter="stack" data-value="{{ stack }}" aria-pressed="false">{{ stack }}</button>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <p class="filter-count" role="status" aria-live="polite"></p>
+    </div>
+  {% endif %}
+
   <div class="lab-grid">
     {% for lab in labs %}
       {% include lab-card.html lab=lab %}
     {% endfor %}
   </div>
+
+  <p class="no-match" hidden></p>
 </div>
+
+<script>
+  (function () {
+    var filters = document.querySelector(".filters");
+    if (!filters) return;
+
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".lab-card"));
+    var countEl = filters.querySelector(".filter-count");
+    var noMatchEl = document.querySelector(".no-match");
+    var active = { category: "all", stack: "all" };
+
+    function matches(card) {
+      if (active.category !== "all" && card.dataset.category !== active.category) {
+        return false;
+      }
+      if (active.stack !== "all") {
+        var stack = card.dataset.stack || "";
+        // A `stack: Any` lab is relevant whichever stack you filter by.
+        if (stack !== "Any" && stack.split(",").map(function (s) {
+          return s.trim();
+        }).indexOf(active.stack) === -1) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function apply() {
+      var shown = 0;
+      cards.forEach(function (card) {
+        var ok = matches(card);
+        card.hidden = !ok;
+        if (ok) shown++;
+      });
+
+      var template = shown === 1 ? filters.dataset.countOne : filters.dataset.countOther;
+      countEl.textContent = template.replace("{n}", shown);
+
+      noMatchEl.textContent = filters.dataset.noMatch;
+      noMatchEl.hidden = shown !== 0;
+    }
+
+    filters.addEventListener("click", function (event) {
+      var chip = event.target.closest(".chip");
+      if (!chip) return;
+
+      var group = chip.dataset.filter;
+      active[group] = chip.dataset.value;
+
+      filters.querySelectorAll('.chip[data-filter="' + group + '"]').forEach(function (other) {
+        var on = other === chip;
+        other.classList.toggle("is-active", on);
+        other.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+
+      apply();
+    });
+
+    apply();
+  })();
+</script>

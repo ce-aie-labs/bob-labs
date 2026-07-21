@@ -1,0 +1,22 @@
+# Canonical lab categories - the single source of truth.
+#
+# The KEY is the machine value: it goes in a lab's `category:` front matter,
+# is what the homepage filters on, and must match a row in README.md's
+# priority tables. It stays in English in both language files so the value is
+# stable and CI can validate it - unlike `difficulty`, which is display text
+# and is localized.
+#
+# The VALUE is the Korean display label.
+#
+# .github/scripts/validate_content.py reads this file, so adding a category
+# here is all that is needed to allow it.
+
+"Bob Features": "Bob 기능"
+"Repository Understanding": "저장소 파악"
+"Code Review": "코드 리뷰"
+"Test Generation": "테스트 생성"
+"Documentation": "문서화"
+"Migration": "마이그레이션"
+"Data & Documents": "데이터·문서"
+"Debug & Performance": "디버깅·성능"
+"Security": "보안"
