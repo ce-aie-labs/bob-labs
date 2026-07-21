@@ -52,6 +52,43 @@ Each has a `_labs_ko/` counterpart at the same path. `README.md`'s "Content unit
 
 Most repetitive work isn't stack-specific - "explain this repo" is the same lab in Java and Python. Write it once with `stack: Any` and put per-stack differences in the **Variations** section, rather than writing five near-duplicates. Reserve stack-specific labs for cases where the stack genuinely changes the prompt (a Spring Boot 2→3 migration does).
 
+## Previewing your work
+
+**For a lab, you almost certainly do not need to.** Opening the `.md` file in a browser will not work - it is Markdown, and Jekyll turns it into HTML at build time. Opening a built file from `_site/` will not work either: the site is served under `/bob-labs/`, so every stylesheet, font and link is an absolute path that resolves to your disk root over `file://` and 404s.
+
+You do not need any of that, because everything a lab PR needs checking for is already covered:
+
+| What needs checking | Who checks it |
+|---|---|
+| All front matter fields present, `category` valid | `validate-content` CI |
+| All five sections present and non-empty | `validate-content` CI |
+| Both language files exist | `validate-content` CI |
+| Does the prose read well | GitHub renders your Markdown in the PR |
+| Does the page look right | It renders exactly like the four labs already published |
+| **Does the prompt actually work in Bob** | **You, by running it. Nothing else can.** |
+
+Spend your time on the last row. It is the only one that is genuinely at risk, and the only one no tool will catch.
+
+### Running the site locally
+
+Needed if you are changing layouts, CSS, or anything under `_layouts/`, `_includes/` or `assets/` - and optional if you just want to see your lab in place.
+
+```sh
+bundle install
+bundle exec jekyll serve
+```
+
+Then open <http://127.0.0.1:4000/bob-labs/>. Note the `/bob-labs/` - the root URL alone will 404, because the site is built for a project path.
+
+**Ruby 3.0 or newer is required, and macOS ships 2.6.** With the system Ruby, `bundle install` fails on `ffi ... requires ruby version >= 3.0`. On macOS:
+
+```sh
+brew install ruby
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"   # add to your shell profile to keep it
+```
+
+Preview both languages - `/bob-labs/` and `/bob-labs/ko/` - and both themes, using the toggle in the header.
+
 ## Other changes (docs, site, tooling)
 
 Same PR flow, branch prefix `feat/`, `fix/`, or `docs/` depending on what changed. `AGENTS.md`'s "Current state" section describes the site stack (Jekyll, GitHub Actions, GitHub Pages) - don't introduce a different framework or build tool without asking first.
