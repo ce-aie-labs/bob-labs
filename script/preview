@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# Build and serve the site locally.
+#
+# Exists because the two things that block a first-time contributor are both
+# silent: Jekyll needs Ruby 3+ and macOS ships 2.6 (bundle install then fails
+# on ffi without saying why), and the site is served under /bob-labs/ so the
+# bare localhost root 404s.
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)" || repo_root=""
+[ -n "$repo_root" ] && [ -f "$repo_root/_config.yml" ] || {
+  printf '\nCould not locate the repository root from %s.\nRun this from inside a bob-labs checkout.\n\n' "$0" >&2
+  exit 1
+}
+cd "$repo_root"
+
+PORT="${PORT:-4000}"
+RUBY_MIN_MAJOR=3
+
+die() { printf '\n%s\n\n' "$*" >&2; exit 1; }
+
+command -v ruby >/dev/null 2>&1 || die \
+"Ruby is not installed.
+
+  macOS:  brew install ruby
+  Linux:  use your package manager, or rbenv / asdf
+
+Then re-run: script/preview"
+
+ruby_version="$(ruby -e 'print RUBY_VERSION')"
+ruby_major="${ruby_version%%.*}"
+
+if [ "$ruby_major" -lt "$RUBY_MIN_MAJOR" ]; then
+  die \
+"Ruby $ruby_version is too old - Jekyll needs $RUBY_MIN_MAJOR.0 or newer.
+
+macOS ships 2.6, which is almost certainly what you are on. Without this
+check, 'bundle install' fails on a gem called ffi and never mentions Ruby.
+
+  brew install ruby
+  export PATH=\"\$(brew --prefix ruby)/bin:\$PATH\"
+
+Add that export to your shell profile (~/.zshrc) so it sticks, then re-run:
+  script/preview"
+fi
+
+command -v bundle >/dev/null 2>&1 || die \
+"Bundler is not installed.
+
+  gem install bundler
+
+Then re-run: script/preview"
+
+if [ ! -d vendor/bundle ]; then
+  echo "Installing dependencies (first run only)..."
+  bundle config set --local path vendor/bundle >/dev/null
+  bundle install --quiet
+fi
+
+url="http://127.0.0.1:${PORT}/bob-labs/"
+cat <<BANNER
+
+  Serving on ${url}
+  Korean:     ${url}ko/
+  Bobathon:   ${url}bobathon/
+
+  Note the /bob-labs/ path - the bare root 404s, because the site is built
+  for a project path rather than a domain root.
+
+  Edits to _labs/, _layouts/ and assets/ rebuild automatically.
+  Changes to _config.yml need a restart.
+
+  Ctrl-C to stop.
+
+BANNER
+
+exec bundle exec jekyll serve --port "$PORT" --host 127.0.0.1 --livereload

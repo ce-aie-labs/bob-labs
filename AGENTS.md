@@ -80,7 +80,7 @@ Bob-capability demos - subagents, skills, MCP, Plan mode, diagram/report generat
 
 ## Running the site
 
-`bundle install && bundle exec jekyll serve`, then <http://127.0.0.1:4000/bob-labs/> - the `/bob-labs/` path is required, the root 404s. Ruby 3.0+ is needed and macOS ships 2.6, so `brew install ruby` first. See CONTRIBUTING.md for why writing a lab does not require any of this.
+`script/preview` - it checks the Ruby version, installs dependencies on first run, and prints the URLs. The site lives at <http://127.0.0.1:4000/bob-labs/>; the bare root 404s. Ruby 3.0+ is required and macOS ships 2.6, which the script explains rather than failing on a gem. There is a dev container for running it without a local Ruby. See CONTRIBUTING.md.
 
 ## Git workflow
 
