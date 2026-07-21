@@ -175,9 +175,42 @@ These need to be settled before real work starts.
 
 ```
 README.md    This document — project overview
-CLAUDE.md    Working rules for Claude Code
+AGENTS.md    Working rules for coding agents
+CLAUDE.md    Imports AGENTS.md for Claude Code
 NOTE.md      Original planning note (local only, gitignored)
 docs/        Design system and reference docs (local only, gitignored)
 ```
 
 Design follows the IBM Carbon Design System (`docs/DESIGN.md`).
+
+---
+
+## Contributing
+
+Every change goes through a PR. `main` is never committed to directly.
+
+1. **Branch off `main`.**
+   `content/<stack>-<slug>` for assets — e.g. `content/spring-boot-explain-repo`.
+   `feat/`, `fix/`, `docs/` for everything else.
+2. **One asset per commit.** Don't mix several labs into one commit — each asset should be reviewable, and revertable, on its own.
+3. **Fill the content spec completely.** `Problem → Prompt → Expected Output → Tips → Variations`, plus all five metadata fields. A section left blank blocks the PR.
+4. **Verify the prompt against Bob before opening the PR.** Expected Output describes what you actually saw, not what you expect Bob to do.
+5. **Open the PR:** `git push -u origin <branch>` then `gh pr create`.
+
+Commit messages are in English, imperative mood.
+
+### Before you commit
+
+`NOTE.md` and `docs/` are local-only working documents and are gitignored.
+Run `git status` and confirm neither is staged.
+
+### What gets merged
+
+A PR is judged by the same checklist we use for the content itself:
+
+- Does copy-paste produce a first result within 5 minutes?
+- Does it convert to a Before/After in minutes?
+- Can someone else pick it up as-is?
+- Is it P0? While P0 items remain, P1/P2 waits.
+
+Reusability beats asset count. A rejected lab is cheaper than a lab nobody reopens.
