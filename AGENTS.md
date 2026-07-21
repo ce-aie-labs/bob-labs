@@ -13,8 +13,8 @@ Do not introduce a different framework or build tooling on your own - ask first.
 ## Working rules
 
 - **Every lab is bilingual, mandatory** - an English file and a Korean file, added together. Prompt language matches the file, not a fixed rule: the English file's Prompt is English, the Korean file's Prompt is Korean, written the way an actual Korean-speaking participant would type it - not a stiff translation. Korean customers paste Bob prompts in Korean, so the Korean Prompt needs its own verification pass against Bob in Korean, not just a translation of the English Expected Output.
-- `NOTE.md` and `docs/` are gitignored. Never include them in a commit.
-- When building UI, follow `docs/DESIGN.md` (IBM Carbon).
+- `NOTE.md` and `docs/` are gitignored. Never include them in a commit, and don't add gitignore exceptions to sneak part of `docs/` in. `docs/bob/` is a full Markdown mirror of IBM's product documentation from `bob.ibm.com/docs`; this repository is public, so mirroring it here would republish someone else's documentation and go stale the moment they update it. Link to the live docs instead.
+- When building UI, follow `DESIGN.md` (IBM Carbon). It is tool-generated - don't hand-edit it.
   Essentials: 0px corners · IBM Plex Sans · weight 300 for display sizes · 1px hairlines instead of shadows · IBM Blue (#0f62fe) as the only accent.
 
 ## Adding content

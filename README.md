@@ -215,7 +215,7 @@ These need to be settled before real work starts.
 - [ ] **Challenge Labs** - Step 2 gives participants a goal with no prompt. That assumes a level of comfort the current audience may not have. Decide whether to keep them, soften them (goal plus a hint), or drop them from the first event and reallocate the 45 minutes.
 - [ ] **Event size and duration** - the timeline above assumes a 6.5-hour day.
 - [x] **Site implementation** - Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
-- [ ] **Java Modernization assets** - deferred. Bob's Java Modernization is a paid **premium package** ([bob.ibm.com/docs/ide/premium-packages/java-modernization](https://bob.ibm.com/docs/ide/premium-packages/java-modernization)), not part of base Bob - 4 workflows (Java upgrade, Liberty replatforming, UI modernization, unit test generation). We don't have access yet; revisit once it's confirmed.
+- [ ] **Java Modernization assets** - deferred. Bob's Java Modernization is a paid **premium package** ([java-modernization-index](https://bob.ibm.com/docs/ide/premium-packages/java-modernization/java-modernization-index)), not part of base Bob - 4 workflows (Java upgrade, Liberty replatforming, UI modernization, unit test generation). We don't have access yet; revisit once it's confirmed.
 
 ---
 
@@ -226,8 +226,10 @@ README.md       This document - project overview
 AGENTS.md       Working rules for coding agents
 CLAUDE.md       Imports AGENTS.md for Claude Code
 CONTRIBUTING.md Full contributing guide (branches, bilingual asset workflow, PR checklist)
+DESIGN.md       IBM Carbon design system spec - follow this when building UI
 NOTE.md         Original planning note (local only, gitignored)
-docs/           Design system + a local Bob docs mirror in docs/bob/ (local only, gitignored)
+docs/           Local scratch only, never committed. docs/bob/ holds a Markdown
+                mirror of bob.ibm.com/docs for whoever has fetched it
 _labs/          English Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
 _labs_ko/       Korean mirror of _labs/, same relative paths
 _data/          ui.yml - site-chrome translation strings (badge labels, nav)
@@ -237,7 +239,7 @@ assets/         Site CSS and fonts
 ko/             Korean homepage (index.md), served at /ko/
 ```
 
-Design follows the IBM Carbon Design System (`docs/DESIGN.md`).
+Design follows the IBM Carbon Design System (`DESIGN.md`).
 
 Every asset lives at `_labs/<stack>/<slug>.md` plus its mirror `_labs_ko/<stack>/<slug>.md` - e.g. `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
 See that pair for a complete reference example of the content spec below, fully filled in.
