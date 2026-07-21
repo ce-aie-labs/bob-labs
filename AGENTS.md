@@ -7,8 +7,8 @@ See `README.md` for the project overview and content spec, `NOTE.md` for the ori
 
 ## Current state
 
-No implementation code yet. Phase 1 (skeleton) has not started, and the **site implementation approach is undecided**.
-Do not introduce a framework or build tooling on your own — ask first.
+Phase 1 (skeleton) has started. Site is Jekyll, hosted on GitHub Pages, built and deployed via GitHub Actions (`.github/workflows/pages.yml`).
+Do not introduce a different framework or build tooling on your own — ask first.
 
 ## Working rules
 
@@ -22,10 +22,15 @@ Do not introduce a framework or build tooling on your own — ask first.
 To add one Lab / Recipe:
 
 1. Write in one line **which repetitive task this replaces**. If you can't, don't build it.
-2. Fill in the spec — `Problem → Prompt → Expected Output → Tips → Variations`. **Never skip a section.**
-3. Attach all five metadata fields — difficulty / duration / stack / work replaced / expected saving.
-4. Actually run the prompt through Bob and write Expected Output from **what you observed**, not from what you assume.
-5. One asset = one commit (or one PR). Don't mix several assets into one commit.
+2. Place the file at `_labs/<stack>/<slug>.md` — one file per asset, grouped by stack directory. This is a Jekyll collection (`_labs/`), so the underscore prefix is required — don't rename it to `content/`.
+   The branch name keeps the hyphenated form (`content/<stack>-<slug>`) as a label only — it doesn't need to match the physical folder, e.g. branch `content/spring-boot-explain-repo` holds file `_labs/spring-boot/explain-repo.md`.
+3. Add a `title:` front matter field — the page heading Jekyll renders (e.g. `title: Explain This Repository`).
+4. Fill in the spec — `Problem → Prompt → Expected Output → Tips → Variations`. **Never skip a section.**
+5. Attach all five metadata fields as YAML front matter at the top of the file — difficulty / duration / stack / work_replaced / expected_saving. A CI check (`validate-content`) blocks the PR if any field or section is missing.
+6. Actually run the prompt through Bob and write Expected Output from **what you observed**, not from what you assume.
+7. One asset = one commit (or one PR). Don't mix several assets into one commit.
+
+See `_labs/spring-boot/explain-repo.md` for a complete reference example.
 
 ## Git workflow
 

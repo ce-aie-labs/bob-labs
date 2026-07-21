@@ -59,15 +59,18 @@ Tips             Where it commonly goes wrong, and how to correct it
 Variations       2–3 ways to adapt it
 ```
 
-Metadata, shown as badges on the card and used for filtering:
+Metadata, shown as badges on the card and used for filtering. Stored as YAML front matter at the top of the asset file, parsed by the Jekyll build:
 
-| Field | Example |
-|---|---|
-| Difficulty | Guided / Challenge |
-| Duration | 5 min |
-| Stack | Java, Spring Boot |
-| Work replaced | Code review |
-| Expected saving | 30 min → 7 min |
+```yaml
+---
+title: Explain This Repository   # the page heading
+difficulty: Guided                # Guided / Challenge
+duration: 5 min
+stack: Java, Spring Boot
+work_replaced: Code review
+expected_saving: 30 min → 7 min
+---
+```
 
 Challenge Labs present the Goal only and push hints to the Prompt Cookbook.
 
@@ -155,7 +158,7 @@ What this event produces is not a ranking of people — it is **assets**.
 - **Phase 2 — Asset build-out**: All P0 (~40 labs) · 5 Challenge Labs · all Cookbook categories · Showcase
 - **Phase 3 — Ongoing operation**: Feedback pipeline · P1/P2 assets · stack filters and search
 
-Current status: **Phase 1 not started** (implementation approach undecided)
+Current status: **Phase 1 started** — Jekyll site scaffolding, deployed to GitHub Pages via GitHub Actions, live with the first lab.
 
 ---
 
@@ -167,7 +170,7 @@ These need to be settled before real work starts.
 - [ ] **Target audience** — internal developers or customers? This decides whether we supply practice repos or use participants' own code.
 - [ ] **Practice repositories** — build one per stack, or point at public open source?
 - [ ] **Event size and duration** — the timeline above assumes a 6.5-hour day.
-- [ ] **Site implementation** — a static site generator + Markdown makes adding an asset a single PR, which favors the asset-count goal.
+- [x] **Site implementation** — Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
 
 ---
 
@@ -179,9 +182,17 @@ AGENTS.md    Working rules for coding agents
 CLAUDE.md    Imports AGENTS.md for Claude Code
 NOTE.md      Original planning note (local only, gitignored)
 docs/        Design system and reference docs (local only, gitignored)
+_labs/       Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
+_layouts/    Jekyll page templates
+_includes/   Jekyll partials (e.g. the lab card)
+assets/      Site CSS and fonts
 ```
 
 Design follows the IBM Carbon Design System (`docs/DESIGN.md`).
+
+Every asset lives at `_labs/<stack>/<slug>.md` — e.g. `_labs/spring-boot/explain-repo.md`.
+See that file for a complete reference example of the content spec below, fully filled in.
+The `_labs/` underscore prefix is required (it's how Jekyll recognizes the collection) — the asset's *branch* name still uses the hyphenated `content/<stack>-<slug>` form, that's just a label and doesn't need to match the folder.
 
 ---
 
@@ -193,9 +204,9 @@ Every change goes through a PR. `main` is never committed to directly.
    `content/<stack>-<slug>` for assets — e.g. `content/spring-boot-explain-repo`.
    `feat/`, `fix/`, `docs/` for everything else.
 2. **One asset per commit.** Don't mix several labs into one commit — each asset should be reviewable, and revertable, on its own.
-3. **Fill the content spec completely.** `Problem → Prompt → Expected Output → Tips → Variations`, plus all five metadata fields. A section left blank blocks the PR.
+3. **Fill the content spec completely.** `Problem → Prompt → Expected Output → Tips → Variations`, plus all five metadata fields and `title`. A section or field left blank fails the `validate-content` check and blocks the PR.
 4. **Verify the prompt against Bob before opening the PR.** Expected Output describes what you actually saw, not what you expect Bob to do.
-5. **Open the PR:** `git push -u origin <branch>` then `gh pr create`.
+5. **Open the PR:** `git push -u origin <branch>` then `gh pr create`. Requires one approval and passing status checks before it can merge.
 
 Commit messages are in English, imperative mood.
 
