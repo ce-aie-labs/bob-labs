@@ -19,19 +19,22 @@
 <body>
   {% assign page_lang = page.lang | default: "en" %}
   {% assign ui = site.data.ui[page_lang] %}
-  {% if page.lang == "ko" %}
-    {% assign other_lang_url = page.url | remove_first: "/ko" %}
+  {% comment %}
+    Both languages sit behind a prefix, so switching is a straight swap of the
+    first path segment and every page has a counterpart at the same path.
+  {% endcomment %}
+  {% if page_lang == "ko" %}
+    {% assign other_lang_url = page.url | replace_first: "/ko/", "/en/" %}
+    {% assign home_path = "/ko/" %}
+    {% assign bobathon_path = "/ko/bobathon/" %}
   {% else %}
-    {% assign other_lang_url = "/ko" | append: page.url %}
+    {% assign other_lang_url = page.url | replace_first: "/en/", "/ko/" %}
+    {% assign home_path = "/en/" %}
+    {% assign bobathon_path = "/en/bobathon/" %}
   {% endif %}
   <header class="site-header">
-    <a href="{% if page.lang == 'ko' %}{{ '/ko/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}">IBM Bob Labs</a>
+    <a href="{{ home_path | relative_url }}">IBM Bob Labs</a>
     <nav class="site-header-nav">
-      {% if page_lang == "ko" %}
-        {% assign home_path = "/ko/" %}{% assign bobathon_path = "/ko/bobathon/" %}
-      {% else %}
-        {% assign home_path = "/" %}{% assign bobathon_path = "/bobathon/" %}
-      {% endif %}
       <a href="{{ home_path | relative_url }}"{% if page.url == home_path %} aria-current="page"{% endif %}>{{ ui.nav_all_labs }}</a>
       <a href="{{ bobathon_path | relative_url }}"{% if page.url == bobathon_path %} aria-current="page"{% endif %}>{{ ui.nav_bobathon }}</a>
       <span class="nav-sep" aria-hidden="true"></span>

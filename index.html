@@ -1,0 +1,35 @@
+---
+# layout: null is required. _config.yml applies `layout: default` to every
+# page, which would wrap this stub in the site header and a second set of SEO
+# tags - including a competing canonical.
+layout: null
+permalink: /
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ site.title }}</title>
+<!--
+  GitHub Pages serves static files, so there is no server-side redirect to
+  configure. A meta refresh plus a script covers every browser, and the
+  canonical link keeps crawlers pointed at the real page rather than treating
+  this stub as a duplicate.
+
+  Both languages sit behind a prefix now - neither /en/ nor /ko/ is the
+  default - so this exists purely to give the bare root somewhere to go.
+-->
+<link rel="canonical" href="{{ '/en/' | absolute_url }}">
+<meta http-equiv="refresh" content="0; url={{ '/en/' | relative_url }}">
+<script>location.replace({{ '/en/' | relative_url | jsonify }});</script>
+<style>
+  body { font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; margin: 48px; }
+  a { color: #0f62fe; }
+</style>
+</head>
+<body>
+<p>Redirecting to <a href="{{ '/en/' | relative_url }}">{{ site.title }}</a>.</p>
+<p><a href="{{ '/ko/' | relative_url }}">한국어</a></p>
+</body>
+</html>

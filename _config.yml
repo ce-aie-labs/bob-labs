@@ -6,7 +6,7 @@ baseurl: "/bob-labs"
 collections:
   labs:
     output: true
-    permalink: /labs/:path/
+    permalink: /en/labs/:path/
   labs_ko:
     output: true
     permalink: /ko/labs/:path/

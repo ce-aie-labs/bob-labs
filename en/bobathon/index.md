@@ -1,7 +1,7 @@
 ---
 layout: event
 lang: en
-permalink: /bobathon/
+permalink: /en/bobathon/
 title: Bobathon
 description: Bring the work you do over and over. Spend the session replacing it with Bob, then submit what you built so the next person can reuse it.
 
