@@ -10,12 +10,16 @@ import sys
 REQUIRED_FRONT_MATTER = [
     "title",
     "lang",
+    "category",
     "difficulty",
     "duration",
     "stack",
     "work_replaced",
     "expected_saving",
 ]
+
+CATEGORIES_FILE = "_data/categories.yml"
+CATEGORY_LINE_RE = re.compile(r'^"(.+?)"\s*:\s*"(.+?)"\s*$')
 
 REQUIRED_SECTIONS = {
     "en": ["Problem", "Prompt", "Expected Output", "Tips", "Variations"],
@@ -55,6 +59,27 @@ def parse_front_matter(text):
     return fields, body
 
 
+def load_categories():
+    """Read the canonical category list from _data/categories.yml.
+
+    Hand-parsed rather than via PyYAML so the check needs no dependency
+    beyond a stock Python in CI. The file is a flat "key": "value" map.
+    """
+    categories = []
+    try:
+        with open(CATEGORIES_FILE, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                match = CATEGORY_LINE_RE.match(line)
+                if match:
+                    categories.append(match.group(1))
+    except FileNotFoundError:
+        return None
+    return categories or None
+
+
 def sibling_path(path):
     for root, (sibling_root, own_lang, sibling_lang) in COLLECTION_ROOTS.items():
         if path.startswith(root + "/"):
@@ -63,7 +88,7 @@ def sibling_path(path):
     return None, None, None
 
 
-def validate_file(path):
+def validate_file(path, categories=None):
     errors = []
     with open(path, encoding="utf-8") as f:
         text = f.read()
@@ -75,6 +100,15 @@ def validate_file(path):
     for field in REQUIRED_FRONT_MATTER:
         if not fields.get(field):
             errors.append(f"{path}: front matter field '{field}' is missing or empty")
+
+    category = fields.get("category")
+    if category and categories and category not in categories:
+        errors.append(
+            f"{path}: category '{category}' is not one of the canonical categories. "
+            f"Use one of: {', '.join(categories)}. "
+            f"To add a new one, add it to {CATEGORIES_FILE} and the priority "
+            f"tables in README.md."
+        )
 
     lang = fields.get("lang")
     sections = REQUIRED_SECTIONS.get(lang)
@@ -110,9 +144,13 @@ def main():
         print("No _labs/**/*.md or _labs_ko/**/*.md files changed - nothing to validate.")
         return 0
 
+    categories = load_categories()
+    if categories is None:
+        print(f"Warning: could not read {CATEGORIES_FILE} - skipping category validation.")
+
     all_errors = []
     for path in files:
-        all_errors.extend(validate_file(path))
+        all_errors.extend(validate_file(path, categories))
 
     if all_errors:
         print("Content spec validation failed:\n")

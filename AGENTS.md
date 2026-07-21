@@ -25,6 +25,7 @@ To add one Lab / Recipe, you're always producing **two files**, one asset:
 2. Place the English file at `_labs/<stack>/<slug>.md` and the Korean file at `_labs_ko/<stack>/<slug>.md` - same relative path, mirrored, one file per asset per language. These are Jekyll collections, so the underscore prefix is required on both - don't rename either to `content/`.
    The branch name keeps the hyphenated form (`content/<stack>-<slug>`) as a label only - it doesn't need to match the physical folders, e.g. branch `content/spring-boot-explain-repo` holds both `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
 3. In each file's front matter, set `lang: en` or `lang: ko` - this is what templates and CI key off, not the folder name.
+   Also set `category:` to one of the values in `_data/categories.yml`. Unlike `difficulty`, the category value stays **English in both language files** - it is a machine key that the homepage filter and CI validate against, and the Korean label is looked up for display. A category that is not in that file fails CI.
 4. Add a `title:` front matter field in each file's own language - the page heading Jekyll renders.
 5. Fill in the spec, headings in the file's own language:
    - English: `Problem → Prompt → Expected Output → Tips → Variations`

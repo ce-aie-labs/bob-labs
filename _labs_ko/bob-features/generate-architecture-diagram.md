@@ -1,6 +1,7 @@
 ---
 title: 아키텍처 다이어그램 생성하기
 lang: ko
+category: Bob Features
 difficulty: 가이드
 duration: 10분
 stack: Any

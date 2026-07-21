@@ -2,7 +2,7 @@
 {% if include.lab.lang == "ko" %}
   {% assign problem_heading = "문제" %}
 {% endif %}
-<a class="lab-card" href="{{ include.lab.url | relative_url }}">
+<a class="lab-card" href="{{ include.lab.url | relative_url }}" data-category="{{ include.lab.category }}" data-stack="{{ include.lab.stack }}">
   <div class="badges">
     <span class="badge stack">{{ include.lab.stack }}</span>
     <span class="badge">{{ include.lab.difficulty }}</span>

@@ -1,6 +1,7 @@
 ---
 title: 이 레포지토리 파악하기
 lang: ko
+category: Repository Understanding
 difficulty: 가이드
 duration: 5분
 stack: Java, Spring Boot

@@ -1,6 +1,7 @@
 ---
 title: Explain This Repository
 lang: en
+category: Repository Understanding
 difficulty: Guided
 duration: 5 min
 stack: Java, Spring Boot

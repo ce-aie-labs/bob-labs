@@ -1,6 +1,7 @@
 ---
 title: 계획 세우고 나서 구현하기
 lang: ko
+category: Bob Features
 difficulty: 가이드
 duration: 30분
 stack: Any

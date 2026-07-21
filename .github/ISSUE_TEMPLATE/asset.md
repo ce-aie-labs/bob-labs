@@ -25,7 +25,8 @@ Reference pairs to copy from - see CONTRIBUTING.md for which shape fits:
 
 ## Checklist (both language files)
 
-- [ ] `title` and `lang` (`en` / `ko`) front matter fields set in each file
+- [ ] `title`, `lang` (`en` / `ko`), and `category` front matter fields set in each file
+- [ ] `category` is one of the values in `_data/categories.yml` - English in both files, it is a filter key
 - [ ] English: `Problem → Prompt → Expected Output → Tips → Variations` - all five sections filled, none skipped
 - [ ] Korean: `문제 → 프롬프트 → 기대 결과 → 팁 → 응용` - all five sections filled, none skipped
 - [ ] All 5 metadata fields as YAML front matter in each file: `difficulty`, `duration`, `stack`, `work_replaced`, `expected_saving`

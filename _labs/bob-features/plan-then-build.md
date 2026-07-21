@@ -1,6 +1,7 @@
 ---
 title: Plan a Feature, Then Build It
 lang: en
+category: Bob Features
 difficulty: Guided
 duration: 30 min
 stack: Any
