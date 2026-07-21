@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Validate that every changed _labs/**/*.md file has the full content spec."""
+"""Validate that every changed _labs(_ko)/**/*.md file has the full content
+spec in its own language, and that its bilingual sibling exists."""
 
+import os
 import re
 import subprocess
 import sys
 
 REQUIRED_FRONT_MATTER = [
     "title",
+    "lang",
     "difficulty",
     "duration",
     "stack",
@@ -14,13 +17,15 @@ REQUIRED_FRONT_MATTER = [
     "expected_saving",
 ]
 
-REQUIRED_SECTIONS = [
-    "Problem",
-    "Prompt",
-    "Expected Output",
-    "Tips",
-    "Variations",
-]
+REQUIRED_SECTIONS = {
+    "en": ["Problem", "Prompt", "Expected Output", "Tips", "Variations"],
+    "ko": ["문제", "프롬프트", "기대 결과", "팁", "응용"],
+}
+
+COLLECTION_ROOTS = {
+    "_labs": ("_labs_ko", "en", "ko"),
+    "_labs_ko": ("_labs", "ko", "en"),
+}
 
 FRONT_MATTER_RE = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", re.DOTALL)
 
@@ -30,7 +35,10 @@ def changed_lab_files(base_ref):
         ["git", "diff", "--name-only", "--diff-filter=ACM", f"{base_ref}...HEAD"],
         capture_output=True, text=True, check=True,
     ).stdout.splitlines()
-    return [f for f in diff if f.startswith("_labs/") and f.endswith(".md")]
+    return [
+        f for f in diff
+        if (f.startswith("_labs/") or f.startswith("_labs_ko/")) and f.endswith(".md")
+    ]
 
 
 def parse_front_matter(text):
@@ -47,6 +55,14 @@ def parse_front_matter(text):
     return fields, body
 
 
+def sibling_path(path):
+    for root, (sibling_root, own_lang, sibling_lang) in COLLECTION_ROOTS.items():
+        if path.startswith(root + "/"):
+            rel = path[len(root) + 1:]
+            return f"{sibling_root}/{rel}", own_lang, sibling_lang
+    return None, None, None
+
+
 def validate_file(path):
     errors = []
     with open(path, encoding="utf-8") as f:
@@ -60,7 +76,15 @@ def validate_file(path):
         if not fields.get(field):
             errors.append(f"{path}: front matter field '{field}' is missing or empty")
 
-    for section in REQUIRED_SECTIONS:
+    lang = fields.get("lang")
+    sections = REQUIRED_SECTIONS.get(lang)
+    if sections is None:
+        errors.append(
+            f"{path}: front matter field 'lang' must be 'en' or 'ko' (got '{lang}')"
+        )
+        sections = []
+
+    for section in sections:
         heading_re = re.compile(
             rf"^##\s+{re.escape(section)}\s*$\n+(.+?)(?=^##\s|\Z)",
             re.MULTILINE | re.DOTALL,
@@ -69,6 +93,13 @@ def validate_file(path):
         if not match or not match.group(1).strip():
             errors.append(f"{path}: section '## {section}' is missing or empty")
 
+    sibling, own_lang, sibling_lang = sibling_path(path)
+    if sibling and not os.path.exists(sibling):
+        errors.append(
+            f"{path}: bilingual sibling '{sibling}' does not exist - "
+            f"every lab needs both an {own_lang} and a {sibling_lang} version"
+        )
+
     return errors
 
 
@@ -76,7 +107,7 @@ def main():
     base_ref = sys.argv[1] if len(sys.argv) > 1 else "origin/main"
     files = changed_lab_files(base_ref)
     if not files:
-        print("No _labs/**/*.md files changed - nothing to validate.")
+        print("No _labs/**/*.md or _labs_ko/**/*.md files changed - nothing to validate.")
         return 0
 
     all_errors = []

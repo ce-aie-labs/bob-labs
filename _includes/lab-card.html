@@ -1,3 +1,7 @@
+{% assign problem_heading = "Problem" %}
+{% if include.lab.lang == "ko" %}
+  {% assign problem_heading = "문제" %}
+{% endif %}
 <a class="lab-card" href="{{ include.lab.url | relative_url }}">
   <div class="badges">
     <span class="badge stack">{{ include.lab.stack }}</span>
@@ -5,6 +9,6 @@
     <span class="badge">{{ include.lab.duration }}</span>
   </div>
   <h2>{{ include.lab.title }}</h2>
-  <p class="problem">{{ include.lab.content | strip_html | remove: "Problem" | strip | truncatewords: 24 }}</p>
+  <p class="problem">{{ include.lab.content | strip_html | remove: problem_heading | strip | truncatewords: 24 }}</p>
   <p class="saving">{{ include.lab.expected_saving }}</p>
 </a>

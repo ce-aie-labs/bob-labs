@@ -12,25 +12,29 @@ Do not introduce a different framework or build tooling on your own — ask firs
 
 ## Working rules
 
-- **Prompt bodies are written in English** — participants paste them verbatim. Surrounding explanation follows the site's language.
+- **Every lab is bilingual, mandatory** — an English file and a Korean file, added together. Prompt language matches the file, not a fixed rule: the English file's Prompt is English, the Korean file's Prompt is Korean, written the way an actual Korean-speaking participant would type it — not a stiff translation. Korean customers paste Bob prompts in Korean, so the Korean Prompt needs its own verification pass against Bob in Korean, not just a translation of the English Expected Output.
 - `NOTE.md` and `docs/` are gitignored. Never include them in a commit.
 - When building UI, follow `docs/DESIGN.md` (IBM Carbon).
   Essentials: 0px corners · IBM Plex Sans · weight 300 for display sizes · 1px hairlines instead of shadows · IBM Blue (#0f62fe) as the only accent.
 
 ## Adding content
 
-To add one Lab / Recipe:
+To add one Lab / Recipe, you're always producing **two files**, one asset:
 
 1. Write in one line **which repetitive task this replaces**. If you can't, don't build it.
-2. Place the file at `_labs/<stack>/<slug>.md` — one file per asset, grouped by stack directory. This is a Jekyll collection (`_labs/`), so the underscore prefix is required — don't rename it to `content/`.
-   The branch name keeps the hyphenated form (`content/<stack>-<slug>`) as a label only — it doesn't need to match the physical folder, e.g. branch `content/spring-boot-explain-repo` holds file `_labs/spring-boot/explain-repo.md`.
-3. Add a `title:` front matter field — the page heading Jekyll renders (e.g. `title: Explain This Repository`).
-4. Fill in the spec — `Problem → Prompt → Expected Output → Tips → Variations`. **Never skip a section.**
-5. Attach all five metadata fields as YAML front matter at the top of the file — difficulty / duration / stack / work_replaced / expected_saving. A CI check (`validate-content`) blocks the PR if any field or section is missing.
-6. Actually run the prompt through Bob and write Expected Output from **what you observed**, not from what you assume.
-7. One asset = one commit (or one PR). Don't mix several assets into one commit.
+2. Place the English file at `_labs/<stack>/<slug>.md` and the Korean file at `_labs_ko/<stack>/<slug>.md` — same relative path, mirrored, one file per asset per language. These are Jekyll collections, so the underscore prefix is required on both — don't rename either to `content/`.
+   The branch name keeps the hyphenated form (`content/<stack>-<slug>`) as a label only — it doesn't need to match the physical folders, e.g. branch `content/spring-boot-explain-repo` holds both `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
+3. In each file's front matter, set `lang: en` or `lang: ko` — this is what templates and CI key off, not the folder name.
+4. Add a `title:` front matter field in each file's own language — the page heading Jekyll renders.
+5. Fill in the spec, headings in the file's own language:
+   - English: `Problem → Prompt → Expected Output → Tips → Variations`
+   - Korean: `문제 → 프롬프트 → 기대 결과 → 팁 → 응용`
+   **Never skip a section, in either language.**
+6. Attach all six front matter fields in each file — `title`, `lang`, `difficulty`, `duration`, `stack`, `work_replaced`, `expected_saving`. A CI check (`validate-content`) blocks the PR if any field or section is missing in either file, or if one language's file exists without its sibling.
+7. Actually run each language's prompt through Bob and write its Expected Output from **what you observed in that language**, not a translation of the other file's output.
+8. One asset = one commit (or one PR) = **both language files together**. Don't mix several assets into one commit.
 
-See `_labs/spring-boot/explain-repo.md` for a complete reference example.
+See `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md` for a complete reference pair.
 
 ## Git workflow
 
