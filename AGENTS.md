@@ -51,18 +51,24 @@ Three reference pairs, three different shapes:
 
 Get Bob to <goal>, without being told the prompt.
 
-<details><summary>Stuck? A prompt skeleton</summary>
+<details markdown="1">
+<summary>Stuck? A prompt skeleton</summary>
 
     <the shape, with blanks the participant fills in>
 
 </details>
 
-<details><summary>The full prompt</summary>
+<details markdown="1">
+<summary>The full prompt</summary>
 
     <a prompt known to work>
 
 </details>
 ```
+
+`markdown="1"` is required. Without it Kramdown leaves the fenced block unprocessed, so no `<pre>` is produced and the prompt gets no copy button - which defeats the point.
+
+A challenge lab also appears at `/challenge/`, which is the same collection scoped to `difficulty: Challenge`. Nothing extra to do: set the difficulty and it shows up.
 
 Do not leave `## Prompt` empty to make it a challenge - CI rejects an empty section, and an empty section helps nobody. Challenge labs are the bridge from Guided to Bring Your Own Work, so they matter most for the least experienced participant in the room.
 

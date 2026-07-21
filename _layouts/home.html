@@ -5,6 +5,14 @@ layout: default
 {% if page.lang == "ko" %}
   {% assign labs = site.labs_ko %}
 {% endif %}
+{% comment %}
+  A page can scope the library to one difficulty (see challenge/index.md).
+  It is the same collection filtered, not a second copy of the content, so a
+  lab is written once and appears wherever it qualifies.
+{% endcomment %}
+{% if page.filter_difficulty %}
+  {% assign labs = labs | where: "difficulty", page.filter_difficulty %}
+{% endif %}
 {% assign page_lang = page.lang | default: "en" %}
 {% assign ui = site.data.ui[page_lang] %}
 

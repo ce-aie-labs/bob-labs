@@ -112,6 +112,21 @@ a {
   color: var(--ink-muted);
 }
 
+.site-header-nav a:hover {
+  color: var(--ink);
+}
+
+.site-header-nav a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.nav-sep {
+  width: 1px;
+  height: 16px;
+  background: var(--hairline);
+}
+
 #theme-toggle {
   background: var(--canvas);
   color: var(--ink);
