@@ -35,8 +35,8 @@ Every content decision is made against these five.
 ## Site structure
 
 ```
-🏠 Asset Library            Every lab, filtered by work replaced, stack, and difficulty
-🏃 Bobathon                 /bobathon/ - the event itself: process, rubric, and submission
+🏠 Asset Library            /en/ and /ko/ - every lab, filtered by work, stack and difficulty
+🏃 Bobathon                 /en/bobathon/ (and /ko/) - the event: process, rubric, submission
 ⚙️  Setup                    Install · login · permissions · one first prompt
 💡 Prompt Cookbook          Prompts by situation (one copy button)
 ```
@@ -174,7 +174,7 @@ There is one sentence we give participants:
 | 5:00–5:30 | Write up submission (Before/After) |
 | 5:30–6:30 | Showcase |
 
-Everything from "Pick your work" onward runs off the [Bobathon page](/bobathon/): the process, the rubric, and the submission.
+Everything from "Pick your work" onward runs off the [Bobathon page](/en/bobathon/): the process, the rubric, and the submission.
 
 For a half-day event, cut Guided Labs rather than the Challenge block - the bridge is what makes Bring Your Own Work survivable.
 
@@ -186,7 +186,7 @@ Keep the burden minimal. Only one thing is required.
 Usually 30 min  →  Bob 7 min
 ```
 
-Everything else - Bob chat history, repository link, what went wrong and what fixed it - is optional but is what turns a submission into a reusable lab. The full list and the submit button live on the [Bobathon page](/bobathon/).
+Everything else - Bob chat history, repository link, what went wrong and what fixed it - is optional but is what turns a submission into a reusable lab. The full list and the submit button live on the [Bobathon page](/en/bobathon/).
 
 ### Rubric
 

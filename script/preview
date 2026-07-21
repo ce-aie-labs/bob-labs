@@ -60,12 +60,12 @@ fi
 url="http://127.0.0.1:${PORT}/bob-labs/"
 cat <<BANNER
 
-  Serving on ${url}
+  English:    ${url}en/
   Korean:     ${url}ko/
-  Bobathon:   ${url}bobathon/
+  Bobathon:   ${url}en/bobathon/
 
-  Note the /bob-labs/ path - the bare root 404s, because the site is built
-  for a project path rather than a domain root.
+  ${url} redirects to /en/. Note the /bob-labs/ prefix - without it you get
+  a 404, because the site is built for a project path rather than a domain root.
 
   Edits to _labs/, _layouts/ and assets/ rebuild automatically.
   Changes to _config.yml need a restart.

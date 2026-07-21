@@ -23,12 +23,13 @@ otherwise dies on a gem called `ffi` without mentioning Ruby.
 
 | URL | |
 |---|---|
-| `http://127.0.0.1:4000/bob-labs/` | Home - the lab library |
+| `http://127.0.0.1:4000/bob-labs/` | Redirects to `/en/` |
+| `http://127.0.0.1:4000/bob-labs/en/` | English home - the lab library |
 | `http://127.0.0.1:4000/bob-labs/ko/` | Korean home |
-| `http://127.0.0.1:4000/bob-labs/bobathon/` | Event page |
-| `http://127.0.0.1:4000/bob-labs/labs/<stack>/<slug>/` | A lab |
+| `http://127.0.0.1:4000/bob-labs/en/bobathon/` | Event page |
+| `http://127.0.0.1:4000/bob-labs/en/labs/<stack>/<slug>/` | A lab |
 
-**The bare root 404s.** That is expected - the site is built for a project path.
+Both languages sit behind a prefix; neither is the default. The bare root is a redirect stub to `/en/`, and the URL *below* `/bob-labs/` 404s because the site is built for a project path.
 
 Edits to `_labs/`, `_layouts/` and `assets/` rebuild automatically. Changes to
 `_config.yml` need a restart.

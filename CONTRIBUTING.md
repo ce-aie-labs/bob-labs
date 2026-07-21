@@ -79,7 +79,7 @@ script/preview
 
 That is it. The script checks your Ruby version, installs dependencies on first run, and prints the URLs. If something is missing it tells you exactly what to do rather than failing on a gem you have never heard of.
 
-Open <http://127.0.0.1:4000/bob-labs/>. **Note the `/bob-labs/`** - the bare root 404s, because the site is built for a project path rather than a domain root. Check both languages (`/bob-labs/` and `/bob-labs/ko/`) and both themes, using the toggle in the header.
+Open <http://127.0.0.1:4000/bob-labs/>, which redirects to `/en/`. **Note the `/bob-labs/`** - dropping it 404s, because the site is built for a project path rather than a domain root. Check both languages (`/bob-labs/en/` and `/bob-labs/ko/`) and both themes, using the toggle in the header.
 
 Jekyll needs **Ruby 3.0 or newer and macOS ships 2.6**, so on a Mac you will likely need `brew install ruby` first - the script will say so if you do.
 
