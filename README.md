@@ -36,13 +36,14 @@ Every content decision is made against these five.
 
 ```
 🏠 Asset Library            Every lab, filtered by work replaced, stack, and difficulty
+🧩 Challenge Labs           /challenge/ - the same library scoped to difficulty: Challenge
 ⚙️  Setup                    Install · login · permissions · one first prompt
 💡 Prompt Cookbook          Prompts by situation (one copy button)
 🚀 Bring Your Own Work      Participants run their own repetitive work through Bob
 🏆 Showcase                 Share · evaluate · feed back into the asset library
 ```
 
-Guided and Challenge are **difficulties, not sections**. They are the same labs in the same library, told apart by a front matter field and reachable through the same filter - a numbered Step 1 / Step 2 split would make the site read as a curriculum, which principle 5 rules out.
+Guided and Challenge are **difficulties, not separate content**. `/challenge/` is the same collection scoped to one difficulty, not a second copy of the labs - a lab is written once and appears wherever it qualifies. It has its own URL because the event agenda has a named Challenge block, and "go to this page" beats "go to the homepage and set a filter" when a room of people needs to move at once.
 
 ---
 
@@ -88,13 +89,13 @@ They exist to bridge Guided labs, where the prompt is handed to you, and Bring Y
 
 Assets are prioritized by **the repetitive work they replace**, not by tech stack. A participant arrives thinking "I lose three hours a week to code review," not "I want a Spring Boot lab." Stack is a filter, not a category - see [Stack coverage](#stack-coverage) below.
 
-**P0 - build these first.** 18 labs, enough to run the first event.
+**P0 - build these first.** 18 labs, enough to run the first event. 4 built.
 
 | Work replaced | Target labs | Status and ideas |
 |---|---|---|
 | Bob Features (`stack: Any`) | 5 | **2 built** - architecture diagrams, plan→build. Ideas: subagents, skills, MCP |
 | Repository Understanding | 2 | **1 built** - explain this repository |
-| Code Review | 2 | Review a diff, catch issues before opening a PR |
+| Code Review | 2 | **1 built** - review my own changes (Challenge). Ideas: review someone else's PR |
 | Test Generation | 2 | Generate tests for an untested module |
 | Documentation | 2 | README, API docs, onboarding docs from code |
 | Migration | 3 | Spring Boot 2→3, legacy monolith - genuinely stack-specific |
