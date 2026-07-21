@@ -121,13 +121,18 @@ This is the design principle "an example that only works in its own context is n
 
 ### Stack coverage
 
-`stack` is a front matter field, so the site filters on it. Use this as a coverage checklist, not a build queue - the goal is that a participant from any of these can find something, not that every cell has its own lab.
+`stack` is a front matter field, so the site filters on it. Use this as a coverage checklist, not a build queue - the goal is that a participant from any of these can find something, not that each one gets its own lab.
 
-| Priority | Stacks |
+**Must cover:**
+
+| Area | Stacks |
 |---|---|
-| Must cover | Java (Spring Boot, Legacy Monolith), Python (FastAPI), Frontend (React) |
-| Nice to have | Docker, Kubernetes, PostgreSQL, Oracle, Data Pipeline |
-| Later | Angular, Vue, Terraform, MongoDB, RAG, LangGraph |
+| Java | Spring Boot, legacy monolith |
+| Python | FastAPI |
+| Frontend | React |
+| Data & Documents | Excel, API spec |
+
+**Everything else is out of scope for the first event.** Docker, Kubernetes, Terraform, cloud databases, RAG and LangGraph are advanced infrastructure and AI topics, and the audience for this event is customers whose day-to-day work is the list above. Revisit after the first run, based on what participants actually brought.
 
 ---
 
@@ -205,8 +210,9 @@ Current status: **Phase 1 started** - Jekyll site scaffolding, deployed to GitHu
 These need to be settled before real work starts.
 
 - [x] **Bob's actual capability surface** - agent execution / context injection / external tool integration. Reference is [bob.ibm.com/docs/ide](https://bob.ibm.com/docs/ide) and [bob.ibm.com/docs/shell](https://bob.ibm.com/docs/shell) - use it when writing a lab's Prompt/Expected Output. A local Markdown mirror exists at `docs/bob/` for whoever has fetched it (gitignored, not shipped with the repo - `docs/` is local-only, see "Repository" below).
-- [ ] **Target audience** - internal developers or customers? This decides whether we supply practice repos or use participants' own code.
-- [ ] **Practice repositories** - build one per stack, or point at public open source?
+- [x] **Target audience** - **customers**, and not currently highly technical. This is why P0 skews toward low-floor repetitive work (documents, repository understanding, code review) rather than advanced infrastructure or AI topics, and why everything outside "Must cover" in [Stack coverage](#stack-coverage) is out of scope for the first event.
+- [ ] **Practice repositories** - build one per stack, or point at public open source? Now unblocked by the audience decision above: customers may not be able to bring their own code to a shared event for IP reasons, which argues for supplying practice repos.
+- [ ] **Challenge Labs** - Step 2 gives participants a goal with no prompt. That assumes a level of comfort the current audience may not have. Decide whether to keep them, soften them (goal plus a hint), or drop them from the first event and reallocate the 45 minutes.
 - [ ] **Event size and duration** - the timeline above assumes a 6.5-hour day.
 - [x] **Site implementation** - Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
 - [ ] **Java Modernization assets** - deferred. Bob's Java Modernization is a paid **premium package** ([bob.ibm.com/docs/ide/premium-packages/java-modernization](https://bob.ibm.com/docs/ide/premium-packages/java-modernization)), not part of base Bob - 4 workflows (Java upgrade, Liberty replatforming, UI modernization, unit test generation). We don't have access yet; revisit once it's confirmed.
