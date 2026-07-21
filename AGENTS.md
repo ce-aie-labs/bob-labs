@@ -78,6 +78,10 @@ Use `stack: Any` whenever the lab isn't genuinely tied to one language or framew
 
 Bob-capability demos - subagents, skills, MCP, Plan mode, diagram/report generation - go in `bob-features/`, not under a stack name.
 
+## Running the site
+
+`bundle install && bundle exec jekyll serve`, then <http://127.0.0.1:4000/bob-labs/> - the `/bob-labs/` path is required, the root 404s. Ruby 3.0+ is needed and macOS ships 2.6, so `brew install ruby` first. See CONTRIBUTING.md for why writing a lab does not require any of this.
+
 ## Git workflow
 
 Remote is `origin` → `github.com/ce-aie-labs/bob-labs`. Default branch is `main`.
