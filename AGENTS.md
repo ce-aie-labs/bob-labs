@@ -42,6 +42,30 @@ Three reference pairs, three different shapes:
 - `_labs/bob-features/generate-architecture-diagram.md` + `_labs_ko/…` - a **Bob Features** lab (`stack: Any`), single prompt - demos a capability of Bob itself rather than a language/framework.
 - `_labs/bob-features/plan-then-build.md` + `_labs_ko/…` - a **multi-step** lab: four sequential prompts as `### Step N` subheadings inside the single `## Prompt` section, each with its own checkpoint. The 5-section spec is unchanged - `###` subheadings don't affect it, so multi-step labs need no special handling.
 
+### Challenge labs
+
+`difficulty: Challenge` is a value, not a separate content type or site section - same five sections, same validator. What changes is the `## Prompt` section: state the goal, then put the help behind `<details>` so it is there without being handed over.
+
+```markdown
+## Prompt
+
+Get Bob to <goal>, without being told the prompt.
+
+<details><summary>Stuck? A prompt skeleton</summary>
+
+    <the shape, with blanks the participant fills in>
+
+</details>
+
+<details><summary>The full prompt</summary>
+
+    <a prompt known to work>
+
+</details>
+```
+
+Do not leave `## Prompt` empty to make it a challenge - CI rejects an empty section, and an empty section helps nobody. Challenge labs are the bridge from Guided to Bring Your Own Work, so they matter most for the least experienced participant in the room.
+
 ### Write stack-agnostic first
 
 Use `stack: Any` whenever the lab isn't genuinely tied to one language or framework, and put per-stack differences in the asset's own **Variations** section. "Explain this repo" or "review this diff" is the same lab in Java and Python - writing it five times per stack is exactly the duplication the reusability principle exists to prevent. Write a stack-specific lab only when the stack really changes the prompt (a Spring Boot 2→3 migration does; "explain this repo" doesn't).

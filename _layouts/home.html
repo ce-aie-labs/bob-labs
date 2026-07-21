@@ -24,6 +24,7 @@ layout: default
   {% endunless %}
 {% endfor %}
 {% assign stacks = stack_blob | replace: ", ", "," | split: "," | uniq | sort %}
+{% assign difficulties = labs | map: "difficulty" | uniq | sort %}
 
 <div class="page">
   <div class="intro">
@@ -31,7 +32,7 @@ layout: default
     <p>{{ page.description }}</p>
   </div>
 
-  {% if categories.size > 1 or stacks.size > 1 %}
+  {% if categories.size > 1 or stacks.size > 1 or difficulties.size > 1 %}
     <div class="filters"
          data-count-one="{{ ui.count_one }}"
          data-count-other="{{ ui.count_other }}"
@@ -63,6 +64,18 @@ layout: default
         </div>
       {% endif %}
 
+      {% if difficulties.size > 1 %}
+        <div class="filter-group">
+          <span class="filter-label">{{ ui.filter_difficulty_label }}</span>
+          <div class="chip-row">
+            <button type="button" class="chip is-active" data-filter="difficulty" data-value="all" aria-pressed="true">{{ ui.filter_all }}<span class="chip-count"></span></button>
+            {% for difficulty in difficulties %}
+              <button type="button" class="chip" data-filter="difficulty" data-value="{{ difficulty }}" aria-pressed="false">{{ difficulty }}<span class="chip-count"></span></button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
       <div class="filter-status">
         <span class="filter-count" role="status" aria-live="polite"></span>
         <button type="button" class="filter-reset" hidden>{{ ui.filter_reset }}</button>
@@ -89,10 +102,13 @@ layout: default
     var countEl = filters.querySelector(".filter-count");
     var resetEl = filters.querySelector(".filter-reset");
     var noMatchEl = document.querySelector(".no-match");
-    var active = { category: "all", stack: "all" };
+    var active = { category: "all", stack: "all", difficulty: "all" };
 
     function matchesWith(card, state) {
       if (state.category !== "all" && card.dataset.category !== state.category) {
+        return false;
+      }
+      if (state.difficulty !== "all" && card.dataset.difficulty !== state.difficulty) {
         return false;
       }
       if (state.stack !== "all") {
@@ -110,7 +126,7 @@ layout: default
     // other group's current selection kept. Lets each option show its own count
     // and lets dead-end options be disabled rather than clicked into nothing.
     function countFor(group, value) {
-      var trial = { category: active.category, stack: active.stack };
+      var trial = { category: active.category, stack: active.stack, difficulty: active.difficulty };
       trial[group] = value;
       return cards.filter(function (card) { return matchesWith(card, trial); }).length;
     }
@@ -132,7 +148,7 @@ layout: default
       var template = shown === 1 ? filters.dataset.countOne : filters.dataset.countOther;
       countEl.textContent = template.replace("{n}", shown);
 
-      resetEl.hidden = active.category === "all" && active.stack === "all";
+      resetEl.hidden = active.category === "all" && active.stack === "all" && active.difficulty === "all";
 
       noMatchEl.textContent = filters.dataset.noMatch;
       noMatchEl.hidden = shown !== 0;
@@ -158,6 +174,7 @@ layout: default
       if (event.target.closest(".filter-reset")) {
         select("category", "all");
         select("stack", "all");
+        select("difficulty", "all");
       }
     });
 
