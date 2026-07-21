@@ -13,6 +13,8 @@ layout: default
   or stack never appears until something uses it. Stacks are comma-separated
   in front matter ("Java, Spring Boot"), so they are flattened here.
   `stack: Any` is not offered as an option - those labs match every stack.
+  Per-option counts are filled in by script, because they depend on what the
+  other filter group currently has selected.
 {% endcomment %}
 {% assign categories = labs | map: "category" | uniq | sort %}
 {% assign stack_blob = "" %}
@@ -37,26 +39,34 @@ layout: default
       {% if categories.size > 1 %}
         <div class="filter-group">
           <span class="filter-label">{{ ui.filter_work_label }}</span>
-          <button type="button" class="chip is-active" data-filter="category" data-value="all" aria-pressed="true">{{ ui.filter_all }}</button>
-          {% for category in categories %}
-            <button type="button" class="chip" data-filter="category" data-value="{{ category }}" aria-pressed="false">
-              {%- if page_lang == "ko" -%}{{ site.data.categories[category] | default: category }}{%- else -%}{{ category }}{%- endif -%}
-            </button>
-          {% endfor %}
+          <div class="chip-row">
+            <button type="button" class="chip is-active" data-filter="category" data-value="all" aria-pressed="true">{{ ui.filter_all }}<span class="chip-count"></span></button>
+            {% for category in categories %}
+              <button type="button" class="chip" data-filter="category" data-value="{{ category }}" aria-pressed="false">
+                {%- if page_lang == "ko" -%}{{ site.data.categories[category] | default: category }}{%- else -%}{{ category }}{%- endif -%}
+                <span class="chip-count"></span>
+              </button>
+            {% endfor %}
+          </div>
         </div>
       {% endif %}
 
       {% if stacks.size > 1 %}
         <div class="filter-group">
           <span class="filter-label">{{ ui.filter_stack_label }}</span>
-          <button type="button" class="chip is-active" data-filter="stack" data-value="all" aria-pressed="true">{{ ui.filter_all }}</button>
-          {% for stack in stacks %}
-            <button type="button" class="chip" data-filter="stack" data-value="{{ stack }}" aria-pressed="false">{{ stack }}</button>
-          {% endfor %}
+          <div class="chip-row">
+            <button type="button" class="chip is-active" data-filter="stack" data-value="all" aria-pressed="true">{{ ui.filter_all }}<span class="chip-count"></span></button>
+            {% for stack in stacks %}
+              <button type="button" class="chip" data-filter="stack" data-value="{{ stack }}" aria-pressed="false">{{ stack }}<span class="chip-count"></span></button>
+            {% endfor %}
+          </div>
         </div>
       {% endif %}
 
-      <p class="filter-count" role="status" aria-live="polite"></p>
+      <div class="filter-status">
+        <span class="filter-count" role="status" aria-live="polite"></span>
+        <button type="button" class="filter-reset" hidden>{{ ui.filter_reset }}</button>
+      </div>
     </div>
   {% endif %}
 
@@ -75,30 +85,46 @@ layout: default
     if (!filters) return;
 
     var cards = Array.prototype.slice.call(document.querySelectorAll(".lab-card"));
+    var chips = Array.prototype.slice.call(filters.querySelectorAll(".chip"));
     var countEl = filters.querySelector(".filter-count");
+    var resetEl = filters.querySelector(".filter-reset");
     var noMatchEl = document.querySelector(".no-match");
     var active = { category: "all", stack: "all" };
 
-    function matches(card) {
-      if (active.category !== "all" && card.dataset.category !== active.category) {
+    function matchesWith(card, state) {
+      if (state.category !== "all" && card.dataset.category !== state.category) {
         return false;
       }
-      if (active.stack !== "all") {
+      if (state.stack !== "all") {
         var stack = card.dataset.stack || "";
         // A `stack: Any` lab is relevant whichever stack you filter by.
-        if (stack !== "Any" && stack.split(",").map(function (s) {
-          return s.trim();
-        }).indexOf(active.stack) === -1) {
-          return false;
+        if (stack !== "Any") {
+          var owned = stack.split(",").map(function (s) { return s.trim(); });
+          if (owned.indexOf(state.stack) === -1) return false;
         }
       }
       return true;
     }
 
+    // How many labs would be left if this chip were the one selected, with the
+    // other group's current selection kept. Lets each option show its own count
+    // and lets dead-end options be disabled rather than clicked into nothing.
+    function countFor(group, value) {
+      var trial = { category: active.category, stack: active.stack };
+      trial[group] = value;
+      return cards.filter(function (card) { return matchesWith(card, trial); }).length;
+    }
+
     function apply() {
+      chips.forEach(function (chip) {
+        var n = countFor(chip.dataset.filter, chip.dataset.value);
+        chip.querySelector(".chip-count").textContent = n;
+        chip.disabled = n === 0 && !chip.classList.contains("is-active");
+      });
+
       var shown = 0;
       cards.forEach(function (card) {
-        var ok = matches(card);
+        var ok = matchesWith(card, active);
         card.hidden = !ok;
         if (ok) shown++;
       });
@@ -106,24 +132,33 @@ layout: default
       var template = shown === 1 ? filters.dataset.countOne : filters.dataset.countOther;
       countEl.textContent = template.replace("{n}", shown);
 
+      resetEl.hidden = active.category === "all" && active.stack === "all";
+
       noMatchEl.textContent = filters.dataset.noMatch;
       noMatchEl.hidden = shown !== 0;
     }
 
+    function select(group, value) {
+      active[group] = value;
+      chips.forEach(function (chip) {
+        if (chip.dataset.filter !== group) return;
+        var on = chip.dataset.value === value;
+        chip.classList.toggle("is-active", on);
+        chip.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      apply();
+    }
+
     filters.addEventListener("click", function (event) {
       var chip = event.target.closest(".chip");
-      if (!chip) return;
-
-      var group = chip.dataset.filter;
-      active[group] = chip.dataset.value;
-
-      filters.querySelectorAll('.chip[data-filter="' + group + '"]').forEach(function (other) {
-        var on = other === chip;
-        other.classList.toggle("is-active", on);
-        other.setAttribute("aria-pressed", on ? "true" : "false");
-      });
-
-      apply();
+      if (chip && !chip.disabled) {
+        select(chip.dataset.filter, chip.dataset.value);
+        return;
+      }
+      if (event.target.closest(".filter-reset")) {
+        select("category", "all");
+        select("stack", "all");
+      }
     });
 
     apply();
