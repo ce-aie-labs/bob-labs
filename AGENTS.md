@@ -22,8 +22,8 @@ Do not introduce a different framework or build tooling on your own - ask first.
 To add one Lab / Recipe, you're always producing **two files**, one asset:
 
 1. Write in one line **what this shows someone how to do with Bob**, and the useful result it produces. If you can't, don't build it.
-2. Place the English file at `_labs/<stack>/<slug>.md` and the Korean file at `_labs_ko/<stack>/<slug>.md` - same relative path, mirrored, one file per asset per language. These are Jekyll collections, so the underscore prefix is required on both - don't rename either to `content/`.
-   The branch name keeps the hyphenated form (`content/<stack>-<slug>`) as a label only - it doesn't need to match the physical folders, e.g. branch `content/spring-boot-explain-repo` holds both `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
+2. Place the English file at `_labs_en/<stack>/<slug>.md` and the Korean file at `_labs_ko/<stack>/<slug>.md` - same relative path, mirrored, one file per asset per language. These are Jekyll collections, so the underscore prefix is required on both - don't rename either to `content/`.
+   The branch name keeps the hyphenated form (`content/<stack>-<slug>`) as a label only - it doesn't need to match the physical folders, e.g. branch `content/spring-boot-explain-repo` holds both `_labs_en/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
 3. In each file's front matter, set `lang: en` or `lang: ko` - this is what templates and CI key off, not the folder name.
    Also set `category:` to one of the values in `_data/categories.yml`. Unlike `difficulty`, the category value stays **English in both language files** - it is a machine key that the homepage filter and CI validate against, and the Korean label is looked up for display. A category that is not in that file fails CI.
 4. Add a `title:` front matter field in each file's own language - the page heading Jekyll renders.
@@ -38,9 +38,9 @@ To add one Lab / Recipe, you're always producing **two files**, one asset:
 
 Three reference pairs, three different shapes:
 
-- `_labs/spring-boot/explain-repo.md` + `_labs_ko/…` - a stack-tied lab (`stack: Java, Spring Boot`), single prompt, Expected Output verified by an actual dry run.
-- `_labs/bob-features/generate-architecture-diagram.md` + `_labs_ko/…` - a **Bob Features** lab (`stack: Any`), single prompt - demos a capability of Bob itself rather than a language/framework.
-- `_labs/bob-features/plan-then-build.md` + `_labs_ko/…` - a **multi-step** lab: four sequential prompts as `### Step N` subheadings inside the single `## Prompt` section, each with its own checkpoint. The 5-section spec is unchanged - `###` subheadings don't affect it, so multi-step labs need no special handling.
+- `_labs_en/spring-boot/explain-repo.md` + `_labs_ko/…` - a stack-tied lab (`stack: Java, Spring Boot`), single prompt, Expected Output verified by an actual dry run.
+- `_labs_en/bob-features/generate-architecture-diagram.md` + `_labs_ko/…` - a **Bob Features** lab (`stack: Any`), single prompt - demos a capability of Bob itself rather than a language/framework.
+- `_labs_en/bob-features/plan-then-build.md` + `_labs_ko/…` - a **multi-step** lab: four sequential prompts as `### Step N` subheadings inside the single `## Prompt` section, each with its own checkpoint. The 5-section spec is unchanged - `###` subheadings don't affect it, so multi-step labs need no special handling.
 
 ### Challenge labs
 

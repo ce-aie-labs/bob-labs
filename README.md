@@ -241,8 +241,8 @@ DESIGN.md       IBM Carbon design system spec - follow this when building UI
 NOTE.md         Original planning note (local only, gitignored)
 docs/           Local scratch only, never committed. docs/bob/ holds a Markdown
                 mirror of bob.ibm.com/docs for whoever has fetched it
-_labs/          English Lab / Recipe assets (a Jekyll collection): _labs/<stack>/<slug>.md
-_labs_ko/       Korean mirror of _labs/, same relative paths
+_labs_en/          English Lab / Recipe assets (a Jekyll collection): _labs_en/<stack>/<slug>.md
+_labs_ko/       Korean mirror of _labs_en/, same relative paths
 _data/          ui.yml - site-chrome translation strings (badge labels, nav)
 _layouts/       Jekyll page templates
 _includes/      Jekyll partials (e.g. the lab card)
@@ -253,9 +253,9 @@ script/preview  Build and serve the site locally
 
 Design follows the IBM Carbon Design System (`DESIGN.md`).
 
-Every asset lives at `_labs/<stack>/<slug>.md` plus its mirror `_labs_ko/<stack>/<slug>.md` - e.g. `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
+Every asset lives at `_labs_en/<stack>/<slug>.md` plus its mirror `_labs_ko/<stack>/<slug>.md` - e.g. `_labs_en/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
 See that pair for a complete reference example of the content spec below, fully filled in.
-The `_labs/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recognizes the collections) - the asset's *branch* name still uses the hyphenated `content/<stack>-<slug>` form, that's just a label and doesn't need to match the folders.
+The `_labs_en/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recognizes the collections) - the asset's *branch* name still uses the hyphenated `content/<stack>-<slug>` form, that's just a label and doesn't need to match the folders.
 
 ---
 
@@ -263,7 +263,7 @@ The `_labs/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recog
 
 Adding an asset is writing **two Markdown files - no code, no HTML, no CSS.** The site renders each new lab, lists it on the homepage, wires it into the filters, and gives every prompt a copy button, all automatically. You never touch a template or a stylesheet.
 
-1. **Copy the skeleton.** [CONTRIBUTING.md → Copy this skeleton](CONTRIBUTING.md#copy-this-skeleton) has two paste-ready blocks. English goes to `_labs/<stack>/<slug>.md`, Korean to `_labs_ko/<stack>/<slug>.md` - same slug, same folder.
+1. **Copy the skeleton.** [CONTRIBUTING.md → Copy this skeleton](CONTRIBUTING.md#copy-this-skeleton) has two paste-ready blocks. English goes to `_labs_en/<stack>/<slug>.md`, Korean to `_labs_ko/<stack>/<slug>.md` - same slug, same folder.
 2. **Fill the blanks and run it through Bob.** Eight front matter fields, five sections, in both languages. Run each Prompt against a shared [practice repo](CONTRIBUTING.md#practice-repositories) so a reviewer can reproduce your result. Never skip the Bob run - it is the one thing no tool can check for you.
 3. **Open a PR.** CI checks the format and that both languages exist; a reviewer checks it against [what makes a lab worth keeping](CONTRIBUTING.md#what-makes-a-lab-worth-keeping). `main` is protected, so everything lands through a PR - once merged, it is live.
 

@@ -4,7 +4,7 @@ url: "https://ce-aie-labs.github.io"
 baseurl: "/bob-labs"
 
 collections:
-  labs:
+  labs_en:
     output: true
     permalink: /en/labs/:path/
   labs_ko:
@@ -14,7 +14,7 @@ collections:
 defaults:
   - scope:
       path: ""
-      type: labs
+      type: labs_en
     values:
       layout: lab
   - scope:

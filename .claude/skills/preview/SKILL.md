@@ -31,7 +31,7 @@ otherwise dies on a gem called `ffi` without mentioning Ruby.
 
 Both languages sit behind a prefix; neither is the default. The bare root is a redirect stub to `/en/`, and the URL *below* `/bob-labs/` 404s because the site is built for a project path.
 
-Edits to `_labs/`, `_layouts/` and `assets/` rebuild automatically. Changes to
+Edits to `_labs_en/`, `_layouts/` and `assets/` rebuild automatically. Changes to
 `_config.yml` need a restart.
 
 ## What to check
