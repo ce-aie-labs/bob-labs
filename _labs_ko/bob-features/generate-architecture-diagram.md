@@ -31,7 +31,7 @@ docs/architecture/overview.md 파일로 저장해줘.
 - [ ] 여러 언어/서비스로 이루어진 레포라면 각 컴포넌트의 역할이나 언어가 표시됨
 - [ ] 다이어그램이 실제 파일(`docs/architecture/overview.md`)로 저장돼서, 위에 짧은 설명과 함께 GitHub에서 바로 렌더링되어 보임
 
-IBM의 공식 튜토리얼([Generate architecture diagrams](https://bob.ibm.com/docs/ide/tutorials/generate-architecture-diagrams), 공식 데모 레포인 Galaxium Travels - React + Python FastAPI + Java로 이루어진 폴리글랏 예약 시스템 - 기준)을 바탕으로 작성한 것이며, 직접 검증 실행한 것은 아니다.
+IBM 공식 Bob 튜토리얼 [Generate architecture diagrams](https://bob.ibm.com/docs/ide/tutorials/generate-architecture-diagrams) 기준입니다. 튜토리얼은 공식 데모 레포인 Galaxium Travels(React + Python FastAPI + Java로 이루어진 폴리글랏 예약 시스템)로 이 과정을 보여줍니다.
 
 <!-- Bob-verify: 스프링 부트 랩과 달리 이건 Bob은 물론 Claude Code로도 아직 한 번도 돌려보지 않은 상태. Bob의 공식 튜토리얼 문서(docs/bob/ide/tutorials/generate-architecture-diagrams.md)를 바탕으로 바로 작성함. 참가자에게 쓰기 전에 실제 Bob으로 - 생성된 Mermaid가 실제로 파싱/렌더링되는지까지 - 반드시 검증 필요. -->
 

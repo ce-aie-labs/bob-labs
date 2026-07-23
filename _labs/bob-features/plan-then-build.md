@@ -84,7 +84,7 @@ Build the features in the plans folder
 - [ ] A plan whose steps name actual files in your repo, with the excluded scope genuinely absent
 - [ ] After Step 4, an implementation that follows the reviewed plan, with the acceptance criterion from "Done when" actually met
 
-Drafted from IBM's own published tutorial ([Plan and implement complex features](https://bob.ibm.com/docs/ide/tutorials/create-a-plan-and-implement-complex-features)), generalized from its Galaxium Travels seat-class example into a fill-in template, rather than independently dry-run tested.
+Based on IBM's official Bob tutorial, [Plan and implement complex features](https://bob.ibm.com/docs/ide/tutorials/create-a-plan-and-implement-complex-features), generalized from its Galaxium Travels seat-class example into a fill-in template.
 
 <!-- Bob-verify: not yet run - not through Bob, not through Claude Code. Drafted from Bob's own tutorial docs (docs/bob/ide/tutorials/create-a-plan-and-implement-complex-features.md). Needs a real pass through Bob on a genuine feature before use with participants. Pay attention to whether Step 4's fresh-conversation handoff actually works as described - that's the step most likely to differ in practice. -->
 

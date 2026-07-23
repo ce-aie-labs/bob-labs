@@ -170,13 +170,13 @@ There is one sentence we give participants:
 
 | Time | Session |
 |---|---|
-| 0:00–0:30 | Setup + first success - clear every environment problem here |
-| 0:30–1:30 | Guided Labs |
-| 1:30–1:50 | Challenge Labs - the bridge to writing your own prompt |
-| 1:50–2:05 | Pick your work - **Bobathon** starts here |
-| 2:05–5:00 | **Bring Your Own Work** (the main event) |
-| 5:00–5:30 | Write up submission (Before/After) |
-| 5:30–6:30 | Showcase |
+| 0:00-0:30 | Setup + first success - clear every environment problem here |
+| 0:30-1:30 | Guided Labs |
+| 1:30-1:50 | Challenge Labs - the bridge to writing your own prompt |
+| 1:50-2:05 | Pick your work - **Bobathon** starts here |
+| 2:05-5:00 | **Bring Your Own Work** (the main event) |
+| 5:00-5:30 | Write up submission (Before/After) |
+| 5:30-6:30 | Showcase |
 
 Everything from "Pick your work" onward runs off the [Bobathon page](/en/bobathon/): the process, the rubric, and the submission.
 
@@ -212,7 +212,7 @@ What this event produces is not a ranking of people - it is **assets**.
 - **Phase 2 - Asset build-out**: All P0 (18 labs) · more Challenge Labs · all Cookbook categories · Showcase
 - **Phase 3 - Ongoing operation**: Feedback pipeline · P1/P2 assets · stack filters and search
 
-Current status: **Phase 1 started** - Jekyll site scaffolding, deployed to GitHub Pages via GitHub Actions, live with the first lab.
+Current status: **Phase 1 started** - Jekyll site scaffolding, deployed to GitHub Pages via GitHub Actions, live with the first four labs.
 
 ---
 
