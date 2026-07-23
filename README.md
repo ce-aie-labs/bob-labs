@@ -6,6 +6,8 @@
 **Live site: <https://ce-aie-labs.github.io/bob-labs/>** - English under `/en/`, Korean under `/ko/`. The bare root redirects to `/en/`; note the `/bob-labs/` base path (it is a GitHub Pages project site, so dropping the prefix 404s).
 
 > **Here to build assets?** Adding a lab is two Markdown files and no code. Jump straight to [Add a lab](#add-a-lab).
+>
+> **한국어 기여 가이드**: 랩 에셋을 만드는 자세한 방법은 [CONTRIBUTING.md](CONTRIBUTING.md)에 한국어로 정리돼 있습니다.
 
 The goal is for participants to reopen this site the week *after* the event.
 If it is a one-off training handout, it failed.
