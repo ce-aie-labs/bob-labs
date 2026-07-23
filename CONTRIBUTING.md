@@ -211,7 +211,7 @@ Same PR flow, branch prefix `feat/`, `fix/`, or `docs/` depending on what change
 
 CI checks that a lab is *well-formed*. It cannot check that it is *worth keeping* - that is what review is for, and it is the same bar whether you are writing the lab or reviewing someone else's. A lab merges only when every line below is yes.
 
-- [ ] **Replaces real repetitive work.** `work_replaced` names something a developer actually does over and over, not a scenario contrived to show off a feature. If you can't state the repetitive task in one line, it isn't a lab.
+- [ ] **Shows a genuinely useful way to use Bob.** The lab produces a real result a developer wants, not a scenario contrived to show off a feature. `work_replaced` names the kind of work it helps with. If you can't say in one line what it's good for, it isn't a lab.
 - [ ] **First result in five minutes, by copy-paste.** Someone lands on the page, copies the Prompt, and has something useful before they'd have given up. No setup essay, no "read this first."
 - [ ] **A stranger can reuse it.** Nothing depends on your machine, your private repo, or context only you have. Running against a [practice repo](#practice-repositories) is what makes this true - use one.
 - [ ] **The Before/After is obvious.** `expected_saving` is concrete and believable (`30 min → 5 min`), and the Expected Output actually shows what "after" looks like.

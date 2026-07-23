@@ -21,7 +21,7 @@ Do not introduce a different framework or build tooling on your own - ask first.
 
 To add one Lab / Recipe, you're always producing **two files**, one asset:
 
-1. Write in one line **which repetitive task this replaces**. If you can't, don't build it.
+1. Write in one line **what this shows someone how to do with Bob**, and the useful result it produces. If you can't, don't build it.
 2. Place the English file at `_labs/<stack>/<slug>.md` and the Korean file at `_labs_ko/<stack>/<slug>.md` - same relative path, mirrored, one file per asset per language. These are Jekyll collections, so the underscore prefix is required on both - don't rename either to `content/`.
    The branch name keeps the hyphenated form (`content/<stack>-<slug>`) as a label only - it doesn't need to match the physical folders, e.g. branch `content/spring-boot-explain-repo` holds both `_labs/spring-boot/explain-repo.md` and `_labs_ko/spring-boot/explain-repo.md`.
 3. In each file's front matter, set `lang: en` or `lang: ko` - this is what templates and CI key off, not the folder name.
