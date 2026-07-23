@@ -67,7 +67,7 @@ cat <<BANNER
   ${url} redirects to /en/. Note the /bob-labs/ prefix - without it you get
   a 404, because the site is built for a project path rather than a domain root.
 
-  Edits to _labs/, _layouts/ and assets/ rebuild automatically.
+  Edits to _labs_en/, _layouts/ and assets/ rebuild automatically.
   Changes to _config.yml need a restart.
 
   Ctrl-C to stop.

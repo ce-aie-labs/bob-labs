@@ -7,7 +7,7 @@ Thanks for helping build this out. This document is the detailed version of the 
 Before you build anything, spend your first hour proving the whole loop works end to end for you. Every lab you write afterwards is this same loop at volume.
 
 1. **Get Bob running and signed in.** If your access isn't sorted, raise it immediately - it is the one thing that blocks everything and cannot be worked around. Don't start drafting around it.
-2. **Run the reference lab yourself.** Open `_labs/spring-boot/explain-repo.md`, clone [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic), and run its Prompt through Bob against that repo. Compare what you get to the lab's Expected Output. This is exactly the loop you repeat for every lab - feel it once before writing your own.
+2. **Run the reference lab yourself.** Open `_labs_en/spring-boot/explain-repo.md`, clone [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic), and run its Prompt through Bob against that repo. Compare what you get to the lab's Expected Output. This is exactly the loop you repeat for every lab - feel it once before writing your own.
 3. **Skim the three reference shapes** in [Reference assets](#reference-assets) so you know which one to copy.
 4. **Ship your first lab in week 1.** Pick the *smallest* lab you own, not the most interesting one. The point of week 1 is to get one bilingual pair all the way through CI and review, so any blocker shows up now instead of in week 4.
 
@@ -24,7 +24,7 @@ Before you build anything, spend your first hour proving the whole loop works en
 
 One asset is **two files, added together in one commit/PR**:
 
-- `_labs/<stack>/<slug>.md` - English
+- `_labs_en/<stack>/<slug>.md` - English
 - `_labs_ko/<stack>/<slug>.md` - Korean
 
 Both are required. Korean customers paste Bob prompts in Korean too, so the Korean file isn't a translation of the English one's Prompt - write it the way an actual Korean-speaking participant would type it.
@@ -45,7 +45,7 @@ The `validate-content` CI check enforces all of this automatically, including th
 
 The fastest start: paste each block into its file and fill the blanks. Every field and every section is required - leave none empty or CI rejects the PR. Delete the `<!-- comments -->` as you replace them. Note the differences in the Korean file: headings, `difficulty`, `duration`, `work_replaced` and `expected_saving` are written in Korean, but `lang`, `category` and `stack` values stay exactly as shown.
 
-**`_labs/<stack>/<slug>.md`** (English)
+**`_labs_en/<stack>/<slug>.md`** (English)
 
 ````markdown
 ---
@@ -131,9 +131,9 @@ Three complete pairs to copy from, covering three different shapes:
 
 | Reference | Shape |
 |---|---|
-| `_labs/spring-boot/explain-repo.md` | Stack-tied (`stack: Java, Spring Boot`), single prompt |
-| `_labs/bob-features/generate-architecture-diagram.md` | Stack-agnostic (`stack: Any`), single prompt, demos a Bob capability |
-| `_labs/bob-features/plan-then-build.md` | Multi-step - four sequential prompts as `### Step N` subheadings inside `## Prompt`, each with a checkpoint |
+| `_labs_en/spring-boot/explain-repo.md` | Stack-tied (`stack: Java, Spring Boot`), single prompt |
+| `_labs_en/bob-features/generate-architecture-diagram.md` | Stack-agnostic (`stack: Any`), single prompt, demos a Bob capability |
+| `_labs_en/bob-features/plan-then-build.md` | Multi-step - four sequential prompts as `### Step N` subheadings inside `## Prompt`, each with a checkpoint |
 
 Each has a `_labs_ko/` counterpart at the same path. `README.md`'s "Content unit spec" has the full field/section reference.
 

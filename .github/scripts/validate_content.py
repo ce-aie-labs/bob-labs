@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate that every changed _labs(_ko)/**/*.md file has the full content
+"""Validate that every changed _labs_en(_ko)/**/*.md file has the full content
 spec in its own language, and that its bilingual sibling exists."""
 
 import os
@@ -27,8 +27,8 @@ REQUIRED_SECTIONS = {
 }
 
 COLLECTION_ROOTS = {
-    "_labs": ("_labs_ko", "en", "ko"),
-    "_labs_ko": ("_labs", "ko", "en"),
+    "_labs_en": ("_labs_ko", "en", "ko"),
+    "_labs_ko": ("_labs_en", "ko", "en"),
 }
 
 FRONT_MATTER_RE = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", re.DOTALL)
@@ -41,7 +41,7 @@ def changed_lab_files(base_ref):
     ).stdout.splitlines()
     return [
         f for f in diff
-        if (f.startswith("_labs/") or f.startswith("_labs_ko/")) and f.endswith(".md")
+        if (f.startswith("_labs_en/") or f.startswith("_labs_ko/")) and f.endswith(".md")
     ]
 
 
@@ -145,7 +145,7 @@ def main():
     base_ref = sys.argv[1] if len(sys.argv) > 1 else "origin/main"
     files = changed_lab_files(base_ref)
     if not files:
-        print("No _labs/**/*.md or _labs_ko/**/*.md files changed - nothing to validate.")
+        print("No _labs_en/**/*.md or _labs_ko/**/*.md files changed - nothing to validate.")
         return 0
 
     categories = load_categories()
