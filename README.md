@@ -3,6 +3,10 @@
 > This is not a training site.
 > It is a **playbook for replacing repetitive work with Bob**, validated through a hackathon.
 
+**Live site: <https://ce-aie-labs.github.io/bob-labs/>** - English under `/en/`, Korean under `/ko/`. The bare root redirects to `/en/`; note the `/bob-labs/` base path (it is a GitHub Pages project site, so dropping the prefix 404s).
+
+> **Here to build assets?** Adding a lab is two Markdown files and no code. Jump straight to [Add a lab](#add-a-lab).
+
 The goal is for participants to reopen this site the week *after* the event.
 If it is a one-off training handout, it failed.
 
@@ -218,7 +222,7 @@ These need to be settled before real work starts.
 
 - [x] **Bob's actual capability surface** - agent execution / context injection / external tool integration. Reference is [bob.ibm.com/docs/ide](https://bob.ibm.com/docs/ide) and [bob.ibm.com/docs/shell](https://bob.ibm.com/docs/shell) - use it when writing a lab's Prompt/Expected Output. A local Markdown mirror exists at `docs/bob/` for whoever has fetched it (gitignored, not shipped with the repo - `docs/` is local-only, see "Repository" below).
 - [x] **Target audience** - **customers**, and not currently highly technical. This is why P0 skews toward low-floor repetitive work (documents, repository understanding, code review) rather than advanced infrastructure or AI topics, and why everything outside "Must cover" in [Stack coverage](#stack-coverage) is out of scope for the first event.
-- [ ] **Practice repositories** - build one per stack, or point at public open source? Now unblocked by the audience decision above: customers may not be able to bring their own code to a shared event for IP reasons, which argues for supplying practice repos.
+- [ ] **Practice repositories** - split into two questions. **For authoring the labs: decided** - a fixed shortlist of public repos, one per must-cover stack, listed in [CONTRIBUTING.md](CONTRIBUTING.md#practice-repositories). Every lab runs its Prompt against that shared set, so inputs are consistent and a reviewer can reproduce any Expected Output. **For the event day: still open** - customers may not be able to bring their own code to a shared event for IP reasons, which argues for supplying practice repos on the day; settle once the audience's constraints are known.
 - [x] **Challenge Labs** - kept, but as a `difficulty` value rather than a site section, with help behind progressive disclosure instead of withheld entirely. They are the bridge from Guided to Bring Your Own Work, so dropping them would make the main event harder for this audience, not easier. The first-event block is 20 minutes rather than 45, and the 25 minutes go to Bring Your Own Work.
 - [ ] **Event size and duration** - the timeline above assumes a 6.5-hour day.
 - [x] **Site implementation** - Jekyll, built and deployed via GitHub Actions to GitHub Pages (not GitHub's legacy auto-build, so we aren't limited to the `github-pages` gem's plugin whitelist). Adding an asset is a single PR that lands on the site automatically once merged.
@@ -255,8 +259,12 @@ The `_labs/`/`_labs_ko/` underscore prefixes are required (it's how Jekyll recog
 
 ---
 
-## Contributing
+## Add a lab
 
-Every change goes through a PR - `main` is never committed to directly, and it's enforced by branch protection.
+Adding an asset is writing **two Markdown files - no code, no HTML, no CSS.** The site renders each new lab, lists it on the homepage, wires it into the filters, and gives every prompt a copy button, all automatically. You never touch a template or a stylesheet.
 
-See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide: branch naming, the bilingual asset workflow, front matter fields, and what gets merged. Opening a PR picks up `.github/PULL_REQUEST_TEMPLATE.md` automatically.
+1. **Copy the skeleton.** [CONTRIBUTING.md → Copy this skeleton](CONTRIBUTING.md#copy-this-skeleton) has two paste-ready blocks. English goes to `_labs/<stack>/<slug>.md`, Korean to `_labs_ko/<stack>/<slug>.md` - same slug, same folder.
+2. **Fill the blanks and run it through Bob.** Eight front matter fields, five sections, in both languages. Run each Prompt against a shared [practice repo](CONTRIBUTING.md#practice-repositories) so a reviewer can reproduce your result. Never skip the Bob run - it is the one thing no tool can check for you.
+3. **Open a PR.** CI checks the format and that both languages exist; a reviewer checks it against [what makes a lab worth keeping](CONTRIBUTING.md#what-makes-a-lab-worth-keeping). `main` is protected, so everything lands through a PR - once merged, it is live.
+
+First time here? Start with [CONTRIBUTING.md → Start here (day 1)](CONTRIBUTING.md#start-here-day-1) - it walks you through your first lab end to end. The full guide (branch naming, every rule) is in **[CONTRIBUTING.md](CONTRIBUTING.md)**; opening a PR picks up `.github/PULL_REQUEST_TEMPLATE.md` automatically.
