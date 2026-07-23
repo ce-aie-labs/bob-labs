@@ -30,10 +30,12 @@ Reference pairs to copy from - see CONTRIBUTING.md for which shape fits:
 - [ ] English: `Problem → Prompt → Expected Output → Tips → Variations` - all five sections filled, none skipped
 - [ ] Korean: `문제 → 프롬프트 → 기대 결과 → 팁 → 응용` - all five sections filled, none skipped
 - [ ] All 5 metadata fields as YAML front matter in each file: `difficulty`, `duration`, `stack`, `work_replaced`, `expected_saving`
+- [ ] Prompt run against one of the shared [practice repositories](../../blob/main/CONTRIBUTING.md#practice-repositories), so a reviewer can reproduce the Expected Output
 - [ ] Each language's Prompt actually run through Bob in that language, Expected Output written from what was observed (not translated from the other file)
 - [ ] One asset per commit / PR - both language files together
 - [ ] `git status` confirms `NOTE.md` and `docs/` are not staged
+- [ ] Passes the merge bar: [What makes a lab worth keeping](../../blob/main/CONTRIBUTING.md#what-makes-a-lab-worth-keeping)
 
-The `validate-content` CI check enforces the title/lang/spec/front-matter items and the bilingual pairing automatically.
+The `validate-content` CI check enforces the title/lang/spec/front-matter items and the bilingual pairing automatically. The two links above are the parts CI can't check - a reviewer does.
 
-See `README.md`'s "Content unit spec" and "Contributing" sections, and `AGENTS.md`'s "Adding content", for the full rules.
+See `README.md`'s "Content unit spec" and "Add a lab" sections, and `AGENTS.md`'s "Adding content", for the full rules.
