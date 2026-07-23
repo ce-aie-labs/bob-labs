@@ -9,9 +9,9 @@ labels: asset
 
 <!-- e.g. Java - Spring Boot -->
 
-## What repetitive task will this replace?
+## What does this show someone how to do with Bob?
 
-<!-- One line. If you can't answer this, don't build it. -->
+<!-- One line - the useful result it produces. If you can't answer this, don't build it. -->
 
 ## Where the files go
 
