@@ -31,7 +31,7 @@ short description above the diagram code block.
 - [ ] For a multi-language or multi-service repo, each component's role or language called out
 - [ ] The diagram saved as a real file (`docs/architecture/overview.md`), with a short description above the Mermaid block, viewable rendered directly on GitHub
 
-Drafted from IBM's own published tutorial ([Generate architecture diagrams](https://bob.ibm.com/docs/ide/tutorials/generate-architecture-diagrams), using the official Galaxium Travels demo repo - a React + Python FastAPI + Java polyglot booking system) rather than independently dry-run tested.
+Based on IBM's official Bob tutorial, [Generate architecture diagrams](https://bob.ibm.com/docs/ide/tutorials/generate-architecture-diagrams), which walks through this on the official Galaxium Travels demo repo - a React + Python FastAPI + Java polyglot booking system.
 
 <!-- Bob-verify: unlike the Spring Boot lab, this one hasn't been run at all yet - not through Bob, not through Claude Code. It's drafted directly from Bob's own published tutorial docs (docs/bob/ide/tutorials/generate-architecture-diagrams.md). Needs a real pass through Bob - including confirming the generated Mermaid actually parses/renders - before it's trusted for participants. -->
 

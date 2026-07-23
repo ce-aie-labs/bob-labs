@@ -31,7 +31,7 @@ To add one Lab / Recipe, you're always producing **two files**, one asset:
    - English: `Problem → Prompt → Expected Output → Tips → Variations`
    - Korean: `문제 → 프롬프트 → 기대 결과 → 팁 → 응용`
    **Never skip a section, in either language.**
-6. Attach all six front matter fields in each file - `title`, `lang`, `difficulty`, `duration`, `stack`, `work_replaced`, `expected_saving`. A CI check (`validate-content`) blocks the PR if any field or section is missing in either file, or if one language's file exists without its sibling.
+6. Attach all eight front matter fields in each file - `title`, `lang`, `category`, `difficulty`, `duration`, `stack`, `work_replaced`, `expected_saving`. A CI check (`validate-content`) blocks the PR if any field or section is missing in either file, or if one language's file exists without its sibling.
 7. Actually run each language's prompt through Bob and write its Expected Output from **what you observed in that language**, not a translation of the other file's output.
    If you can't run Bob yet (drafting from [bob.ibm.com/docs](https://bob.ibm.com/docs) or the local `docs/bob/` mirror instead), that's fine as a starting draft - but say so explicitly with a `<!-- Bob-verify: ... -->` comment on the Expected Output, and get a real Bob pass before the asset is used with actual participants.
 8. One asset = one commit (or one PR) = **both language files together**. Don't mix several assets into one commit.

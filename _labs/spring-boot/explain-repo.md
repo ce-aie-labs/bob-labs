@@ -29,7 +29,7 @@ new REST endpoint or a new entity)?
 - [ ] Concrete build & run commands for whichever build tool(s) the repo has, plus where the app listens once it's running
 - [ ] Concrete guidance on where a new entity or endpoint would go, pointing at a specific existing class as the pattern to copy
 
-Validated against [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic): the response named the actual tech stack (Java 17, Spring Boot, Spring MVC, Spring Data JPA + Hibernate, Thymeleaf, H2/MySQL/Postgres), broke the code down by real package (`model`, `owner`, `vet`, `system`) with the classes in each, gave the real `./mvnw spring-boot:run` / `./gradlew bootRun` commands, and pointed at `VetController`'s existing REST endpoint as the pattern for adding a new one.
+Checked against [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic): the response named the actual tech stack (Java 17, Spring Boot, Spring MVC, Spring Data JPA + Hibernate, Thymeleaf, H2/MySQL/Postgres), broke the code down by real package (`model`, `owner`, `vet`, `system`) with the classes in each, gave the real `./mvnw spring-boot:run` / `./gradlew bootRun` commands, and pointed at `VetController`'s existing REST endpoint as the pattern for adding a new one.
 
 <!-- Bob-verify: this Expected Output was validated by running the prompt as an agent (Claude Code) against spring-petclinic, since Bob wasn't reachable from this environment. Give it one real pass through Bob before merging to confirm the response shape matches. -->
 

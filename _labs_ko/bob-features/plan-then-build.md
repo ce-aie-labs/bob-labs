@@ -84,7 +84,7 @@ plans 폴더에 있는 계획대로 구현해줘
 - [ ] 각 단계가 내 레포의 실제 파일을 짚고 있고, 제외한 범위는 정말로 빠져있는 계획
 - [ ] 4단계 후, 리뷰한 계획을 따라간 구현. "완료 기준"에 적은 조건이 실제로 충족됨
 
-IBM 공식 튜토리얼([Plan and implement complex features](https://bob.ibm.com/docs/ide/tutorials/create-a-plan-and-implement-complex-features))을 바탕으로, 튜토리얼의 Galaxium Travels 좌석 등급 예시를 채워 쓰는 템플릿 형태로 일반화해서 작성한 것이며, 직접 검증 실행한 것은 아니다.
+IBM 공식 Bob 튜토리얼 [Plan and implement complex features](https://bob.ibm.com/docs/ide/tutorials/create-a-plan-and-implement-complex-features) 기준입니다. 튜토리얼의 Galaxium Travels 좌석 등급 예시를 채워 쓰는 템플릿 형태로 일반화했습니다.
 
 <!-- Bob-verify: 아직 한 번도 안 돌려봤음. Bob도, Claude Code도. Bob 공식 튜토리얼 문서(docs/bob/ide/tutorials/create-a-plan-and-implement-complex-features.md) 기반으로 작성. 참가자에게 쓰기 전에 실제 기능으로 Bob에서 검증 필요. 특히 4단계의 새 대화 인계가 설명대로 동작하는지 확인할 것 - 실제와 가장 다를 수 있는 지점. -->
 

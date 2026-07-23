@@ -29,7 +29,7 @@ expected_saving: 30분 → 5분
 - [ ] 레포지토리에 있는 빌드 도구별 실제 빌드/실행 명령어, 그리고 실행 후 앱이 어디서 응답하는지
 - [ ] 새 엔티티나 엔드포인트를 추가할 때 어디를 봐야 하는지에 대한 구체적인 안내, 참고할 기존 클래스를 콕 집어서
 
-[spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic)으로 검증: 실제 기술 스택(Java 17, Spring Boot, Spring MVC, Spring Data JPA + Hibernate, Thymeleaf, H2/MySQL/Postgres)을 정확히 짚어냈고, 실제 패키지(`model`, `owner`, `vet`, `system`) 단위로 각 패키지의 클래스까지 짚어 코드 구조를 설명했으며, 실제 `./mvnw spring-boot:run` / `./gradlew bootRun` 명령어를 제시했고, 새 엔드포인트를 추가하는 패턴으로 `VetController`의 기존 REST 엔드포인트를 짚어줬다.
+[spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic)으로 확인: 실제 기술 스택(Java 17, Spring Boot, Spring MVC, Spring Data JPA + Hibernate, Thymeleaf, H2/MySQL/Postgres)을 정확히 짚어냈고, 실제 패키지(`model`, `owner`, `vet`, `system`) 단위로 각 패키지의 클래스까지 짚어 코드 구조를 설명했으며, 실제 `./mvnw spring-boot:run` / `./gradlew bootRun` 명령어를 제시했고, 새 엔드포인트를 추가하는 패턴으로 `VetController`의 기존 REST 엔드포인트를 짚어줬다.
 
 <!-- Bob-verify: 이 기대 결과는 이 환경에서 Bob에 접근할 수 없어 Claude Code로 spring-petclinic에 대해 (영어 프롬프트로) 대신 검증한 뒤 한국어로 옮긴 것. 병합 전에 실제 한국어 프롬프트로 Bob에 돌려서 응답 형태가 같은지 확인 필요. -->
 

@@ -1,6 +1,6 @@
 # Contributing to IBM Bob Labs
 
-Thanks for helping build this out. This document is the detailed version of the rules in `README.md`'s "Contributing" section and `AGENTS.md`.
+Thanks for helping build this out. This document is the detailed version of the rules in `README.md`'s "Add a lab" and "Content unit spec" sections and `AGENTS.md`.
 
 ## Start here (day 1)
 
@@ -8,7 +8,7 @@ Before you build anything, spend your first hour proving the whole loop works en
 
 1. **Get Bob running and signed in.** If your access isn't sorted, raise it immediately - it is the one thing that blocks everything and cannot be worked around. Don't start drafting around it.
 2. **Run the reference lab yourself.** Open `_labs/spring-boot/explain-repo.md`, clone [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic), and run its Prompt through Bob against that repo. Compare what you get to the lab's Expected Output. This is exactly the loop you repeat for every lab - feel it once before writing your own.
-3. **Skim the four reference shapes** in [Reference assets](#reference-assets) so you know which one to copy.
+3. **Skim the three reference shapes** in [Reference assets](#reference-assets) so you know which one to copy.
 4. **Ship your first lab in week 1.** Pick the *smallest* lab you own, not the most interesting one. The point of week 1 is to get one bilingual pair all the way through CI and review, so any blocker shows up now instead of in week 4.
 
 ## Ground rules
@@ -198,7 +198,7 @@ If you work with a coding agent in this repository, `.claude/skills/preview/` te
 
 The repository has a dev container, so you can run the site without Ruby on your machine:
 
-- **In the browser**: on GitHub, `Code` → `Codespaces` → create one. Codespaces has to be enabled for the organisation first, so this cannot bill anyone by surprise.
+- **In the browser**: on GitHub, `Code` → `Codespaces` → create one. Codespaces has to be enabled for the organization first, so this cannot bill anyone by surprise.
 - **Locally**: VS Code with Docker, then `Reopen in Container`.
 
 Then `script/preview` as above. See `.devcontainer/README.md`.
