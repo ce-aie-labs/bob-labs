@@ -111,4 +111,4 @@ If any of the first three is "no", don't build it. Reusability beats asset count
 - Ship a prompt that requires reading an explanation to work. One copy button should be enough.
 - Write one-off examples that only apply in their own context.
 - Make decisions that depend on the open items at the bottom of `README.md`.
-- Build Java Modernization assets - it's a paid Bob premium package we don't have access to yet (see README's "Open decisions").
+- Ship a Java Modernization lab without marking it premium-gated. Bob's Java Modernization is a paid premium package, so these labs are allowed but must say so in the lab body (participants can only run them with the package enabled) and carry a `<!-- Bob-verify -->` note until run against the real package - we don't have access yet. See `_labs_en/migration/java-upgrade.md` for the pattern, and README's "Open decisions".
