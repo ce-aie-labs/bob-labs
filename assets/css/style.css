@@ -376,16 +376,25 @@ a {
   line-height: 1.25;
 }
 
+/* Section headings (문제 / 프롬프트 / ...). Carbon carries hierarchy by size,
+   and separates sections with a thin hairline rather than a big gap - so each
+   section opens on a 1px rule with an ink card-title, well above the 16px body
+   instead of the old 14px muted label that read smaller than the text under it. */
 .lab-detail h2 {
-  margin: 24px 0 8px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.16px;
-  color: var(--ink-subtle);
+  margin: 16px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.33;
+  letter-spacing: 0;
+  color: var(--ink);
 }
 
 .lab-detail h2:first-of-type {
   margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
 .lab-detail p,
