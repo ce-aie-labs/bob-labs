@@ -98,7 +98,7 @@ That address has to still be there. Step 2 told the workflow not to change the R
 
 ### Step 7 - Hand back whatever is left
 
-If any of the three lines is not green, give the workflow the file that explains it and let it keep going. That fix-build-fix loop is what the package is for, and stopping short of it is the most common way to waste the run.
+If any of the four lines is not green, give the workflow the file that explains it and let it keep going. That fix-build-fix loop is what the package is for, and stopping short of it is the most common way to waste the run.
 
 ```
 The build is not finished yet. Here is the output - find the cause and fix it,
@@ -117,16 +117,16 @@ Attach `build.log` for a build failure, `boot.log` if it builds but will not sta
 ```
   Modernization report   spring-petclinic-rest
 
-  [ OK ]  Build       BUILD SUCCESS
-  [ OK ]  Tests       169 passed · 0 disabled · 225 assertions
-  [ OK ]  Startup     HTTP 200  /petclinic/api/vets
+  [ OK ]  Build         BUILD SUCCESS
+  [ OK ]  Java version  87 classes at Java 21
+  [ OK ]  Tests         169 passed · 0 disabled · 225 assertions
+  [ OK ]  Startup       HTTP 200  /petclinic/api/vets
 
   What changed
-     Java bytecode             8  →  21
      Spring Boot               2.1.5.RELEASE  →  3.5.3
      Libraries                 52 of 87 at a different version
 
-  Finished?   3 / 3
+  Finished?   4 / 4
 ```
 
 - [ ] All **169 tests still running and passing**, with nothing disabled and no assertions dropped - `check.java` fails the Tests line if the count moved, so a green line here means the bar did not move

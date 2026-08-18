@@ -48,6 +48,7 @@ public class Check {
 
         header();
         String buildLog = checkBuild();
+        checkJavaVersion();
         checkTests(buildLog);
         checkStartup();
 
@@ -56,7 +57,7 @@ public class Check {
         writeResultJson();
     }
 
-    // ---- the three things that decide whether the work is finished --------
+    // ---- the four things that decide whether the work is finished ---------
 
     static String checkBuild() throws Exception {
         Check_ c = check(t("빌드", "Build"));
@@ -70,6 +71,31 @@ public class Check {
         if (exit == 0) c.pass("BUILD SUCCESS");
         else c.fail(firstError(out), t("자세한 내용은 build.log", "see build.log"));
         return out;
+    }
+
+    /**
+     * The artifact has to actually be compiled for the target, not merely declared
+     * for it. Without this a single build-plugin bump turns everything else green
+     * while the application is still exactly where it started.
+     */
+    static void checkJavaVersion() {
+        Check_ c = check(t("자바 버전", "Java version"));
+        Path classes = app.resolve("target/classes");
+        if (!Files.isDirectory(classes)) { c.skip(t("컴파일된 클래스가 없습니다", "nothing was compiled")); return; }
+        Map<Integer, Long> seen;
+        try (Stream<Path> s = Files.walk(classes)) {
+            seen = s.filter(x -> x.toString().endsWith(".class")).map(Check::majorVersion)
+                    .filter(v -> v > 0)
+                    .collect(Collectors.groupingBy(v -> v, TreeMap::new, Collectors.counting()));
+        } catch (IOException e) { c.skip(e.getMessage()); return; }
+        if (seen.isEmpty()) { c.skip(t("클래스 파일 없음", "no class files")); return; }
+
+        String found = seen.entrySet().stream()
+                .map(e -> t("Java " + jdkName(e.getKey()) + " " + e.getValue() + "개",
+                            e.getValue() + " classes at Java " + jdkName(e.getKey())))
+                .collect(Collectors.joining(", "));
+        if (seen.size() == 1 && seen.containsKey(TARGET_MAJOR)) c.pass(found);
+        else c.fail(found, t("목표는 Java " + jdkName(TARGET_MAJOR), "the target is Java " + jdkName(TARGET_MAJOR)));
     }
 
     /** Tests must still run, and must not have been weakened to get there. */
@@ -169,10 +195,6 @@ public class Check {
         Map<String, String> before = libraries(BEFORE_JAR);
         Map<String, String> after = libraries(built != null ? built : BEFORE_JAR);
 
-        int major = dominantBytecode();
-        changes.add(new String[]{t("Java 바이트코드", "Java bytecode"),
-                arrow("8", major > 0 ? jdkName(major) : "8", jdkName(TARGET_MAJOR))});
-
         String boot = springBootVersion();
         if (boot != null)
             changes.add(new String[]{"Spring Boot", arrow("2.1.5.RELEASE", boot, null)});
@@ -245,11 +267,14 @@ public class Check {
 
     static String verdict(int passed) {
         if (passed == checks.size())
-            return t("빌드·테스트·기동을 실제로 실행해서 확인했습니다.",
-                     "Build, tests and a real startup were all executed and verified.");
+            return t("바이트코드를 읽고, 빌드하고, 테스트를 돌리고, 앱을 띄워서 확인했습니다.",
+                     "Bytecode read, build run, tests run, application started - all of it executed.");
         if (state(t("빌드", "Build")) == -1 && dominantBytecode() < TARGET_MAJOR)
             return t("아직 현대화 전 상태입니다. 앱이 고장난 게 아니라 Java 21로 옮겨지지 않은 것입니다.",
                      "Still the original state - not a broken app, just one that has not moved to Java 21 yet.");
+        if (state(t("자바 버전", "Java version")) == -1)
+            return t("빌드는 통과했지만 산출물이 아직 Java " + jdkName(TARGET_MAJOR) + " 로 컴파일되지 않았습니다. 빌드가 도는 것과 현대화된 것은 다릅니다.",
+                     "The build passes but the artifact is not Java " + jdkName(TARGET_MAJOR) + " yet - a build that runs is not the same as one that moved.");
         if (state(t("테스트", "Tests")) == -1)
             return t("테스트가 약해졌습니다. 통과한 게 아니라 판정 기준이 낮아진 것입니다.",
                      "The tests were weakened - the bar moved, not the result.");
@@ -285,7 +310,7 @@ public class Check {
         void fail(String... d) { state = -1; detail = join(d); print("[FAIL]"); }
         void skip(String... d) { state = 0; detail = join(d); print("[ -- ]"); }
         String stateName() { return state == 1 ? "pass" : state == -1 ? "fail" : "not_run"; }
-        void print(String mark) { System.out.println("  " + mark + "  " + pad(name, 12) + detail); }
+        void print(String mark) { System.out.println("  " + mark + "  " + pad(name, 14) + detail); }
     }
     static String join(String[] d) { return String.join(" · ", d); }
     static Check_ check(String name) { Check_ c = new Check_(name); checks.add(c); return c; }
