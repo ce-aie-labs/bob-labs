@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Assemble the downloadable lab fixture from fixtures/petclinic/.
+# Assemble the downloadable lab attachment from attachments/petclinic/.
 #
 # Participants get a zip, not a repo link - no git, no GitHub account, no
 # company proxy problem, and nothing to clone on the day. The zip carries a
@@ -21,7 +21,7 @@ repo_root="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)" || repo_root=""
 }
 cd "$repo_root"
 
-src="fixtures/petclinic"
+src="attachments/petclinic"
 out="dist"
 name="bob-lab-petclinic"
 
@@ -66,5 +66,5 @@ mv "$stage/$name.zip" "$out/$name.zip"
 size="$(du -h "$out/$name.zip" | cut -f1)"
 printf '\n  %s  (%s)\n\n' "$out/$name.zip" "$size"
 printf 'Upload it to a GitHub Release so the lab pages can link to a stable URL:\n\n'
-printf '  gh release create fixture-$(date +%%Y%%m%%d) %s/%s.zip \\\n' "$out" "$name"
-printf '    --title "PetClinic lab fixture" --notes "Java 8 / Spring Boot 2.1.5 fixture for the Java modernization labs."\n\n'
+printf '  gh release create petclinic-$(date +%%Y%%m%%d) %s/%s.zip \\\n' "$out" "$name"
+printf '    --title "PetClinic lab attachment" --notes "Java 8 / Spring Boot 2.1.5 application for the Java modernization labs."\n\n'

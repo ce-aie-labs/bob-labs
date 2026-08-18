@@ -113,7 +113,7 @@ Bob에서 `app` 폴더를 열고 **Agent 모드**에서 이걸 넣으세요.
   완료 확인   0 / 3
 ```
 
-<!-- Bob-verify: 위 check.java 출력은 실제 값 - 배포되는 zip 을 새로 풀어 JDK 21 에서 돌려 캡처했다. Bob 응답 체크리스트는 fixture 의 실제 pom.xml 과 baseline-vulnerabilities.json 의 동결 스캔 결과에 근거하지만, 이 한국어 프롬프트를 Bob 에 직접 넣어본 적은 아직 없다. 참가자와 쓰기 전에 한국어로 실제 한 번 돌리고 체크리스트를 고칠 것. -->
+<!-- Bob-verify: 위 check.java 출력은 실제 값 - 배포되는 zip을 새로 풀어 JDK 21 에서 돌려 캡처했다. Bob 응답 체크리스트는 이 애플리케이션의 실제 pom.xml 과 baseline-vulnerabilities.json 의 동결 스캔 결과에 근거하지만, 이 한국어 프롬프트를 Bob 에 직접 넣어본 적은 아직 없다. 참가자와 쓰기 전에 한국어로 실제 한 번 돌리고 체크리스트를 고칠 것. -->
 
 ## 팁
 

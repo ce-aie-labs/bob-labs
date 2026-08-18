@@ -15,7 +15,7 @@ Moving a service from Java 8 to Java 21 is not one task. It is a dependency audi
 
 Bob's Java Modernization package runs those steps as a fixed workflow: it works out the dependencies itself, applies OpenRewrite recipes for the mechanical rewrites, looks up known vulnerabilities and repairs them as one of its own stages, and keeps building and fixing until it stops failing. This lab runs that workflow on a real application and then checks the result against the running app.
 
-**This is a paid premium package.** The workflow only starts on an account with Java Modernization enabled. Confirm that before you begin, or Step 2 does nothing.
+The workflow comes with Bob's Java Modernization premium package. Without it, do [Size Up a Legacy Java Application](../petclinic-assess/) instead - same application, twenty minutes, no package needed.
 
 ## Prompt
 
@@ -119,7 +119,6 @@ Attach `build.log` for a build failure, `boot.log` if it builds but will not sta
 
 ## Tips
 
-- Confirm the premium package is enabled before the session starts, not during it. Without it the prompt in Step 2 falls back to ordinary editing and the whole point of the lab is gone.
 - Step 3 is the lab. The workflow does the work, but where it lands is your call, and a target you did not choose is the easiest way to end up somewhere reasonable and wrong.
 - Recorded runs did not all land in the same place from the same starting point. Treat the first result as a draft to check rather than a delivery, which is what Step 5 is for.
 - Green tests are not a finished upgrade. The tests run in the build; the application starting is a separate fact, and the two come apart more often than you would expect.
