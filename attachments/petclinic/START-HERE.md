@@ -54,6 +54,7 @@ java check.java
 - `demo.html` 눈으로 보는 확인
 - `baseline-vulnerabilities.json` 동결된 취약점 목록 (재스캔이 아니라 대조용)
 - `build.log` `boot.log` `result.json` 은 `check.java` 가 만듭니다
+- `NOTICE.md` 이 앱의 출처와 라이선스 (Apache 2.0), 우리가 바꾼 것
 
 ---
 
