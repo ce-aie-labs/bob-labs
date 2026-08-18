@@ -35,6 +35,12 @@ exclude:
   - DESIGN.md
   - NOTE.md
   - docs
+  # Lab attachments are packaged into a zip by script/build-attachment and
+  # served from a GitHub Release, so publishing the source as loose files
+  # would only slow the build down.
+  - attachments
+  - script
+  - dist
   - Gemfile
   - Gemfile.lock
   - vendor

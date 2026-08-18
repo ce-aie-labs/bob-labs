@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# Assemble the downloadable lab attachment for the Java modernization labs.
+#
+# The application is NOT vendored into this repository. It is Spring PetClinic
+# REST, upstream and unchanged, so this script fetches it from upstream at a
+# pinned tag and layers our few files on top of it - rather than committing
+# ~11k lines of someone else's code here. What we actually own lives in
+# attachments/petclinic/:
+#
+#   check.java, START-HERE.md, NOTICE.md   - written for these labs
+#   overlay/                               - the only files we change on the app
+#                                            (Maven wrapper 3.9.9 + Apache LICENSE)
+#
+# Participants get a zip, not a repo link - no git, no GitHub account, no
+# company proxy problem, and nothing to clone on the day. The zip carries a
+# jar we built for them so the very first thing they do is watch the old app
+# work, which needs no build and no network.
+#
+# The jar is build output and belongs on a GitHub Release, not in git.
+#
+# Only JDK 21 is required. The app is Java 8 code, but javac 21 still compiles
+# to a Java 8 target - it is the test run that cannot survive JDK 21, which is
+# exactly what the lab is about, so tests are skipped here on purpose.
+set -euo pipefail
+
+# Upstream application, pinned. The vendored tree this replaced was verified to
+# match this tag byte for byte, except for the overlay/ files below.
+upstream_url="https://github.com/spring-petclinic/spring-petclinic-rest.git"
+upstream_ref="v2.1.5"
+upstream_sha="2cd2f9c7a3eee55d7c6d09fa100e02341ae27070"
+
+repo_root="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)" || repo_root=""
+[ -n "$repo_root" ] && [ -f "$repo_root/_config.yml" ] || {
+  printf '\nCould not locate the repository root from %s.\nRun this from inside a bob-labs checkout.\n\n' "$0" >&2
+  exit 1
+}
+cd "$repo_root"
+
+src="attachments/petclinic"
+out="dist"
+name="bob-lab-petclinic"
+
+die() { printf '\n%s\n\n' "$*" >&2; exit 1; }
+
+[ -d "$src/overlay" ] || die "$src/overlay not found. Nothing to layer onto the app."
+command -v java >/dev/null 2>&1 || die "No java on PATH. JDK 21 is required."
+command -v git  >/dev/null 2>&1 || die "No git on PATH. It is needed to fetch the app."
+
+java_major="$(java -version 2>&1 | head -1 | sed -n 's/.*version "\([0-9]*\).*/\1/p')"
+[ "${java_major:-0}" -ge 21 ] 2>/dev/null || die \
+"JDK 21 or newer is required to build the fixture jar (found ${java_major:-unknown}).
+
+  brew install --cask temurin@21     # or use sdkman: sdk install java 21-tem"
+
+stage="$(mktemp -d)"
+trap 'rm -rf "$stage"' EXIT
+work="$stage/$name"
+mkdir -p "$work"
+
+# Fetch the application from upstream at the pinned tag, then confirm we got the
+# exact commit - a moved tag would silently change what ships to participants.
+printf '\nFetching the application (%s %s)...\n' "$upstream_ref" "${upstream_sha:0:7}"
+app_src="$stage/app"
+git clone --depth 1 --branch "$upstream_ref" "$upstream_url" "$app_src" >/dev/null 2>&1 \
+  || die "Could not clone $upstream_url at $upstream_ref."
+got="$(git -C "$app_src" rev-parse HEAD)"
+[ "$got" = "$upstream_sha" ] || die \
+"Upstream $upstream_ref resolved to $got, not the pinned $upstream_sha.
+The tag may have moved. Verify the tree and update upstream_sha before shipping."
+rm -rf "$app_src/.git"
+
+# Layer on the only files we change: the Maven 3.9.9 wrapper (3.3.3 will not run
+# on JDK 21) and the Apache 2.0 licence text upstream does not ship at this tag.
+rm -f "$app_src/.mvn/wrapper/maven-wrapper.jar"
+(cd "$src/overlay" && find . -type f) | while read -r f; do
+  mkdir -p "$app_src/$(dirname "$f")"
+  cp "$src/overlay/$f" "$app_src/$f"
+done
+chmod +x "$app_src/mvnw"
+
+printf 'Building the legacy jar (this is the app as it is today)...\n'
+build_dir="$stage/build"
+cp -R "$app_src" "$build_dir"
+(cd "$build_dir" && ./mvnw -B -q clean package -DskipTests) \
+  || die "The fixture failed to build. Run it by hand in $build_dir to see why."
+
+jar="$(find "$build_dir/target" -maxdepth 1 -name '*.jar' ! -name '*-sources.jar' | head -1)"
+[ -n "$jar" ] || die "The build produced no jar."
+cp "$jar" "$work/petclinic-legacy.jar"
+
+# Everything the participant touches, minus build output.
+rsync -a --exclude target "$app_src/" "$work/app/"
+for f in START-HERE.md NOTICE.md check.java; do
+  [ -f "$src/$f" ] || die "$src/$f is missing."
+  cp "$src/$f" "$work/$f"
+done
+
+mkdir -p "$out"
+rm -f "$out/$name.zip"
+(cd "$stage" && zip -qr "$name.zip" "$name")
+mv "$stage/$name.zip" "$out/$name.zip"
+
+size="$(du -h "$out/$name.zip" | cut -f1)"
+printf '\n  %s  (%s)\n\n' "$out/$name.zip" "$size"
+printf 'Upload it as an asset on the fixed "lab-assets" Release so the lab pages\nlink to a stable URL. First time only, create the Release:\n\n'
+printf '  gh release create lab-assets \\\n'
+printf '    --title "Lab attachments" --notes "Downloadable zip attachments for the labs."\n\n'
+printf 'Then - and on every rebuild - upload the zip, replacing the existing asset:\n\n'
+printf '  gh release upload lab-assets %s/%s.zip --clobber\n\n' "$out" "$name"

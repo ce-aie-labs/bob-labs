@@ -106,7 +106,7 @@ Assets are prioritized by **the repetitive work they replace**, not by tech stac
 | Code Review | 2 | **1 built** - review my own changes (Challenge). Ideas: review someone else's PR |
 | Test Generation | 2 | Generate tests for an untested module |
 | Documentation | 2 | README, API docs, onboarding docs from code |
-| Migration | 3 | Spring Boot 2→3, legacy monolith - genuinely stack-specific |
+| Migration | 3 | **3 built** - Java upgrade workflow, plus the PetClinic pair (assess, then upgrade) that ships a downloadable attachment |
 | Data & Documents | 2 | Excel, API spec |
 
 **P1 - only after P0 is done.** 9 labs.

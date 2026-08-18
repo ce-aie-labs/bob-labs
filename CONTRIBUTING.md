@@ -169,9 +169,10 @@ Challenge 랩도 섹션은 동일합니다 - `## Prompt`만 형태가 다릅니�
 |---|---|
 | Java / Spring Boot | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) |
 | Java / 레거시 모놀리스 | [mybatis/jpetstore-6](https://github.com/mybatis/jpetstore-6) - Spring + MyBatis, 의도적으로 구형 |
+| Java / 마이그레이션 | `attachments/petclinic` - Spring PetClinic REST (Boot 2.1.5 / Java 8). 링크가 아니라 이 레포에 들어 있습니다. 참가자가 clone 없이 zip으로 받아 바로 시작해야 하고, 업그레이드 랩의 기대 결과가 특정 트리에 묶인 숫자(테스트 169개, 취약점 190건)라 버전이 고정돼야 하기 때문입니다. `script/build-attachment` 로 zip을 만듭니다 |
 | Python / FastAPI | [grillazz/fastapi-sqlalchemy-asyncpg](https://github.com/grillazz/fastapi-sqlalchemy-asyncpg) |
 | Frontend / React | [alan2207/bulletproof-react](https://github.com/alan2207/bulletproof-react) |
-| Data & Documents | OpenAPI 스펙: [Swagger Petstore](https://github.com/OAI/OpenAPI-Specification/blob/main/examples/v3.0/petstore.yaml). Excel: 첫 Data & Documents 랩과 함께 추가하는 `fixtures/` 아래 샘플 워크북 |
+| Data & Documents | OpenAPI 스펙: [Swagger Petstore](https://github.com/OAI/OpenAPI-Specification/blob/main/examples/v3.0/petstore.yaml). Excel: 첫 Data & Documents 랩과 함께 추가하는 `attachments/` 아래 샘플 워크북 |
 
 이 목록에 없는 repo가 정말 필요하면, 같은 PR에서 이 표에 한 줄 이유와 함께 추가하세요 - 조용히 다른 걸 가리키지 마세요, 다음 사람이 재현할 수 없습니다.
 
