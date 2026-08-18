@@ -138,7 +138,7 @@ Run the build as often as you like. Do not change the source yet.
   Finished?   0 / 4
 ```
 
-<!-- Bob-verify: the earlier, weaker Korean prompt was run through Bob and the top of this checklist comes from that answer, checked line by line against the source - the four file:line citations and every library version were correct. The prompt has since been strengthened to demand that things are actually run, and neither language has been through Bob in that form. Run both and turn the last two items into observations. -->
+<!-- Bob-verify: the top of this checklist came from an earlier, weaker Korean run, checked line by line against the source - the four file:line citations and every library version were correct. The strengthened Korean prompt (the KO sibling file) has since been run live on 2026-08-19, and its last two items - evidence of having run things, verified vs inferred - are now real observations. This English prompt has still not been run in this strengthened form. Run it and confirm the checklist before use with participants. -->
 
 ## Tips
 
