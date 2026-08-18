@@ -225,8 +225,7 @@ public class Check {
 
     static void header() {
         System.out.println();
-        System.out.println("  " + t("현대화 리포트", "Modernization report") + "   "
-                + app.toAbsolutePath().normalize().getFileName());
+        System.out.println("  " + t("현대화 리포트", "Modernization report") + "   " + artifactId());
         System.out.println();
     }
 
@@ -345,6 +344,15 @@ public class Check {
         }
     }
     static Path builtJarQuiet() { try { return builtJar(); } catch (IOException e) { return null; } }
+
+    /** The project's own name, rather than whatever the folder happens to be called. */
+    static String artifactId() {
+        Matcher m = Pattern.compile("<artifactId>([^<]+)</artifactId>").matcher(read(app.resolve("pom.xml")));
+        while (m.find()) {                        // skip the parent block if it comes first
+            if (!m.group(1).contains("starter-parent")) return m.group(1);
+        }
+        return app.toAbsolutePath().normalize().getFileName().toString();
+    }
 
     static String springBootVersion() {
         Matcher m = Pattern.compile("spring-boot-starter-parent</artifactId>\\s*<version>([^<]+)")

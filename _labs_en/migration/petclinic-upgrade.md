@@ -78,6 +78,8 @@ This does not read Bob's summary. It builds the project, reads the class files, 
 
 ### Step 6 - Open the newly built application at the same address
 
+**Stop the old application first** - Ctrl-C in the terminal from Step 3 of the first lab. It holds the same port, so the new one cannot start while it is up.
+
 This time you start the jar Bob just built. `check.java` printed its name at the end of Step 5.
 
 ```
@@ -110,9 +112,11 @@ Attach `build.log` for a build failure, `boot.log` if it builds but will not sta
 - [ ] A workflow with **named stages**, not one long edit - a task list that moves through building, fixing, vulnerabilities and validation, with `Fix Vulnerabilities` appearing without you asking for it
 - [ ] **OpenRewrite recipes actually applied** - Bob names the recipes it ran, and the `javax` → `jakarta` rewrite lands across the codebase in one pass instead of file by file
 - [ ] A **vulnerability lookup with results** - the packages it found, the versions it moved them to, and what it could not lift
-- [ ] `java check.java` reporting the move as fact, not as a claim:
+- [ ] `java check.java` reporting the move as fact, not as a claim (the versions and counts depend on where the workflow landed):
 
 ```
+  Modernization report   spring-petclinic-rest
+
   [ OK ]  Build       BUILD SUCCESS
   [ OK ]  Tests       169 passed · 0 disabled · 225 assertions
   [ OK ]  Startup     HTTP 200  /petclinic/api/vets

@@ -3,17 +3,17 @@ title: Size Up a Legacy Java Application
 lang: en
 category: Migration
 difficulty: Guided
-duration: 20 min
+duration: 30 min
 stack: Java, Spring Boot
 work_replaced: Pre-upgrade assessment of a legacy service
-expected_saving: 2 days → 20 min
+expected_saving: 2 days → 30 min
 ---
 
 ## Problem
 
 Somebody hands you a Java service nobody has opened in years. Before an upgrade can even be scheduled, someone has to work out what it is built on, what has aged out, what is exposed, and what has to move before what. That reading job takes a day or two, and it is usually the reason the upgrade keeps getting postponed.
 
-This lab gives you exactly such a service and gets you to that answer in twenty minutes. Nothing is modified, so it is safe to repeat, and it needs no add-on packages.
+This lab gives you exactly such a service and gets you to that answer in half an hour - installing Java and downloading the application included. With both already in place it is fifteen minutes. Nothing is modified, so it is safe to repeat, and it needs no add-on packages.
 
 ## Prompt
 
@@ -109,6 +109,8 @@ Do not change any code yet.
 `java check.java` on the untouched project prints:
 
 ```
+  Modernization report   spring-petclinic-rest
+
   [FAIL]  Build       maven-surefire-plugin:2.22.2:test ... There are test failures
   [ -- ]  Tests       tests never ran
   [ -- ]  Startup     no jar was built
@@ -126,7 +128,7 @@ Do not change any code yet.
 ## Tips
 
 - Zero of three is the expected starting score. It means the project has not moved to Java 21 yet, not that the application is broken - the API console in Step 3 is the proof of that, which is why that step comes first.
-- The build failure in Step 4 is genuinely cryptic: `The forked VM terminated without properly saying goodbye. Process Exit Code: 134`. Paste that line into Bob and ask what it means. Getting a straight answer out of an error message like that is most of what this tool is for.
+- Why the build failed is in `build.log`, and it is genuinely cryptic. Find the line starting `The forked VM terminated without properly saying goodbye`, paste it into Bob and ask what it means. Getting a straight answer out of an error message like that is half of what Bob is for. (The exit code printed after it differs between JVMs - ignore the number.)
 - If Bob answers in generalities - "update your dependencies, migrate to Jakarta EE" - it has not read the code. Ask it for the exact versions in `pom.xml` and it will go and look.
 - Ask why on the ordering. An upgrade plan you cannot defend to your own team is not a plan, and this is a question Bob answers well.
 - Keep the answer. The next lab runs the upgrade, and comparing what happened against this plan is the fastest way to see what the workflow did on its own.
