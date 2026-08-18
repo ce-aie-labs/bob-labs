@@ -78,6 +78,15 @@ Use `stack: Any` whenever the lab isn't genuinely tied to one language or framew
 
 Bob-capability demos - subagents, skills, MCP, Plan mode, diagram/report generation - go in `bob-features/`, not under a stack name.
 
+### Labs that need a code fixture
+
+Some labs run against a real codebase - the Java migration labs run against Spring PetClinic REST. **Do not commit that code into this repo.** It is third-party or bulky, it is not lab content, and this public content repo should not carry a copy of someone else's application (the same reason `docs/` is gitignored). Ship it as a download instead:
+
+1. Package the fixture as a zip and publish it as an asset on the fixed **`lab-assets` GitHub Release**. Participants download and unzip it - no clone, no GitHub account, and it works behind a company proxy.
+2. Link the lab to `releases/download/lab-assets/<name>.zip`. Keep every fixture on that one fixed tag and update it with `gh release upload lab-assets <zip> --clobber`, so the links never move - a repo-wide `releases/latest/...` pointer breaks the moment a second release exists.
+3. If the zip is built from source - a built jar, a patched app, a checker like `check.java` - keep the rebuild kit as a second `-src.zip` asset on the same Release, not in the repo, so anyone can rebuild it while the repo stays labs-only.
+4. Bring a third-party app in by reference, not by copy: clone it at a pinned upstream tag and layer your few changes on top rather than vendoring its tree. The Java lab does exactly this - see `bob-lab-petclinic-src.zip` on the Release for the pattern (pinned `v2.1.5`, a small `overlay/`, a `build.sh`).
+
 ## Running the site
 
 `script/preview` - it checks the Ruby version, installs dependencies on first run, and prints the URLs. The site lives at <http://127.0.0.1:4000/bob-labs/>; the bare root 404s. Ruby 3.0+ is required and macOS ships 2.6, which the script explains rather than failing on a gem. There is a dev container for running it without a local Ruby. See CONTRIBUTING.md.
@@ -112,3 +121,4 @@ If any of the first three is "no", don't build it. Reusability beats asset count
 - Write one-off examples that only apply in their own context.
 - Make decisions that depend on the open items at the bottom of `README.md`.
 - Ship a Java Modernization lab without marking it premium-gated. Bob's Java Modernization is a paid premium package, so these labs are allowed but must say so in the lab body (participants can only run them with the package enabled) and carry a `<!-- Bob-verify -->` note until run against the real package - we don't have access yet. See `_labs_en/migration/java-upgrade.md` for the pattern, and README's "Open decisions".
+- Commit a lab's code fixture - Java or any other source, built jars, a sample repo - into this repo. Package it as a zip on the `lab-assets` Release and link to it; source-bearing fixtures live on the Release, not in the tree. See "Labs that need a code fixture".
