@@ -22,17 +22,13 @@ Three files, all of them Maven wrapper scaffolding:
 
 Maven 3.3.3 dates from 2015 and will not run on JDK 21, so without this the lab would
 require a second JDK before anything could be built. **No application source, resource,
-test or `pom.xml` was touched** - the labs quote numbers taken from this exact tree (169
-tests, 190 known vulnerabilities), so it has to stay as it was.
+test or `pom.xml` was touched** - the labs quote numbers taken from this exact tree (169 tests,
+102 `@Test` methods, 225 assertions), so it has to stay as it was.
 
 ## Everything else in this folder
 
-`check.java`, `demo.html`, `START-HERE.md`, `NOTICE.md` and
-`baseline-vulnerabilities.json` were written for these labs and are part of
+`check.java`, `START-HERE.md` and `NOTICE.md` were written for these labs and are part of
 [IBM Bob Labs](https://github.com/ce-aie-labs/bob-labs).
 
-`baseline-vulnerabilities.json` is a **snapshot, not a live scan**: 190 findings recorded
-by `osv-scanner 2.4.0` against a frozen OSV database on 2026-08-06. It is there so
-`check.java` can tell you offline whether a vulnerable dependency version is still being
-shipped. It cannot tell you whether a *newer* version is clean - that is what Bob's own
-vulnerability lookup is for.
+`petclinic-legacy.jar` is `app/` built by `script/build-attachment`, shipped so the first
+thing anyone does is watch the application work rather than wait for a build.

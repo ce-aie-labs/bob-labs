@@ -29,14 +29,17 @@ Homebrew 가 없으면 같은 페이지에서 `.pkg` 를 받으세요. Apple Sil
 java -jar petclinic-legacy.jar
 ```
 
-## 2. `demo.html` 을 브라우저로 엽니다
+## 2. 브라우저로 확인합니다
 
-파일을 더블클릭하면 됩니다. 수의사와 반려동물 주인 목록이 뜨면 **앱이 살아있는 것**입니다.
-현대화가 끝난 뒤에도 이 화면이 똑같이 나와야 합니다. 그게 "동작을 보존했다"는 뜻입니다.
+<http://localhost:9966/petclinic/swagger-ui.html>
+
+앱이 원래 갖고 있는 API 콘솔입니다. 기능 목록이 뜨고, **Try it out** → **Execute** 를 누르면
+실제 응답이 옵니다. 이게 보이면 **앱이 살아있는 것**입니다.
+현대화가 끝난 뒤에도 같은 주소에서 같은 데이터가 나와야 합니다.
 
 ## 3. 지금 상태를 봅니다
 
-다른 터미널에서:
+앱은 켜둔 채로, 다른 터미널에서:
 
 ```bash
 java check.java
@@ -51,8 +54,6 @@ java check.java
 
 - `app/` 현대화할 소스
 - `check.java` 리포트 (`--ko` / `--en` 로 언어 강제)
-- `demo.html` 눈으로 보는 확인
-- `baseline-vulnerabilities.json` 동결된 취약점 목록 (재스캔이 아니라 대조용)
 - `build.log` `boot.log` `result.json` 은 `check.java` 가 만듭니다
 - `NOTICE.md` 이 앱의 출처와 라이선스 (Apache 2.0), 우리가 바꾼 것
 
@@ -72,11 +73,12 @@ No Java 21? On Windows take the `.msi` from
 ```bash
 java -version                     # should say 21
 java -jar petclinic-legacy.jar    # 1. start the app
-                                  # 2. open demo.html in a browser
-java check.java                   # 3. see where things stand
+java check.java                   # 2. in a second terminal: see where things stand
 ```
 
-If `demo.html` lists vets and owners, the app is alive. After the modernization it has to
-show the very same thing — that is what "behavior preserved" means.
+Then open <http://localhost:9966/petclinic/swagger-ui.html> — the API console the
+application ships with. Press **Try it out** on `GET /vets` and a real response comes back.
+After the modernization the same address has to return the same data; that is what
+"behavior preserved" means.
 
 What to do next is on the lab pages → <https://ce-aie-labs.github.io/bob-labs/>

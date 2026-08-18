@@ -19,3 +19,6 @@ __pycache__/
 
 # Fixture build output (43MB jar) - belongs on a GitHub Release
 dist/
+
+# Playwright MCP scratch output
+.playwright-mcp/

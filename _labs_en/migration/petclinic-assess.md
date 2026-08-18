@@ -58,17 +58,25 @@ It is important to see this before touching anything. The application is old, no
 java -jar petclinic-legacy.jar
 ```
 
-Then double-click `demo.html`. A list of vets and pet owners appears. Leave both running - you will come back to this page at the end of the next lab, and it has to look identical.
+It takes about five seconds. Then open this in a browser:
+
+```
+http://localhost:9966/petclinic/swagger-ui.html
+```
+
+That is the API console the application ships with. Everything this service offers is listed - `GET /vets`, `POST /owners`, `GET /pets` and the rest. Expand any of them, press **Try it out** and then **Execute**, and a real response comes back with six vets in it, by name.
+
+Leave the application running - you come back to this address at the end of the next lab.
 
 ### Step 4 - See where it stands
 
-In a second terminal, in the same folder:
+Leave that running and open a **second terminal** in the same folder:
 
 ```
 java check.java
 ```
 
-It builds the project on Java 21, reads the compiled bytecode, and reports back. The first run downloads libraries and takes a few minutes. Read the `What changed` block before moving on - the vulnerability count is the number worth remembering.
+It builds the project on Java 21, reads the compiled bytecode, and reports back. The first run downloads libraries and takes a few minutes. Everything it prints was obtained by running something, not by anyone claiming it.
 
 ### Step 5 - Ask Bob
 
@@ -109,16 +117,15 @@ Do not change any code yet.
      Java bytecode             8   (goal 21)
      Spring Boot               2.1.5.RELEASE
      Libraries                 0 of 87 at a different version
-     190 known vulnerabilities all 190 still shipped (CRITICAL 26)
 
   Finished?   0 / 3
 ```
 
-<!-- Bob-verify: check.java's output above is real - captured from a clean unzip of the shipped fixture on JDK 21. The Bob response checklist is drawn from the fixture's actual pom.xml and from the frozen vulnerability scan in baseline-vulnerabilities.json, but this English prompt has not been run through Bob yet. Run it and correct the checklist before using this with participants. -->
+<!-- Bob-verify: check.java's output above is real - captured from a clean unzip of the shipped zip on JDK 21. The Bob response checklist is drawn from the application's actual pom.xml and the dependency versions in the shipped jar, but this English prompt has not been run through Bob yet. Run it and correct the checklist before using this with participants. -->
 
 ## Tips
 
-- Zero of three is the expected starting score. It means the project has not moved to Java 21 yet, not that the application is broken - `demo.html` in Step 3 is the proof of that, which is why that step comes first.
+- Zero of three is the expected starting score. It means the project has not moved to Java 21 yet, not that the application is broken - the API console in Step 3 is the proof of that, which is why that step comes first.
 - The build failure in Step 4 is genuinely cryptic: `The forked VM terminated without properly saying goodbye. Process Exit Code: 134`. Paste that line into Bob and ask what it means. Getting a straight answer out of an error message like that is most of what this tool is for.
 - If Bob answers in generalities - "update your dependencies, migrate to Jakarta EE" - it has not read the code. Ask it for the exact versions in `pom.xml` and it will go and look.
 - Ask why on the ordering. An upgrade plan you cannot defend to your own team is not a plan, and this is a question Bob answers well.

@@ -53,7 +53,7 @@ cp "$jar" "$work/petclinic-legacy.jar"
 
 # Everything the participant touches, minus build output.
 rsync -a --exclude target --exclude .git "$src/app/" "$work/app/"
-for f in START-HERE.md NOTICE.md check.java demo.html baseline-vulnerabilities.json; do
+for f in START-HERE.md NOTICE.md check.java; do
   [ -f "$src/$f" ] || die "$src/$f is missing."
   cp "$src/$f" "$work/$f"
 done

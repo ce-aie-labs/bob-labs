@@ -27,7 +27,6 @@ public class Check {
     static final String[] HEALTH_PATHS = {"/petclinic/api/vets", "/api/vets", "/petclinic/api/vets/"};
     static final int BOOT_TIMEOUT_S = 120;
     static final Path BEFORE_JAR = Paths.get("petclinic-legacy.jar");
-    static final Path VULN_FILE = Paths.get("baseline-vulnerabilities.json");
 
     static Path app;
     static boolean ko = Locale.getDefault().getLanguage().equals("ko");
@@ -133,7 +132,11 @@ public class Check {
                                 HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + PORT + path))
                                         .timeout(Duration.ofSeconds(3)).GET().build(),
                                 HttpResponse.BodyHandlers.ofString());
-                        if (r.statusCode() == 200) { c.pass("HTTP 200  " + path); return; }
+                        if (r.statusCode() == 200) {
+                            c.pass("HTTP 200  " + path);
+                            howToRun(jar);
+                            return;
+                        }
                     } catch (Exception ignored) { }
                 }
                 Thread.sleep(2000);
@@ -144,6 +147,17 @@ public class Check {
             p.waitFor(15, java.util.concurrent.TimeUnit.SECONDS);
             p.destroyForcibly();
         }
+    }
+
+    /**
+     * The jar's name changes with the version, so print the command rather than
+     * making anyone work it out - and the address of the API console the
+     * application serves itself, which is the thing worth looking at.
+     */
+    static void howToRun(Path jar) {
+        say(t("직접 띄우려면:  java -jar " + jar, "run it yourself:  java -jar " + jar));
+        say(t("API 콘솔:      http://localhost:9966/petclinic/swagger-ui.html",
+              "API console:     http://localhost:9966/petclinic/swagger-ui.html"));
     }
 
     // ---- what changed, read off the built artifact ------------------------
@@ -171,8 +185,6 @@ public class Check {
                     t(before.size() + "개 중 " + changed + "개 버전 변경",
                       changed + " of " + before.size() + " at a different version")});
         }
-
-        vulnerabilityLine(after);
     }
 
     /** "a  →  b", or just the value with the goal in brackets when nothing moved yet. */
@@ -180,40 +192,6 @@ public class Check {
         if (!before.equals(after)) return before + "  →  " + after;
         return after + (goal == null || goal.equals(after) ? "" : t("   (목표 " + goal + ")", "   (goal " + goal + ")"));
     }
-
-    /**
-     * The frozen list records which dependency VERSIONS carried known vulnerabilities.
-     * All this can honestly say is whether those versions are still shipped. It is not
-     * a rescan: whether the replacement versions are clean is a question for Bob's own
-     * vulnerability lookup, which is a step of the Java Modernization workflow.
-     */
-    static void vulnerabilityLine(Map<String, String> after) {
-        if (!Files.isRegularFile(VULN_FILE) || after.isEmpty()) return;
-        Matcher m = Pattern.compile(
-                "\"severity\"\\s*:\\s*\"([A-Z]+)\"\\s*,\\s*\"package\"\\s*:\\s*\"([^\"]+)\"\\s*,\\s*\"version\"\\s*:\\s*\"([^\"]+)\"")
-                .matcher(read(VULN_FILE));
-        int total = 0, still = 0, criticalStill = 0;
-        while (m.find()) {
-            total++;
-            String artifact = m.group(2).contains(":") ? m.group(2).split(":")[1] : m.group(2);
-            if (m.group(3).equals(after.get(artifact))) {
-                still++;
-                if (m.group(1).equals("CRITICAL")) criticalStill++;
-            }
-        }
-        if (total == 0) return;
-        String detail = still == total
-                ? t(total + "건 그대로 (CRITICAL " + criticalStill + ")",
-                    "all " + total + " still shipped (CRITICAL " + criticalStill + ")")
-                : t((total - still) + "건이 붙어 있던 버전이 교체됨 · " + still + "건은 그대로",
-                    (total - still) + " were on versions that are gone · " + still + " unchanged");
-        changes.add(new String[]{t("알려진 취약점 " + total + "건", total + " known vulnerabilities"), detail});
-        footnote = t("취약점 줄은 동결된 목록과의 버전 대조입니다. 재스캔이 아니므로, 교체된 버전이 안전한지는 "
-                   + "Bob의 취약점 조회 결과로 확인하세요.",
-                     "That line compares versions against a frozen list. It is not a rescan - whether the "
-                   + "replacement versions are clean is what Bob's vulnerability lookup answers.");
-    }
-    static String footnote = null;
 
     /** artifactId -> version, read from the fat jar's bundled libraries. */
     static Map<String, String> libraries(Path jar) {
@@ -257,7 +235,6 @@ public class Check {
             System.out.println();
             System.out.println("  " + t("바뀐 것", "What changed"));
             for (String[] row : changes) System.out.println("     " + pad(row[0], 26) + row[1]);
-            if (footnote != null) System.out.println("     " + footnote);
         }
         int passed = (int) checks.stream().filter(x -> x.state == 1).count();
         System.out.println();

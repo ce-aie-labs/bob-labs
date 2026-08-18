@@ -76,9 +76,23 @@ java check.java
 
 This does not read Bob's summary. It builds the project, reads the class files, runs the tests, and starts the packaged application to ask it for a real response.
 
-### Step 6 - Open `demo.html` again
+### Step 6 - Open the newly built application at the same address
 
-Same file as the first lab. The runtime underneath has changed completely; the screen has to be identical - the same six vets, the same ten owners.
+This time you start the jar Bob just built. `check.java` printed its name at the end of Step 5.
+
+```
+java -jar app/target/<the-name-it-printed>.jar
+```
+
+Then open the **same address** as in the first lab:
+
+```
+http://localhost:9966/petclinic/swagger-ui.html
+```
+
+That address has to still be there. Step 2 told the workflow not to change the REST contract, and an address that moved means every other system calling this API is broken.
+
+**The page will look different.** The library that draws this console (springfox) cannot run on Spring Boot 3, so the workflow swapped it for a current one (springdoc) - a replacement nobody asked for. The skin is not the point. The endpoint list and the data behind it are: run `GET /vets` again and the same six vets come back.
 
 ### Step 7 - Hand back whatever is left
 
@@ -107,13 +121,12 @@ Attach `build.log` for a build failure, `boot.log` if it builds but will not sta
      Java bytecode             8  →  21
      Spring Boot               2.1.5.RELEASE  →  3.5.3
      Libraries                 52 of 87 at a different version
-     190 known vulnerabilities 190 were on versions that are gone · 0 unchanged
 
   Finished?   3 / 3
 ```
 
 - [ ] All **169 tests still running and passing**, with nothing disabled and no assertions dropped - `check.java` fails the Tests line if the count moved, so a green line here means the bar did not move
-- [ ] `demo.html` showing the same vets and owners as before the upgrade
+- [ ] The API console still opens at the same address and `GET /vets` returns the same six vets as before - even though the library rendering that console was replaced
 
 <!-- Bob-verify: the workflow behaviour above - the stage names, the Boot 2.7 proposal in Step 3, the recipe and vulnerability stages - comes from 18 recorded runs of this premium workflow against this exact fixture, but those runs were driven with Korean prompts, so this English wording has not been run. The check.java output is real, captured by running the tool against a recorded successful result. Confirm the English prompt reaches the same workflow before using this with participants. -->
 
