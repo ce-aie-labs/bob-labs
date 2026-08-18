@@ -45,12 +45,16 @@
   {{ content }}
   <script>
     document.querySelectorAll("pre").forEach(function (block) {
+      // Capture the code before the button is appended - otherwise the button's
+      // own "Copy" label ends up in the copied text. textContent (not innerText)
+      // so it also works for prompts inside a still-closed <details>.
+      var code = block.textContent;
       var button = document.createElement("button");
       button.className = "copy-btn";
       button.type = "button";
       button.textContent = "Copy";
       button.addEventListener("click", function () {
-        navigator.clipboard.writeText(block.innerText).then(function () {
+        navigator.clipboard.writeText(code).then(function () {
           button.textContent = "Copied";
           setTimeout(function () { button.textContent = "Copy"; }, 1500);
         });
