@@ -7,8 +7,19 @@ Spring PetClinic REST — **Java 8 / Spring Boot 2.1.5**, 2019년 코드입니�
 **준비물은 JDK 21 하나뿐입니다.** Maven은 안 깔아도 됩니다.
 
 ```bash
-java -version    # 21 이 나와야 합니다
+java -version    # 첫 줄에 21 이 나와야 합니다
 ```
+
+## 0. Java 21 이 없다면
+
+**Windows** — <https://developer.ibm.com/languages/java/semeru-runtimes/downloads/> 에서
+**Version 21 · Windows · x64** 의 `.msi` 를 받아 실행합니다. 설치 옵션에서
+**Set JAVA_HOME variable** 과 **Add to PATH** 를 켜세요. 다 되면 열려 있는 터미널을
+**전부 닫고 새 PowerShell 을 여세요** — 기존 창은 예전 PATH 를 물고 있습니다.
+
+**macOS** — `brew install --cask semeru-jdk-open@21`
+Homebrew 가 없으면 같은 페이지에서 `.pkg` 를 받으세요. Apple Silicon 은 **aarch64**,
+인텔 맥은 **x64** 입니다.
 
 ---
 
@@ -52,6 +63,10 @@ Inside is one old Java application: Spring PetClinic REST, **Java 8 / Spring Boo
 code from 2019. It is not broken — it still runs fine. It is just old.
 
 **The only thing you need is JDK 21.** You do not need to install Maven.
+No Java 21? On Windows take the `.msi` from
+<https://developer.ibm.com/languages/java/semeru-runtimes/downloads/> and turn on
+*Set JAVA_HOME variable* and *Add to PATH*, then open a new terminal. On macOS run
+`brew install --cask semeru-jdk-open@21`.
 
 ```bash
 java -version                     # should say 21

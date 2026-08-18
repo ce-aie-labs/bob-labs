@@ -35,6 +35,12 @@ exclude:
   - DESIGN.md
   - NOTE.md
   - docs
+  # The lab fixture is packaged into a zip by script/build-fixture and served
+  # from a GitHub Release, so publishing its source as loose files would only
+  # slow the build down.
+  - fixtures
+  - script
+  - dist
   - Gemfile
   - Gemfile.lock
   - vendor
