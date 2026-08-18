@@ -15,13 +15,13 @@ Moving a service from Java 8 to Java 21 is not one task. It is a dependency audi
 
 Bob's Java Modernization package runs those steps as a fixed workflow: it works out the dependencies itself, applies OpenRewrite recipes for the mechanical rewrites, looks up known vulnerabilities and repairs them as one of its own stages, and keeps building and fixing until it stops failing. This lab runs that workflow on a real application and then checks the result against the running app.
 
-The workflow comes with Bob's Java Modernization premium package. Without it, do [Size Up a Legacy Java Application](../petclinic-assess/) instead - same application, twenty minutes, no package needed.
+The workflow comes with Bob's Java Modernization premium package. Without it, do [Size Up a Legacy Java Application](../petclinic-assess/) instead - same application, thirty minutes, no package needed.
 
 ## Prompt
 
 ### Step 1 - Start from the assessed project
 
-You need the unzipped `bob-lab-petclinic` folder from [Size Up a Legacy Java Application](../petclinic-assess/), with Java 21 installed and `java check.java` reporting `0 / 3`. That lab takes twenty minutes and its plan is what you will compare this run against.
+You need the unzipped `bob-lab-petclinic` folder from [Size Up a Legacy Java Application](../petclinic-assess/), with Java 21 installed and `java check.java` reporting `0 / 4`. That lab takes thirty minutes and its plan is what you will compare this run against.
 
 Open the `app` folder in Bob.
 
@@ -132,7 +132,7 @@ Attach `build.log` for a build failure, `boot.log` if it builds but will not sta
 - [ ] All **169 tests still running and passing**, with nothing disabled and no assertions dropped - `check.java` fails the Tests line if the count moved, so a green line here means the bar did not move
 - [ ] The API console still opens at the same address and `GET /vets` returns the same six vets as before - even though the library rendering that console was replaced
 
-<!-- Bob-verify: the workflow behaviour above - the stage names, the Boot 2.7 proposal in Step 3, the recipe and vulnerability stages - comes from 18 recorded runs of this premium workflow against this exact fixture, but those runs were driven with Korean prompts, so this English wording has not been run. The check.java output is real, captured by running the tool against a recorded successful result. Confirm the English prompt reaches the same workflow before using this with participants. -->
+<!-- Bob-verify: the workflow behaviour above - the stage names, the Boot 2.7 proposal in Step 3, the recipe and vulnerability stages - comes from 18 recorded runs of this premium workflow against this exact fixture, plus a live run on 2026-08-19 with the Korean prompt (the KO sibling file), which reached the same workflow and landed check.java at 4/4 (Boot 3.3.11, 169 tests, HTTP 200). This English wording has still not been run. Confirm the English prompt reaches the same workflow before using this with participants. -->
 
 ## Tips
 
