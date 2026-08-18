@@ -6,7 +6,7 @@ difficulty: Guided
 duration: 60 min
 stack: Java, Spring Boot
 work_replaced: Manual Java and Spring Boot version upgrade
-expected_saving: 1 week → 1 hour
+expected_saving: 7 days → 1 hour
 ---
 
 ## Problem

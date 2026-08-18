@@ -6,7 +6,7 @@ difficulty: 가이드
 duration: 60분
 stack: Java, Spring Boot
 work_replaced: 수동 Java · Spring Boot 버전 업그레이드
-expected_saving: 일주일 → 한 시간
+expected_saving: 7일 → 1시간
 ---
 
 ## 문제
