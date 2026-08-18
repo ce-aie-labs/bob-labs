@@ -170,6 +170,7 @@ Challenge 랩도 섹션은 동일합니다 - `## Prompt`만 형태가 다릅니�
 | Java / Spring Boot | [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) |
 | Java / 레거시 모놀리스 | [mybatis/jpetstore-6](https://github.com/mybatis/jpetstore-6) - Spring + MyBatis, 의도적으로 구형 |
 | Java / 마이그레이션 | Spring PetClinic REST (Boot 2.1.5 / Java 8), upstream `v2.1.5` 고정. 레포에 두지 않고 `lab-assets` GitHub Release의 `bob-lab-petclinic.zip` 으로 배포합니다 - 참가자가 clone 없이 zip으로 받아 바로 시작하고, 업그레이드 랩의 기대 결과가 특정 트리에 묶인 숫자(테스트 169개 등)라 버전이 고정돼야 하기 때문입니다. 재빌드 키트는 같은 Release의 `bob-lab-petclinic-src.zip`(`build.sh`) 입니다 |
+| Java / 프리미엄 워크플로 | Legacy Bookstore (Java 8 · Spring MVC 4.3 · JSF 2.2), Kiyeon 원작. Bob-for-Java 프리미엄 워크플로(Upgrade · Unit Testing · Vulnerabilities · UI Modernization) 랩의 픽스처. 레포에 두지 않고 `lab-assets` Release의 `bob-lab-bookstore.zip`(v1) · `bob-lab-bookstore-ui.zip`(UI용, `@ManagedBean` 주석본)으로 배포합니다. 소스 정본은 `enterprise/bob-for-java` 태그 `fixture/v1`·`fixture/v2-annotated`(재-export로 갱신) |
 | Python / FastAPI | [grillazz/fastapi-sqlalchemy-asyncpg](https://github.com/grillazz/fastapi-sqlalchemy-asyncpg) |
 | Frontend / React | [alan2207/bulletproof-react](https://github.com/alan2207/bulletproof-react) |
 | Data & Documents | OpenAPI 스펙: [Swagger Petstore](https://github.com/OAI/OpenAPI-Specification/blob/main/examples/v3.0/petstore.yaml). Excel: 첫 Data & Documents 랩과 함께 추가하는 `attachments/` 아래 샘플 워크북 |
