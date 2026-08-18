@@ -46,7 +46,7 @@ java -version
 
 ### Step 2 - 애플리케이션 받기
 
-**[bob-lab-petclinic.zip](https://github.com/ce-aie-labs/bob-labs/releases/latest/download/bob-lab-petclinic.zip)** (39 MB) 을 받아 압축을 풉니다. `START-HERE.md` 가 있는 그 폴더에서 터미널을 여세요.
+**[bob-lab-petclinic.zip](https://github.com/ce-aie-labs/bob-labs/releases/download/lab-assets/bob-lab-petclinic.zip)** (39 MB) 을 받아 압축을 풉니다. `START-HERE.md` 가 있는 그 폴더에서 터미널을 여세요.
 
 안에 든 건 2019년에 만들어진 동물병원 REST API 인 Spring PetClinic REST 입니다. 자바 파일 99개, 테스트 169개, Java 8, Spring Boot 2.1.5.
 

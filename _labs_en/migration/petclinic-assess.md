@@ -46,7 +46,7 @@ You want the first line to say `21`. Anything lower and the rest of the lab will
 
 ### Step 2 - Get the application
 
-Download **[bob-lab-petclinic.zip](https://github.com/ce-aie-labs/bob-labs/releases/latest/download/bob-lab-petclinic.zip)** (39 MB) and unzip it. Open a terminal in the unzipped folder - the one holding `START-HERE.md`.
+Download **[bob-lab-petclinic.zip](https://github.com/ce-aie-labs/bob-labs/releases/download/lab-assets/bob-lab-petclinic.zip)** (39 MB) and unzip it. Open a terminal in the unzipped folder - the one holding `START-HERE.md`.
 
 Inside is Spring PetClinic REST, a veterinary clinic API from 2019: 99 Java files, 169 tests, Java 8, Spring Boot 2.1.5.
 

@@ -65,6 +65,8 @@ mv "$stage/$name.zip" "$out/$name.zip"
 
 size="$(du -h "$out/$name.zip" | cut -f1)"
 printf '\n  %s  (%s)\n\n' "$out/$name.zip" "$size"
-printf 'Upload it to a GitHub Release so the lab pages can link to a stable URL:\n\n'
-printf '  gh release create petclinic-$(date +%%Y%%m%%d) %s/%s.zip \\\n' "$out" "$name"
-printf '    --title "PetClinic lab attachment" --notes "Java 8 / Spring Boot 2.1.5 application for the Java modernization labs."\n\n'
+printf 'Upload it as an asset on the fixed "lab-assets" Release so the lab pages\nlink to a stable URL. First time only, create the Release:\n\n'
+printf '  gh release create lab-assets \\\n'
+printf '    --title "Lab attachments" --notes "Downloadable zip attachments for the labs."\n\n'
+printf 'Then - and on every rebuild - upload the zip, replacing the existing asset:\n\n'
+printf '  gh release upload lab-assets %s/%s.zip --clobber\n\n' "$out" "$name"
