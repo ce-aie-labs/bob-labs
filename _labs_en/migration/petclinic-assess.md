@@ -100,11 +100,14 @@ Do not change any code yet.
 
 ## Expected Output
 
-- [ ] The real stack, named: Java 8, Spring Boot 2.1.5.RELEASE, Maven, Hibernate 5.3.10, embedded Tomcat 9.0.19, springfox-swagger 2.6.1 - read out of `pom.xml`, not a generic description of Spring applications
-- [ ] The `javax` → `jakarta` package rename explained as something Spring Boot 3 forces, with the places in *this* code that it lands on, rather than as a piece of trivia
-- [ ] A staged order rather than a single leap - Boot 2.1 → 2.7 → 3.x, because 2.7 is the last release still on `javax` and doing both moves at once means debugging two failures at the same time
-- [ ] Named vulnerable libraries with their pinned versions - `jackson-databind`, `tomcat-embed-core` 9.0.19, `snakeyaml`, `logback-core` 1.2.3, `postgresql` 42.2.5 are all in there
-- [ ] No files modified. If Bob started editing, say so and ask for the assessment first
+- [ ] The real stack with versions - Java 1.8, Spring Boot 2.1.5.RELEASE, Hibernate 5.3, Spring Security 5.1, Springfox Swagger2 2.6.1. Noticing that `pom.xml` never declares `java.version` and inherits the Boot BOM default is the sign it actually read the file
+- [ ] `javax` → `jakarta` given as **files and line numbers** - `BaseEntity.java:18` (persistence), `Owner.java:30` (validation), `OwnerRestController.java:21` (transaction), `Vets.java:21` (xml.bind). Locations, not a list of package names
+- [ ] A warning that **`javax.sql.DataSource` must be left alone** - it is JDK standard, and a blanket rename breaks seven JDBC repositories. This is the line that separates understanding from find-and-replace
+- [ ] What Spring Boot 3 removed - `WebSecurityConfigurerAdapter` → `SecurityFilterChain`, `@EnableGlobalMethodSecurity` → `@EnableMethodSecurity`, Springfox → springdoc-openapi
+- [ ] **jacoco `0.8.2` named as unable to handle Java 11+** - that is the real cause of the build failure from Step 4, answered without being asked
+- [ ] Vulnerable libraries by name, pinned version and CVE - `hsqldb 2.4.1` (CVE-2022-41853, RCE), `jackson-databind 2.9.x`, `mysql-connector-java 8.0.16`, and the Spring Boot BOM itself (Spring4Shell, CVE-2022-22965)
+- [ ] The staged route 2.1 → 2.7 → 3.x **with the reason it cannot be one jump** - Boot 2.x is `javax`, Boot 3.x is `jakarta`, and no release supports both
+- [ ] Nothing modified. It should stop and ask before editing
 
 `java check.java` on the untouched project prints:
 
@@ -123,13 +126,14 @@ Do not change any code yet.
   Finished?   0 / 3
 ```
 
-<!-- Bob-verify: check.java's output above is real - captured from a clean unzip of the shipped zip on JDK 21. The Bob response checklist is drawn from the application's actual pom.xml and the dependency versions in the shipped jar, but this English prompt has not been run through Bob yet. Run it and correct the checklist before using this with participants. -->
+<!-- Bob-verify: this checklist comes from a real Bob run of the Korean prompt in _labs_ko, checked line by line against the source - the four file:line citations and every library version were correct. The English prompt above has not been run yet; run it and confirm it reaches the same answer. -->
 
 ## Tips
 
 - Zero of three is the expected starting score. It means the project has not moved to Java 21 yet, not that the application is broken - the API console in Step 3 is the proof of that, which is why that step comes first.
-- Why the build failed is in `build.log`, and it is genuinely cryptic. Find the line starting `The forked VM terminated without properly saying goodbye`, paste it into Bob and ask what it means. Getting a straight answer out of an error message like that is half of what Bob is for. (The exit code printed after it differs between JVMs - ignore the number.)
-- If Bob answers in generalities - "update your dependencies, migrate to Jakarta EE" - it has not read the code. Ask it for the exact versions in `pom.xml` and it will go and look.
+- Step 4 and Step 5 are the same story. `The forked VM terminated without properly saying goodbye` in `build.log` is not a message anyone reasons their way out of, and Bob names jacoco `0.8.2` as the cause without being asked. If it does not, paste the line in and ask. (The exit code after it differs between JVMs - ignore the number.)
+- If Bob answers in generalities - "update your dependencies, migrate to Jakarta EE" - it has not read the code. Ask for the versions in `pom.xml` and the files they land in, and it will go and look.
+- Watch for whether `javax.sql.DataSource` comes up. "Rename every javax" and "rename every javax except this one" are the two answers this lab exists to tell apart.
 - Ask why on the ordering. An upgrade plan you cannot defend to your own team is not a plan, and this is a question Bob answers well.
 - Keep the answer. The next lab runs the upgrade, and comparing what happened against this plan is the fastest way to see what the workflow did on its own.
 

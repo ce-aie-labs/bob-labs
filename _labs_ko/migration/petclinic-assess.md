@@ -99,11 +99,14 @@ Bob에서 `app` 폴더를 열고 **Agent 모드**에서 이걸 넣으세요.
 
 ## 기대 결과
 
-- [ ] 실제 스택을 이름으로 짚음: Java 8, Spring Boot 2.1.5.RELEASE, Maven, Hibernate 5.3.10, 내장 Tomcat 9.0.19, springfox-swagger 2.6.1 - 스프링 앱 일반론이 아니라 `pom.xml` 을 읽고 나온 값
-- [ ] `javax` → `jakarta` 패키지 이름 변경이 Spring Boot 3 때문에 강제된다는 점과, **이 코드의 어디에** 걸리는지. 그냥 상식 나열이 아니라
-- [ ] 한 번에 점프하지 말고 단계로 - Boot 2.1 → 2.7 → 3.x. 2.7 이 `javax` 를 쓰는 마지막 버전이고, 두 가지를 한꺼번에 옮기면 실패 두 개를 동시에 디버깅하게 되기 때문
-- [ ] 취약한 라이브러리를 이름과 고정 버전으로 - `jackson-databind`, `tomcat-embed-core` 9.0.19, `snakeyaml`, `logback-core` 1.2.3, `postgresql` 42.2.5 가 실제로 들어 있습니다
-- [ ] 파일이 하나도 안 바뀜. Bob이 편집을 시작했으면 그렇다고 말하고 조사부터 다시 시키세요
+- [ ] 실제 스택을 버전까지 짚음 - Java 1.8, Spring Boot 2.1.5.RELEASE, Hibernate 5.3, Spring Security 5.1, Springfox Swagger2 2.6.1. `pom.xml` 에 `java.version` 선언이 아예 없어서 Boot BOM 기본값을 물려받는다는 것까지 짚으면 진짜로 읽은 것입니다
+- [ ] `javax` → `jakarta` 를 **파일과 줄 번호로** - `BaseEntity.java:18`(persistence), `Owner.java:30`(validation), `OwnerRestController.java:21`(transaction), `Vets.java:21`(xml.bind). 목록이 아니라 위치여야 합니다
+- [ ] **`javax.sql.DataSource` 는 바꾸면 안 된다고 경고** - JDK 표준이라 일괄 치환하면 JDBC 리포지터리 7개가 깨집니다. 이걸 짚으면 찾아바꾸기가 아니라 이해하고 있는 겁니다
+- [ ] Spring Boot 3 에서 사라진 것들 - `WebSecurityConfigurerAdapter` → `SecurityFilterChain`, `@EnableGlobalMethodSecurity` → `@EnableMethodSecurity`, Springfox → springdoc-openapi
+- [ ] **jacoco `0.8.2` 가 Java 11+ 에서 실패한다는 지적** - Step 4 에서 본 그 빌드 실패의 진짜 원인입니다. 묻지도 않았는데 답이 나옵니다
+- [ ] 취약한 라이브러리를 이름·고정 버전·CVE 로 - `hsqldb 2.4.1`(CVE-2022-41853, RCE), `jackson-databind 2.9.x`, `mysql-connector-java 8.0.16`, 그리고 Spring Boot BOM 전체(Spring4Shell CVE-2022-22965)
+- [ ] 2.1 → 2.7 → 3.x 단계와 **왜 한 번에 못 가는지** - Boot 2.x 는 `javax`, 3.x 는 `jakarta` 만 지원하고 둘 다 되는 버전이 없기 때문
+- [ ] 파일이 하나도 안 바뀜. "수정을 시작할까요?" 하고 멈춰야 합니다
 
 건드리지 않은 상태에서 `java check.java` 는 이렇게 나옵니다.
 
@@ -122,13 +125,16 @@ Bob에서 `app` 폴더를 열고 **Agent 모드**에서 이걸 넣으세요.
   완료 확인   0 / 3
 ```
 
-<!-- Bob-verify: 위 check.java 출력은 실제 값 - 배포되는 zip을 새로 풀어 JDK 21 에서 돌려 캡처했다. Bob 응답 체크리스트는 이 애플리케이션의 실제 pom.xml 과 배포 jar 안의 라이브러리 버전에 근거하지만, 이 한국어 프롬프트를 Bob 에 직접 넣어본 적은 아직 없다. 참가자와 쓰기 전에 한국어로 실제 한 번 돌리고 체크리스트를 고칠 것. -->
+한국어로 실제 돌려서 확인한 결과입니다. Bob 은 위 항목을 전부 짚었고, 파일·줄 번호 네 개와 라이브러리 버전은 소스와 대조해서 전부 맞았습니다. 파일 개수는 "약 30개" 로 어림했는데 실제로는 31개입니다. 단계별 체크리스트를 별도 문서로 따로 만들어 주기도 했습니다.
+
+<!-- Bob-verify: 한국어 프롬프트는 실제로 Bob 에 돌렸고 위 체크리스트는 그 응답에서 나온 것이다. 영어 파일의 프롬프트는 아직 돌리지 않았다. -->
 
 ## 팁
 
 - 0/3 으로 시작하는 게 정상입니다. 앱이 고장났다는 뜻이 아니라 아직 Java 21 로 안 옮겨졌다는 뜻이고, Step 3 에서 본 API 콘솔이 그 증거입니다. 그래서 그 단계가 먼저 있습니다.
-- Step 4 에서 왜 빌드가 실패했는지는 `build.log` 에 있는데, 진짜로 알아보기 어렵습니다. `The forked VM terminated without properly saying goodbye` 로 시작하는 줄을 찾아 그대로 Bob에 붙여넣고 무슨 뜻인지 물어보세요. 이런 메시지에서 답을 바로 얻는 게 Bob을 쓰는 이유의 절반입니다. (뒤에 붙는 종료 코드 숫자는 JVM 마다 달라서 신경 쓰지 않아도 됩니다.)
-- Bob이 "의존성을 최신화하고 Jakarta EE 로 옮기세요" 같은 일반론만 내놓으면 코드를 안 읽은 겁니다. `pom.xml` 에 실제로 적힌 버전을 대라고 하면 그때 찾아봅니다.
+- Step 4 의 빌드 실패와 Step 5 의 답은 이어져 있습니다. `build.log` 의 `The forked VM terminated without properly saying goodbye` 는 사람이 읽고 원인을 알아낼 수 있는 메시지가 아닌데, Bob 은 묻지도 않았는데 jacoco `0.8.2` 가 Java 11+ 를 못 다룬다고 짚어 줍니다. 안 짚고 넘어가면 그 줄을 그대로 붙여넣고 물어보세요. (뒤에 붙는 종료 코드 숫자는 JVM 마다 달라서 무시해도 됩니다.)
+- Bob이 "의존성을 최신화하고 Jakarta EE 로 옮기세요" 같은 일반론만 내놓으면 코드를 안 읽은 겁니다. `pom.xml` 에 실제로 적힌 버전과 파일 위치를 대라고 하면 그때 찾아봅니다.
+- `javax.sql.DataSource` 얘기가 나왔는지 꼭 보세요. `javax` 를 전부 `jakarta` 로 바꾸라는 답과, 그중 건드리면 안 되는 게 있다는 답의 차이가 이 랩에서 제일 큽니다.
 - 순서에 대해서는 꼭 이유를 물으세요. 팀에 설명할 수 없는 계획은 계획이 아니고, 이건 Bob이 잘 답하는 질문입니다.
 - 답변을 저장해 두세요. 다음 랩에서 실제로 업그레이드를 돌리는데, 그 결과를 이 계획과 대조하는 게 워크플로가 알아서 한 일을 확인하는 가장 빠른 방법입니다.
 
