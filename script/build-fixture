@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Assemble the downloadable lab fixture from fixtures/petclinic/.
+#
+# Participants get a zip, not a repo link - no git, no GitHub account, no
+# company proxy problem, and nothing to clone on the day. The zip carries a
+# jar we built for them so the very first thing they do is watch the old app
+# work, which needs no build and no network.
+#
+# The jar is deliberately NOT committed: it is 43MB of build output. This
+# script produces it, and the result belongs on a GitHub Release.
+#
+# Only JDK 21 is required. The app is Java 8 code, but javac 21 still compiles
+# to a Java 8 target - it is the test run that cannot survive JDK 21, which is
+# exactly what the lab is about, so tests are skipped here on purpose.
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)" || repo_root=""
+[ -n "$repo_root" ] && [ -f "$repo_root/_config.yml" ] || {
+  printf '\nCould not locate the repository root from %s.\nRun this from inside a bob-labs checkout.\n\n' "$0" >&2
+  exit 1
+}
+cd "$repo_root"
+
+src="fixtures/petclinic"
+out="dist"
+name="bob-lab-petclinic"
+
+die() { printf '\n%s\n\n' "$*" >&2; exit 1; }
+
+[ -d "$src/app" ] || die "$src/app not found. Nothing to package."
+command -v java >/dev/null 2>&1 || die "No java on PATH. JDK 21 is required."
+
+java_major="$(java -version 2>&1 | head -1 | sed -n 's/.*version "\([0-9]*\).*/\1/p')"
+[ "${java_major:-0}" -ge 21 ] 2>/dev/null || die \
+"JDK 21 or newer is required to build the fixture jar (found ${java_major:-unknown}).
+
+  brew install --cask temurin@21     # or use sdkman: sdk install java 21-tem"
+
+stage="$(mktemp -d)"
+trap 'rm -rf "$stage"' EXIT
+work="$stage/$name"
+mkdir -p "$work"
+
+printf '\nBuilding the legacy jar (this is the app as it is today)...\n'
+build_dir="$stage/build"
+rsync -a --exclude target --exclude .git "$src/app/" "$build_dir/"
+(cd "$build_dir" && ./mvnw -B -q clean package -DskipTests) \
+  || die "The fixture failed to build. Run it by hand in $build_dir to see why."
+
+jar="$(find "$build_dir/target" -maxdepth 1 -name '*.jar' ! -name '*-sources.jar' | head -1)"
+[ -n "$jar" ] || die "The build produced no jar."
+cp "$jar" "$work/petclinic-legacy.jar"
+
+# Everything the participant touches, minus build output.
+rsync -a --exclude target --exclude .git "$src/app/" "$work/app/"
+for f in START-HERE.md check.java demo.html baseline-vulnerabilities.json; do
+  [ -f "$src/$f" ] || die "$src/$f is missing."
+  cp "$src/$f" "$work/$f"
+done
+
+mkdir -p "$out"
+rm -f "$out/$name.zip"
+(cd "$stage" && zip -qr "$name.zip" "$name")
+mv "$stage/$name.zip" "$out/$name.zip"
+
+size="$(du -h "$out/$name.zip" | cut -f1)"
+printf '\n  %s  (%s)\n\n' "$out/$name.zip" "$size"
+printf 'Upload it to a GitHub Release so the lab pages can link to a stable URL:\n\n'
+printf '  gh release create fixture-$(date +%%Y%%m%%d) %s/%s.zip \\\n' "$out" "$name"
+printf '    --title "PetClinic lab fixture" --notes "Java 8 / Spring Boot 2.1.5 fixture for the Java modernization labs."\n\n'

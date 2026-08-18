@@ -16,3 +16,6 @@ __pycache__/
 .vscode/
 .idea/
 .DS_Store
+
+# Fixture build output (43MB jar) - belongs on a GitHub Release
+dist/
