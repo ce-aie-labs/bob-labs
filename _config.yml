@@ -35,12 +35,11 @@ exclude:
   - DESIGN.md
   - NOTE.md
   - docs
-  # Lab attachments are packaged into a zip by script/build-attachment and
-  # served from a GitHub Release, so publishing the source as loose files
-  # would only slow the build down.
+  # Build/config helpers, and any future lab attachments, are not part of the
+  # published site. The Java lab fixture lives on the lab-assets GitHub Release,
+  # not in this repo.
   - attachments
   - script
-  - dist
   - Gemfile
   - Gemfile.lock
   - vendor
