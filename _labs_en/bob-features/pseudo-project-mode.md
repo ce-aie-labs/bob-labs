@@ -55,7 +55,7 @@ The observed Korean run installed **Pseudo Project** (`pseudo-project`) for the 
 - [ ] `.bob/skills/pseudo-project-plan/SKILL.md`
 - [ ] `.bob/skills/pseudo-code-gen/SKILL.md`
 - [ ] `.bob/skills/architecture-viz/SKILL.md`
-- [ ] A four-stage pipeline—technology research → project planning → pseudo code and architecture → visualization and README—with progress shown through `update_todo_list`
+- [ ] A four-stage pipeline - technology research → project planning → pseudo code and architecture → visualization and README - with progress shown through `update_todo_list`
 
 Using the GraphRAG prompt produced a design named **TemporalHeteroGraphRAG** with this manifest:
 
@@ -76,7 +76,7 @@ README.md
 
 The package proposed a temporal knowledge graph, heterogeneous graph transformer encoding, temporal-aware retrieval, Leiden community summarization, causal-path extraction, grounded answer generation, and pipeline orchestration. `docs/architecture.md` and `README.md` included Mermaid system, data-flow, and sequence diagrams.
 
-These are **design and pseudo-code artifacts**. The run did not create a working environment, execute the pipeline, or benchmark it. Its statements that the methods are unused or outperform baseline GraphRAG are hypotheses to review, not verified results. The generated research Skill's helper used curated 2024–2025 fallback data, so add current primary-source citations before retaining novelty comparisons and require an implementation plus benchmark before making performance claims.
+These are **design and pseudo-code artifacts**. The run did not create a working environment, execute the pipeline, or benchmark it. Its statements that the methods are unused or outperform baseline GraphRAG are hypotheses to review, not verified results. The generated research Skill's helper used curated 2024-2025 fallback data, so add current primary-source citations before retaining novelty comparisons and require an implementation plus benchmark before making performance claims.
 
 <!-- Bob-verify: the Custom Mode, project-scoped paths, Skill chain, and GraphRAG artifacts above reflect the observed Korean run. Run both English prompts independently in Bob before participant use and update this section if the generated components, paths, or outputs differ. -->
 

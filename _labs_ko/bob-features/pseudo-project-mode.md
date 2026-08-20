@@ -69,7 +69,7 @@ README.md
 
 설계 패키지는 temporal knowledge graph, heterogeneous graph transformer 인코딩, temporal-aware retrieval, Leiden community summarization, causal path 추출, 근거 기반 답변 생성, 전체 pipeline orchestration을 제안했다. `docs/architecture.md`와 `README.md`에는 Mermaid 시스템, 데이터 흐름, sequence diagram도 포함됐다.
 
-이 결과는 **설계 및 pseudo-code 산출물**이다. 실제 실행에서는 동작 환경을 만들거나 pipeline을 실행하거나 benchmark를 수행하지 않았다. 특정 방법론이 아직 사용되지 않았다거나 기존 GraphRAG보다 성능이 높다는 문장은 검증 결과가 아니라 검토할 가설이다. 생성된 조사 Skill의 helper는 2024–2025년 curated fallback 데이터를 사용했으므로, novelty 비교를 유지하려면 최신 1차 출처를 추가하고 성능 주장은 실제 구현과 benchmark 결과가 나온 뒤에만 사용한다.
+이 결과는 **설계 및 pseudo-code 산출물**이다. 실제 실행에서는 동작 환경을 만들거나 pipeline을 실행하거나 benchmark를 수행하지 않았다. 특정 방법론이 아직 사용되지 않았다거나 기존 GraphRAG보다 성능이 높다는 문장은 검증 결과가 아니라 검토할 가설이다. 생성된 조사 Skill의 helper는 2024-2025년 curated fallback 데이터를 사용했으므로, novelty 비교를 유지하려면 최신 1차 출처를 추가하고 성능 주장은 실제 구현과 benchmark 결과가 나온 뒤에만 사용한다.
 
 ## 팁
 
