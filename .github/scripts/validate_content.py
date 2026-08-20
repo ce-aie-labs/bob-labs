@@ -26,6 +26,20 @@ REQUIRED_SECTIONS = {
     "ko": ["문제", "프롬프트", "기대 결과", "팁", "응용"],
 }
 
+# The site standardizes on plain ASCII punctuation. Em and en dashes read as
+# inconsistent next to the " - " the rest of the content uses, and smart quotes
+# break copy-paste of the prompts participants run. Enforced here so it stops
+# being a manual catch on every content PR. Maps each forbidden character to a
+# (name, suggested replacement) pair.
+FORBIDDEN_CHARS = {
+    "—": ("em dash", "-"),
+    "–": ("en dash", "-"),
+    "“": ("left double quotation mark", '"'),
+    "”": ("right double quotation mark", '"'),
+    "‘": ("left single quotation mark", "'"),
+    "’": ("right single quotation mark / smart apostrophe", "'"),
+}
+
 COLLECTION_ROOTS = {
     "_labs_en": ("_labs_ko", "en", "ko"),
     "_labs_ko": ("_labs_en", "ko", "en"),
@@ -88,14 +102,30 @@ def sibling_path(path):
     return None, None, None
 
 
+def check_typography(path, text):
+    """Flag em/en dashes and smart quotes anywhere in the file."""
+    errors = []
+    for lineno, line in enumerate(text.splitlines(), 1):
+        for char, (name, replacement) in FORBIDDEN_CHARS.items():
+            if char in line:
+                errors.append(
+                    f"{path}:{lineno}: {name} '{char}' is not allowed - "
+                    f"use '{replacement}' instead"
+                )
+    return errors
+
+
 def validate_file(path, categories=None):
     errors = []
     with open(path, encoding="utf-8") as f:
         text = f.read()
 
+    errors.extend(check_typography(path, text))
+
     fields, body = parse_front_matter(text)
     if fields is None:
-        return [f"{path}: missing YAML front matter block (---...---)"]
+        errors.append(f"{path}: missing YAML front matter block (---...---)")
+        return errors
 
     for field in REQUIRED_FRONT_MATTER:
         if not fields.get(field):
