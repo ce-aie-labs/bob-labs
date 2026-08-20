@@ -31,7 +31,7 @@ Our company security rules are:
 4. Comply with NIST SP 800-53, OWASP ASVS Level 1, and the CWE Top 25.
 Add any other minimum security policies that are necessary.
 
-Build this mode from Skills connected as a pipeline. Keep the rules in a rule file, and create a separate, concrete Skill for evaluating each rule. The pipeline must read each code file and apply the defined rules in sequence. Move to the next file only after every rule has been evaluated. If a file fails any rule, write the result to 취약점_및_개선코드.md.
+Build this mode from Skills connected as a pipeline. Keep the rules in a rule file, and create a separate, concrete Skill for evaluating each rule. The pipeline must read each code file and apply the defined rules in sequence. Move to the next file only after every rule has been evaluated. If a file fails any rule, write the result to security-findings-and-remediation.md.
 
 For every finding, keep these three elements together:
 {problem location and code + failed rule + improved code}
@@ -55,7 +55,7 @@ The observed Mode allowed Read but restricted Edit to the report with this tool 
 
 ```yaml
 - - edit
-  - fileRegex: "^취약점_및_개선코드\\.md$"
+  - fileRegex: "^security-findings-and-remediation\\.md$"
 ```
 
 Confirm that there is no broader Edit permission. Select **Security Expert** in the Mode picker before continuing.
@@ -74,7 +74,7 @@ In **Security Expert** mode, run:
 The galaxium-travels project needs a security review.
 ```
 
-**Checkpoint:** Open `취약점_및_개선코드.md`. For every entry, verify the cited file and line, rule applicability, severity, proposed remediation, and whether the relevant file was actually in scope. Treat the report as review input, not a list of confirmed vulnerabilities.
+**Checkpoint:** Open `security-findings-and-remediation.md`. For every entry, verify the cited file and line, rule applicability, severity, proposed remediation, and whether the relevant file was actually in scope. Treat the report as review input, not a list of confirmed vulnerabilities.
 
 ## Expected Output
 
@@ -85,7 +85,7 @@ The observed Korean run created a project-scoped Mode with four rule Skills and 
 - [ ] SR-03 → `info-disclosure-check`: sensitive details in client responses
 - [ ] SR-04 → `compliance-check`: selected NIST SP 800-53, OWASP ASVS Level 1, and CWE Top 25 controls
 - [ ] `security-audit-pipeline`: initialize the report → collect files → apply SR-01 through SR-04 to each file → aggregate the results
-- [ ] `취약점_및_개선코드.md`: findings grouped as location and problem code + failed rule + proposed improved code
+- [ ] `security-findings-and-remediation.md`: findings grouped as location and problem code + failed rule + proposed improved code
 
 Bob's sample audit reported **eight findings**: one hardcoded-configuration result, two response-disclosure results, and five broader results covering missing authentication/authorization, network binding, CORS, container execution, and dependency pinning. It reported zero SR-02 findings. These counts describe Bob's generated report, not independently confirmed vulnerabilities.
 
