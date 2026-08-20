@@ -89,7 +89,7 @@ The observed Korean run created a project-scoped Mode with four rule Skills and 
 
 Bob's sample audit reported **eight findings**: one hardcoded-configuration result, two response-disclosure results, and five broader results covering missing authentication/authorization, network binding, CORS, container execution, and dependency pinning. It reported zero SR-02 findings. These counts describe Bob's generated report, not independently confirmed vulnerabilities.
 
-The report contained useful leads—for example, it cited `services/booking.py:34`, showed that an error response returned another user's stored name, mapped the issue to SR-03, and proposed a generic response that omitted that name. The missing authentication and ownership checks around booking endpoints also warrant high-priority manual review.
+The report contained useful leads - for example, it cited `services/booking.py:34`, showed that an error response returned another user's stored name, mapped the issue to SR-03, and proposed a generic response that omitted that name. The missing authentication and ownership checks around booking endpoints also warrant high-priority manual review.
 
 The same report demonstrates why the checkpoint matters:
 
@@ -100,7 +100,7 @@ The same report demonstrates why the checkpoint matters:
 - Requiring a Red Hat base image was not one of the supplied company rules. Keep only organization-approved policy; review non-root container execution separately.
 - The rules classify authentication/authorization bypass as High, while the report labeled complete authentication absence Medium. Reconcile severity before prioritizing work.
 - Eight findings appeared across six distinct paths, while the report stated eight files with violations. Count findings and affected files separately.
-- The pipeline's general glob list did not include `Dockerfile` or `requirements.txt`, although both appeared in the report. Review collection logic and exclusions before accepting an “entire codebase” claim.
+- The pipeline's general glob list did not include `Dockerfile` or `requirements.txt`, although both appeared in the report. Review collection logic and exclusions before accepting an "entire codebase" claim.
 
 This Mode provides a repeatable LLM- and rule-guided review. It does not prove exploitability or replace SAST, dependency scanning, DAST, threat modeling, or human security review.
 

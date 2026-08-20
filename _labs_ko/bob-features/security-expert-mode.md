@@ -95,7 +95,7 @@ Bob의 예제 감사 보고서는 **8개 finding**을 제시했다. 하드코딩
 - Red Hat base image 의무는 입력한 회사 규칙에 없었다. 조직이 승인한 정책만 유지하고 non-root container 실행 문제는 별도로 검토한다.
 - 생성된 규칙은 인증·인가 우회를 High로 분류했지만 보고서는 인증이 전혀 없는 상황을 Medium으로 표시했다. 조치 순서를 정하기 전에 심각도를 일치시킨다.
 - 8개 finding은 서로 다른 6개 path에 있었지만 보고서는 위반 파일을 8개라고 적었다. finding 수와 영향받은 파일 수를 별도로 센다.
-- pipeline의 일반 glob 목록에는 `Dockerfile`과 `requirements.txt`가 없지만 보고서에는 두 파일이 포함됐다. “전체 코드” 검사를 인정하기 전에 수집 절차와 제외 목록을 검토한다.
+- pipeline의 일반 glob 목록에는 `Dockerfile`과 `requirements.txt`가 없지만 보고서에는 두 파일이 포함됐다. "전체 코드" 검사를 인정하기 전에 수집 절차와 제외 목록을 검토한다.
 
 이 Mode는 반복 가능한 LLM·규칙 기반 검토를 제공한다. 악용 가능성을 증명하거나 SAST, dependency scanning, DAST, threat modeling, exploit 검증, 사람의 보안 리뷰를 대체하지 않는다.
 
