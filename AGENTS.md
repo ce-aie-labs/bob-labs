@@ -16,6 +16,7 @@ Do not introduce a different framework or build tooling on your own - ask first.
 - `NOTE.md` and `docs/` are gitignored. Never include them in a commit, and don't add gitignore exceptions to sneak part of `docs/` in. `docs/bob/` is a full Markdown mirror of IBM's product documentation from `bob.ibm.com/docs`; this repository is public, so mirroring it here would republish someone else's documentation and go stale the moment they update it. Link to the live docs instead.
 - When building UI, follow `DESIGN.md` (IBM Carbon). It is tool-generated - don't hand-edit it.
   Essentials: 0px corners · IBM Plex Sans · weight 300 for display sizes · 1px hairlines instead of shadows · IBM Blue (#0f62fe) as the only accent.
+- **Plain ASCII punctuation only.** Use a plain hyphen `-`, never an em dash `—` or en dash `–`, and straight quotes `"` `'`, never smart quotes `“` `”` `‘` `’` - smart quotes also break copy-paste of the prompts participants run. The `validate-content` CI check rejects any of these characters in a changed lab file, so an editor's autocorrect turning `-` into `—` or `'` into `’` will fail the PR. This applies in both languages.
 
 ## Adding content
 
