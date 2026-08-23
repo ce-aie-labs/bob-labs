@@ -114,6 +114,8 @@ After the modernization was approved, the report recorded changes to 18 frontend
 
 After the changes, the build passed, all 29 tests continued to pass, and npm audit reported zero findings.
 
+<!-- Bob-verify: the Mode, eight Skills, pipeline, and the baseline and report figures above reflect the observed Korean run. Run the English prompts independently in Bob before participant use and update this section if the generated components or results differ. -->
+
 ## Tips
 
 - Review `.bob/custom_modes.yaml` and every generated `SKILL.md` before cloning a target project or selecting the Mode. Generated orchestration should receive the same scrutiny as a script.
