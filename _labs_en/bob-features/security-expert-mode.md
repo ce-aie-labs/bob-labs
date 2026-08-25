@@ -15,7 +15,7 @@ A security checklist is useful only when it is applied consistently and produces
 
 ## Prompt
 
-Use a working directory where Bob may create `.bob/`, then run both steps. Review the generated controls before trusting or using the audit results.
+Use a working directory where Bob may create `.bob/`, then run all three steps. Review the generated and updated controls before trusting or using the audit results.
 
 ### Step 1 - Build the project-scoped security environment
 
@@ -43,9 +43,9 @@ Run this across the entire codebase. Create all required Skills, the Mode, and t
 
 ```text
 .bob/custom_modes.yaml
-.bob/rules/security-rules.md
+.bob/rules/security.md
 .bob/skills/secret-scan/SKILL.md
-.bob/skills/crypto-check/SKILL.md
+.bob/skills/crypto-weakness/SKILL.md
 .bob/skills/info-disclosure-check/SKILL.md
 .bob/skills/compliance-check/SKILL.md
 .bob/skills/security-audit-pipeline/SKILL.md
@@ -76,39 +76,58 @@ The galaxium-travels project needs a security review.
 
 **Checkpoint:** Open `security-findings-and-remediation.md`. For every entry, verify the cited file and line, rule applicability, severity, proposed remediation, and whether the relevant file was actually in scope. Treat the report as review input, not a list of confirmed vulnerabilities.
 
+### Step 3 - Update and maintain the Security Expert Mode
+
+When company policy changes, return to **Agent mode** and update the existing Mode:
+
+```
+I need to update the Security Expert mode.
+
+Our internal protocol protects passwords, so allow MD5 and SHA-1 when they are used for password protection through that protocol. Instead, add session security rules that require Secure, HttpOnly, and SameSite attributes on session cookies, regenerate the Session ID after a successful login, and invalidate the session on logout or expiration.
+```
+
+**Checkpoint:** Review the changes to `.bob/rules/security.md`, `.bob/skills/crypto-weakness/SKILL.md`, and `.bob/skills/compliance-check/SKILL.md`. Confirm that the MD5 and SHA-1 exception applies only to password protection through the approved internal protocol, while other security-sensitive uses remain prohibited. Also confirm that all three session controls are testable and mapped to concrete detection patterns and remediation guidance.
+
 ## Expected Output
 
 The observed Korean run created a project-scoped Mode with four rule Skills and one orchestration Skill:
 
 - [ ] SR-01 → `secret-scan`: hardcoded credentials and secrets
-- [ ] SR-02 → `crypto-check`: MD5 and SHA-1 usage and its context
+- [ ] SR-02 → `crypto-weakness`: MD5 and SHA-1 usage and its context
 - [ ] SR-03 → `info-disclosure-check`: sensitive details in client responses
 - [ ] SR-04 → `compliance-check`: selected NIST SP 800-53, OWASP ASVS Level 1, and CWE Top 25 controls
 - [ ] `security-audit-pipeline`: initialize the report → collect files → apply SR-01 through SR-04 to each file → aggregate the results
 - [ ] `security-findings-and-remediation.md`: findings grouped as location and problem code + failed rule + proposed improved code
 
+The Mode update changed three existing files:
+
+- [ ] `.bob/rules/security.md`
+  - SEC-02 allows MD5 and SHA-1 for password protection under the internal-protocol exception.
+  - SEC-02 instead prohibits the `random` module and MD5 or SHA-1 for non-password security uses such as Session IDs and tokens, and emphasizes classifying the purpose before reporting a finding.
+  - SEC-04c requires Secure, HttpOnly, and SameSite cookie attributes, Session ID regeneration after login, and server-side session invalidation on logout or expiration.
+  - SEC-04c includes allowed and prohibited Flask examples.
+- [ ] `.bob/skills/crypto-weakness/SKILL.md`
+  - Added an `EXEMPT` severity for password-related MD5 and SHA-1 under the internal protocol.
+  - Split the Pattern Group A and B context filters into `EXEMPT`, `CRITICAL`, and `LOW` classifications.
+  - Added `EXEMPT` handling to Step 3 so those cases are not reported.
+  - Updated Step 4 to present password changes only as recommendations and added remediation code for non-password security uses.
+- [ ] `.bob/skills/compliance-check/SKILL.md`
+  - Added missing SameSite to the session-cookie triggers.
+  - Added Session ID regeneration checks, including a CWE-384 Session Fixation detection heuristic.
+  - Added logout and expiration session-invalidation checks.
+  - Added Session Fixation and session-invalidation remediation code to Step 8.
+  - Added a Step 9 `sub_issue` field with `cookie_flags`, `session_fixation`, `session_invalidation`, or `jwt_verify`.
+
 Bob's sample audit reported **eight findings**: one hardcoded-configuration result, two response-disclosure results, and five broader results covering missing authentication/authorization, network binding, CORS, container execution, and dependency pinning. It reported zero SR-02 findings. These counts describe Bob's generated report, not independently confirmed vulnerabilities.
 
 The report contained useful leads - for example, it cited `services/booking.py:34`, showed that an error response returned another user's stored name, mapped the issue to SR-03, and proposed a generic response that omitted that name. The missing authentication and ownership checks around booking endpoints also warrant high-priority manual review.
 
-The same report demonstrates why the checkpoint matters:
-
-- `sqlite:///./booking.db` contains no credential and is likely a configuration-portability concern, not a hardcoded secret.
-- Binding to `0.0.0.0` is often required inside a container; exposure depends on ingress, firewall, authentication, and deployment context.
-- Wildcard CORS with credentials needs framework and browser-behavior validation before its exploitability is described.
-- Pinning dependencies improves reproducibility but does not prove that versions are vulnerability-free. Verify suggested versions with current advisories and a dependency scanner.
-- Requiring a Red Hat base image was not one of the supplied company rules. Keep only organization-approved policy; review non-root container execution separately.
-- The rules classify authentication/authorization bypass as High, while the report labeled complete authentication absence Medium. Reconcile severity before prioritizing work.
-- Eight findings appeared across six distinct paths, while the report stated eight files with violations. Count findings and affected files separately.
-- The pipeline's general glob list did not include `Dockerfile` or `requirements.txt`, although both appeared in the report. Review collection logic and exclusions before accepting an "entire codebase" claim.
-
 This Mode provides a repeatable LLM- and rule-guided review. It does not prove exploitability or replace SAST, dependency scanning, DAST, threat modeling, or human security review.
 
-<!-- Bob-verify: the Mode, project-scoped files, pipeline, and eight-result report above reflect the observed Korean run. Run both English prompts independently in Bob before participant use and update this section if generated components or results differ. -->
 
 ## Tips
 
-- Review `.bob/rules/security-rules.md` and every Skill before the first audit. A broad standards name is not a complete, testable control set.
+- Review `.bob/rules/security.md` and every Skill before the first audit. A broad standards name is not a complete, testable control set.
 - Define which endpoints require authentication, who may access each resource, and where TLS and network exposure are enforced. Those trust boundaries cannot be inferred reliably from isolated code patterns.
 - Keep the review Mode report-only. Put source changes in a separate Plan-mode or approval-gated remediation workflow.
 - Require exact evidence for every finding: file, current line, relevant context, rule text, confidence, and validation method.
@@ -116,7 +135,7 @@ This Mode provides a repeatable LLM- and rule-guided review. It does not prove e
 
 ## Variations
 
-1. **Run one control only**: Invoke `secret-scan`, `crypto-check`, or another rule Skill for a focused pre-commit review.
+1. **Run one control only**: Invoke `secret-scan`, `crypto-weakness`, or another rule Skill for a focused pre-commit review.
 2. **Add stack-specific controls**: Extend the rules with reviewed FastAPI, Spring Security, Express, or container controls while keeping the same report contract.
 3. **Verify with scanners**: Follow the Mode with SAST and dependency scans, then annotate each finding as confirmed, rejected, or requiring manual review.
 4. **Remediate with approval**: Create a separate Mode that accepts only reviewed report entries, proposes a plan, and waits for approval before editing source files.
