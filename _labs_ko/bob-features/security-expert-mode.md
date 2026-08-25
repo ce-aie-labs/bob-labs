@@ -56,6 +56,8 @@ Bob은 기본 모드인 **Agent**, **Plan**, **Ask**를 제공한다. 각 모드
 
 **체크포인트:** Agent, Plan, Ask 모드의 세부 내용을 각각 열어 보고, **설정 > 채팅**에서 표시된 모든 도구와 하위 도구의 자동 승인이 켜졌는지 확인한다.
 
+여기서 Mode는 Bob의 말투만 바꾸는 설정이 아니라 **역할, 행동 지침, 사용할 수 있는 도구**를 함께 제한한다는 점을 확인할 수 있다. 도구 설정이 "Bob이 무엇을 할 수 있는가"를 정한다면 자동 승인은 "허용된 작업을 실행하기 전에 언제 사용자에게 물어볼 것인가"를 정한다. 실습이 끝나면 자동 승인을 다시 줄이고 실제 업무에서는 필요한 Mode, 도구, 권한만 허용한다.
+
 ### 1단계 - 프로젝트 전용 보안 환경 만들기
 
 **Agent 모드**에서 프로젝트 전용 보안 Mode를 생성한다. 아래 프롬프트 전체를 복사한 뒤 Bob의 새 작업 입력창에 붙여 넣고 실행한다.
@@ -106,6 +108,8 @@ Bob이 작업을 마칠 때까지 기다린다. 오른쪽의 할 일 목록에�
 - `custom_modes.yaml`: 세 Skill을 순서대로 사용하는 **Security Expert** (`security-expert`) Mode를 정의한다.
 
 생성된 파일의 이름과 개수는 Bob 버전에 따라 달라질 수 있다. 파일 개수보다 전체 코드 스캔, 규칙 검증, 보고서 작성이 각각 Skill로 분리되고 Custom Mode에서 순서대로 연결됐는지를 확인한다.
+
+이 단계에서는 실제 업무를 구체적으로 설명하면 Bob이 이를 재사용 가능한 프로젝트 자산으로 구조화할 수 있다는 점을 확인한다. Skill은 반복 절차를 나누어 저장하고, `custom_modes.yaml`은 역할, 지침, 도구 범위와 Skill 실행 순서를 하나의 작업 방식으로 연결한다. 생성된 `.bob/` 파일은 일회성 채팅 답변과 달리 사람이 검토하고, 버전 관리하고, 팀과 공유할 수 있다.
 
 **체크포인트:** Bob이 **Security Expert** (`security-expert`)를 만들었는지 확인하고, 생성된 모든 파일을 직접 연다. Mode가 전체 코드 스캔, 규칙 검증, 취약점 보고서 작성 순서로 동작하는지 확인한다. Edit 권한은 `취약점_및_개선코드.md` 같은 보고서 파일에만 허용하고 소스 코드 수정 권한은 포함하지 않는다. 다음 단계 전에 Mode picker에서 **Security Expert**를 선택한다.
 
@@ -166,6 +170,8 @@ Bob이 새로 로드한 **Security Expert** (`security-expert`) Mode로 전환�
 
 </details>
 
+할 일 목록은 저장된 Skill 절차가 현재 어느 단계까지 실행됐는지를 보여 준다. 대상 파일 수집부터 보고서 작성까지 빠진 단계나 멈춘 단계가 없는지 확인할 수 있어, Bob의 작업 과정을 관찰 가능한 workflow로 만든다.
+
 할 일 목록이 5/5로 완료되면 `galaxium-travels/취약점_및_개선코드.md`를 연다. 요약의 심각도별 건수와 각 항목의 파일, line, 위반 규칙, 설명, 개선 코드를 확인한다.
 
 <details markdown="1">
@@ -176,6 +182,8 @@ Bob이 새로 로드한 **Security Expert** (`security-expert`) Mode로 전환�
 </details>
 
 **체크포인트:** `취약점_및_개선코드.md`의 각 항목에서 파일과 line이 실제 코드와 일치하는지, 규칙이 해당 코드에 적용되는지, 심각도와 개선 코드가 적절한지, 해당 파일이 실제 검사 범위에 포함됐는지를 확인한다. 보고서는 확정된 취약점 목록이 아니라 검토 입력으로 다룬다.
+
+일반 Agent 대신 검토한 Security Expert Mode를 사용하면 역할, 도구 범위, 실행 절차를 매번 프롬프트에 다시 적지 않아도 같은 조건으로 감사를 시작할 수 있다. 이는 절차의 일관성과 수동 검색 효율을 높이지만, 생성되는 문장이나 finding이 실행할 때마다 완전히 같아진다는 뜻은 아니다. 최종 판단은 근거 코드를 확인한 사람이 내린다.
 
 ### 3단계 - Security Expert Mode 수정 및 관리하기
 
@@ -223,53 +231,55 @@ Bob이 현재 Mode와 Skill을 읽고 정책 변경이 필요한 파일을 식�
 
 **체크포인트:** `.bob/custom_modes.yaml`, `.bob/skills/code-security-scan/SKILL.md`, `.bob/skills/security-rule-validate/SKILL.md`, `.bob/skills/vulnerability-report/SKILL.md`의 변경 내용을 검토한다. MD5와 SHA-1 허용이 사내 프로토콜을 통한 비밀번호 보호에만 적용되는지 확인한다. Session Cookie의 Secure, HttpOnly, SameSite 속성, 로그인 성공 후 Session ID 재생성, 로그아웃 또는 만료 시 세션 무효화가 구체적인 탐지 pattern, 검증 항목, 개선 코드로 연결됐는지도 확인한다.
 
+이 단계에서는 자연어로 전달한 정책 변경을 Bob이 관련 Mode와 Skill 전체의 수정으로 연결할 수 있다는 점을 확인한다. 여러 파일을 사람이 하나씩 찾아 고치는 수고는 줄어들지만, 변경의 정확성을 보장하는 것은 프롬프트가 아니라 검토다. 실제 diff에서 규칙의 의미, Skill 실행 순서, 보고서 형식, 도구 권한이 의도하지 않게 바뀌지 않았는지 확인한 뒤 변경을 승인한다.
+
 ## 기대 결과
 
-실제 한국어 실행에서는 프로젝트 전용 Mode와 규칙 Skill 네 개, orchestration Skill 한 개가 생성됐다:
+실제 한국어 실행에서는 프로젝트 전용 Security Expert Mode와 세 개의 Skill이 생성됐다:
 
-- [ ] SR-01 → `secret-scan`: 하드코딩된 credential과 secret
-- [ ] SR-02 → `crypto-weakness`: MD5·SHA-1 사용과 사용 맥락
-- [ ] SR-03 → `info-disclosure-check`: 클라이언트 응답의 민감 정보
-- [ ] SR-04 → `compliance-check`: NIST SP800-53, OWASP ASVS Level 1, CWE Top 25 중 선택된 제어 항목
-- [ ] `security-audit-pipeline`: 보고서 초기화 → 파일 수집 → 파일마다 SR-01~SR-04 적용 → 결과 집계
-- [ ] `취약점_및_개선코드.md`: 문제 위치와 코드 + 통과하지 못한 규칙 + 제안된 개선 코드를 한 세트로 기록
+- [ ] `.bob/custom_modes.yaml`: 역할, 지침, 허용 도구와 세 Skill의 실행 순서를 정의한다.
+- [ ] `.bob/skills/code-security-scan/SKILL.md`: 감사 대상 파일을 수집하고 보안 위반 후보를 찾는다.
+- [ ] `.bob/skills/security-rule-validate/SKILL.md`: 후보가 회사 규칙과 선택한 보안 기준을 위반하는지 검증한다.
+- [ ] `.bob/skills/vulnerability-report/SKILL.md`: 파일과 line, 위반 규칙, 설명, 심각도, 개선 코드를 보고서로 정리한다.
 
-Mode 수정 결과 기존 파일 3개에 정책 변경이 반영됐다:
+Security Expert Mode를 새 세션에서 실행하면 할 일 목록에 다음 다섯 단계가 표시되고 순서대로 완료된다:
 
-- [ ] `.bob/rules/security.md`
-  - SEC-02에서 사내 프로토콜을 통한 비밀번호 보호 목적의 MD5와 SHA-1을 예외로 허용했다.
-  - SEC-02의 금지 pattern을 `random` module과 Session ID, token 등 비밀번호 이외 보안 목적의 MD5 또는 SHA-1 사용으로 재정의하고, finding을 보고하기 전에 사용 목적을 구분하도록 했다.
-  - SEC-04c에서 Secure, HttpOnly, SameSite 속성을 모두 필수로 지정하고, 로그인 성공 후 Session ID 재생성, 로그아웃 또는 만료 시 서버 측 세션 무효화 규칙을 추가했다.
-  - SEC-04c에 허용 및 금지 Flask 예제 코드를 추가했다.
-- [ ] `.bob/skills/crypto-weakness/SKILL.md`
-  - 사내 프로토콜이 적용된 비밀번호 목적의 MD5와 SHA-1을 위한 `EXEMPT` 등급을 추가했다.
-  - Pattern Group A와 B의 context filter를 `EXEMPT`, `CRITICAL`, `LOW`로 세분화했다.
-  - Step 3 수집 기준에 보고하지 않는 `EXEMPT` case를 추가했다.
-  - Step 4에서 비밀번호 목적의 변경은 권장 사항으로만 제시하고, 비밀번호 이외 보안 목적 사용에 대한 개선 코드를 추가했다.
-- [ ] `.bob/skills/compliance-check/SKILL.md`
-  - Session Cookie pattern에 SameSite 미설정을 trigger로 추가했다.
-  - CWE-384 Session Fixation 탐지 heuristic을 포함한 Session ID 재생성 검사를 추가했다.
-  - 로그아웃 및 만료 시 Session 무효화 검사를 추가했다.
-  - Step 8에 Session Fixation과 세션 무효화 개선 코드를 추가했다.
-  - Step 9 결과 형식에 `cookie_flags`, `session_fixation`, `session_invalidation`, `jwt_verify` 중 하나를 기록하는 `sub_issue` field를 추가했다.
+1. 대상 파일 수집
+2. 규칙별 pattern 검색
+3. 탐지 결과 정리
+4. scan 결과 보고
+5. report 작성
 
-Bob의 예제 감사 보고서는 **8개 finding**을 제시했다. 하드코딩된 설정 1개, 응답 정보 노출 2개, 인증·인가 부재, network binding, CORS, container 실행, dependency pinning과 관련된 항목 5개였고 SR-02 결과는 0개였다. 이 수치는 Bob이 생성한 보고서 내용이지 독립적으로 확정된 취약점 수가 아니다.
+- [ ] `galaxium-travels/취약점_및_개선코드.md`: 문제 위치와 코드, 적용 규칙, 제안된 개선 코드를 함께 기록한다.
 
-보고서에는 유용한 조사 출발점도 있었다. 예를 들어 `services/booking.py:34`에서 error response가 다른 사용자의 저장된 이름을 반환하는 코드를 인용하고, SR-03과 연결한 뒤 이름을 제외한 generic response를 제안했다. 예약 endpoint의 인증 및 ownership 검사 부재도 우선순위가 높은 수동 검토 대상이다.
+정책 변경 실행에서는 다음 네 파일이 함께 수정됐다:
 
-이 Mode는 반복 가능한 LLM·규칙 기반 검토를 제공한다. 악용 가능성을 증명하거나 SAST, dependency scanning, DAST, threat modeling, exploit 검증, 사람의 보안 리뷰를 대체하지 않는다.
+- [ ] `.bob/custom_modes.yaml`: 변경된 보안 정책과 기존 report-only 도구 범위를 유지한다.
+- [ ] `.bob/skills/code-security-scan/SKILL.md`: Session Cookie, Session ID 재생성, 세션 무효화와 관련된 탐지 항목을 추가한다.
+- [ ] `.bob/skills/security-rule-validate/SKILL.md`: 사내 프로토콜로 보호되는 비밀번호 목적의 MD5와 SHA-1만 허용하고, 세션 규칙 검증 기준을 추가한다.
+- [ ] `.bob/skills/vulnerability-report/SKILL.md`: 새 세션 규칙의 근거와 개선 코드를 보고서에 기록하도록 갱신한다.
+
+Bob의 예제 감사 보고서는 **8개 finding**을 제시했다. 하드코딩된 설정 1개, 응답 정보 노출 2개, 인증 및 인가 부재, network binding, CORS, container 실행, dependency pinning과 관련된 항목 5개였다. 이 수치는 Bob이 생성한 보고서 내용이지 독립적으로 확정된 취약점 수가 아니다.
+
+보고서에는 유용한 조사 출발점도 있었다. 예를 들어 `services/booking.py:34`에서 error response가 다른 사용자의 저장된 이름을 반환하는 코드를 인용하고, 관련 규칙과 연결한 뒤 이름을 제외한 generic response를 제안했다. 예약 endpoint의 인증 및 ownership 검사 부재도 우선순위가 높은 수동 검토 대상이다.
+
+이 Mode는 검토된 역할, 도구 범위, 규칙과 workflow를 반복 적용한다. 결과 문구나 finding을 매번 동일하게 만들거나 악용 가능성을 증명하지 않으며, SAST, dependency scanning, DAST, threat modeling, exploit 검증, 사람의 보안 리뷰를 대체하지 않는다.
 
 ## 팁
 
-- 첫 감사 전에 `.bob/rules/security.md`와 모든 Skill을 검토한다. 표준 이름을 넓게 적는 것만으로 완전하고 테스트 가능한 control set이 되지는 않는다.
+- 첫 감사 전에 `.bob/custom_modes.yaml`과 모든 Skill을 검토한다. 표준 이름을 넓게 적는 것만으로 완전하고 테스트 가능한 control set이 되지는 않는다.
 - 인증이 필요한 endpoint, resource별 접근 주체, TLS와 network 노출이 강제되는 위치를 명시한다. 이런 trust boundary는 분리된 코드 pattern만으로 안정적으로 추론할 수 없다.
 - 검토 Mode는 report-only로 유지한다. 소스 수정은 별도의 Plan mode 또는 승인 gate가 있는 개선 workflow로 분리한다.
 - 모든 finding에 정확한 파일, 현재 line, 관련 context, 규칙 원문, confidence, 검증 방법을 요구한다.
 - 실제 실행된 도구를 기록한다. LLM 판단, regex match, SAST 결과, dependency advisory, 재현된 exploit은 서로 다른 증거다.
+- `.bob/` 파일을 코드와 함께 version control하면 검토한 Mode와 Skill을 팀의 재사용 가능한 작업 자산으로 공유할 수 있다.
 
 ## 응용
 
-1. **규칙 하나만 실행**: pre-commit 검토에서 `secret-scan`, `crypto-weakness` 등 필요한 규칙 Skill만 호출한다.
+1. **Skill 하나만 실행**: pre-commit 검토에서 `code-security-scan`, `security-rule-validate` 등 필요한 절차만 호출한다.
 2. **stack별 제어 항목 추가**: 같은 보고서 contract를 유지하면서 검토된 FastAPI, Spring Security, Express, container 규칙을 추가한다.
 3. **scanner로 검증**: Mode 실행 뒤 SAST와 dependency scan을 수행하고 각 finding을 확인, 기각, 수동 검토 필요로 표시한다.
 4. **승인 후 개선**: 검토를 통과한 보고서 항목만 받아 계획을 제안하고, 승인 전에는 소스 파일을 수정하지 않는 별도 Mode를 만든다.
+5. **외부 맥락과 전문 작업 결합**: Skill에 MCP server를 연결해 issue tracker, 사내 문서, database의 맥락을 불러오거나 보안, 테스트, 문서화 작업을 Subagent로 나눈다. Custom Mode에는 필요한 Skill, MCP server, Tool, Subagent와 최소 권한만 허용한다.
+
+**반복 작업은 Bob, 마지막 검토는 사람.**
