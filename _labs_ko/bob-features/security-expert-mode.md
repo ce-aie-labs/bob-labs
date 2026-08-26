@@ -28,11 +28,11 @@ Bob은 기본 모드인 **Agent**, **Plan**, **Ask**를 제공한다. 각 모드
 2. 왼쪽 메뉴에서 **모드** 탭을 누른다.
 3. 기본 제공되는 **Agent**, **Plan**, **Ask** 모드가 표시되는지 확인한다.
 
-![Bob 설정의 모드 탭에 표시된 Agent, Plan, Ask 기본 모드](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step0_1.png)
+![Bob 설정의 모드 탭에 표시된 Agent, Plan, Ask 기본 모드]({{ '/assets/images/security-expert-mode/step0_1.png' | relative_url }})
 
 각 모드의 이름을 누르면 세부 설정을 확인할 수 있다. **역할 정의**, **사용 시기**, **커스텀 지침**, **사용 가능한 도구**를 차례로 살펴보고 모드마다 Bob의 역할과 작업 범위가 어떻게 달라지는지 확인한다.
 
-![Plan 모드의 역할 정의, 사용 시기, 커스텀 지침, 사용 가능한 도구](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step0_2.png)
+![Plan 모드의 역할 정의, 사용 시기, 커스텀 지침, 사용 가능한 도구]({{ '/assets/images/security-expert-mode/step0_2.png' | relative_url }})
 
 - **Agent**: 파일 편집과 명령 실행 등 실제 구현 작업을 수행할 때 사용한다.
 - **Plan**: 코드를 변경하기 전에 요구사항을 분석하고 구현 순서를 설계할 때 사용한다.
@@ -48,7 +48,7 @@ Bob은 기본 모드인 **Agent**, **Plan**, **Ask**를 제공한다. 각 모드
 3. **읽기**, **편집**, **실행**, **MCP**, **모드**, **하위 작업**, **서브에이전트**, **스킬**, **할 일** 등 표시된 모든 항목의 자동 승인을 켠다.
 4. 접혀 있는 항목은 화살표를 눌러 하위 도구의 자동 승인도 모두 켜졌는지 확인한다.
 
-![Bob 설정의 채팅 탭에서 모든 도구의 자동 승인을 켠 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step0_3.png)
+![Bob 설정의 채팅 탭에서 모든 도구의 자동 승인을 켠 화면]({{ '/assets/images/security-expert-mode/step0_3.png' | relative_url }})
 
 자동 승인을 켜면 Bob이 도구를 사용할 때마다 승인을 기다리지 않아 hands-on을 끊김 없이 진행할 수 있다. 자동 승인은 Bob이 사용자 확인 없이 도구를 실행하도록 허용하므로 신뢰할 수 있는 실습 프로젝트에서만 사용한다. 이번 세션에서는 진행을 위해 모든 도구의 자동 승인을 켜고, 세션이 끝나면 필요한 항목만 남기거나 다시 끈다.
 
@@ -80,7 +80,7 @@ Bob은 기본 모드인 **Agent**, **Plan**, **Ask**를 제공한다. 각 모드
 <details markdown="1">
 <summary>프롬프트 복사 및 붙여 넣기</summary>
 
-![1단계 프롬프트를 복사해 Bob의 새 작업 입력창에 붙여 넣는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step1_1.png)
+![1단계 프롬프트를 복사해 Bob의 새 작업 입력창에 붙여 넣는 화면]({{ '/assets/images/security-expert-mode/step1_1.png' | relative_url }})
 
 </details>
 
@@ -89,7 +89,7 @@ Bob이 작업을 마칠 때까지 기다린다. 오른쪽의 할 일 목록에�
 <details markdown="1">
 <summary>생성 결과</summary>
 
-![Bob이 생성한 보안 감사 Skill과 Security Expert Custom Mode 결과](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step1_2.png)
+![Bob이 생성한 보안 감사 Skill과 Security Expert Custom Mode 결과]({{ '/assets/images/security-expert-mode/step1_2.png' | relative_url }})
 
 </details>
 
@@ -120,7 +120,7 @@ Bob이 작업을 마칠 때까지 기다린다. 오른쪽의 할 일 목록에�
 <details markdown="1">
 <summary>기존 채팅 닫기</summary>
 
-![새로 만든 Custom Mode와 Skill을 로드하기 위해 기존 Bob 채팅을 닫는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step2_0.png)
+![새로 만든 Custom Mode와 Skill을 로드하기 위해 기존 Bob 채팅을 닫는 화면]({{ '/assets/images/security-expert-mode/step2_0.png' | relative_url }})
 
 </details>
 
@@ -129,7 +129,7 @@ Bob이 작업을 마칠 때까지 기다린다. 오른쪽의 할 일 목록에�
 <details markdown="1">
 <summary>새 터미널 열기</summary>
 
-![예제 프로젝트를 받을 새 터미널을 여는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step2_1.png)
+![예제 프로젝트를 받을 새 터미널을 여는 화면]({{ '/assets/images/security-expert-mode/step2_1.png' | relative_url }})
 
 </details>
 
@@ -144,7 +144,7 @@ git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels
 <details markdown="1">
 <summary>예제 프로젝트 Clone 결과</summary>
 
-![터미널에서 예제 branch를 clone하고 탐색기에서 galaxium-travels 프로젝트를 확인하는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step2_3.png)
+![터미널에서 예제 branch를 clone하고 탐색기에서 galaxium-travels 프로젝트를 확인하는 화면]({{ '/assets/images/security-expert-mode/step2_3.png' | relative_url }})
 
 </details>
 
@@ -157,7 +157,7 @@ galaxium-travels 라는 프로젝트에 보안 점검이 필요해
 <details markdown="1">
 <summary>보안 점검 프롬프트 붙여 넣기</summary>
 
-![보안 점검 프롬프트를 복사해 Bob의 새 작업 입력창에 붙여 넣는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step2_2.png)
+![보안 점검 프롬프트를 복사해 Bob의 새 작업 입력창에 붙여 넣는 화면]({{ '/assets/images/security-expert-mode/step2_2.png' | relative_url }})
 
 </details>
 
@@ -166,7 +166,7 @@ Bob이 새로 로드한 **Security Expert** (`security-expert`) Mode로 전환�
 <details markdown="1">
 <summary>Security Expert Mode 실행 과정</summary>
 
-![Security Expert Mode로 전환한 뒤 다섯 단계의 보안 점검을 진행하는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step2_4.png)
+![Security Expert Mode로 전환한 뒤 다섯 단계의 보안 점검을 진행하는 화면]({{ '/assets/images/security-expert-mode/step2_4.png' | relative_url }})
 
 </details>
 
@@ -177,7 +177,7 @@ Bob이 새로 로드한 **Security Expert** (`security-expert`) Mode로 전환�
 <details markdown="1">
 <summary>보안 점검 보고서 결과</summary>
 
-![보안 점검을 완료하고 취약점 및 개선 코드 보고서를 생성한 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step2_5.png)
+![보안 점검을 완료하고 취약점 및 개선 코드 보고서를 생성한 화면]({{ '/assets/images/security-expert-mode/step2_5.png' | relative_url }})
 
 </details>
 
@@ -192,7 +192,7 @@ Bob이 새로 로드한 **Security Expert** (`security-expert`) Mode로 전환�
 <details markdown="1">
 <summary>Agent 모드로 새 세션 열기</summary>
 
-![Security Expert 세션을 닫고 Agent 모드의 새 작업 입력창을 여는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step3_0.png)
+![Security Expert 세션을 닫고 Agent 모드의 새 작업 입력창을 여는 화면]({{ '/assets/images/security-expert-mode/step3_0.png' | relative_url }})
 
 </details>
 
@@ -207,7 +207,7 @@ Bob이 새로 로드한 **Security Expert** (`security-expert`) Mode로 전환�
 <details markdown="1">
 <summary>정책 변경 프롬프트 붙여 넣기</summary>
 
-![보안 정책 변경 프롬프트를 복사해 Agent 모드의 새 작업 입력창에 붙여 넣는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step3_1.png)
+![보안 정책 변경 프롬프트를 복사해 Agent 모드의 새 작업 입력창에 붙여 넣는 화면]({{ '/assets/images/security-expert-mode/step3_1.png' | relative_url }})
 
 </details>
 
@@ -216,7 +216,7 @@ Bob이 현재 Mode와 Skill을 읽고 정책 변경이 필요한 파일을 식�
 <details markdown="1">
 <summary>수정 대상 분석</summary>
 
-![Agent 모드가 보안 정책 변경이 필요한 네 개 파일을 분석하는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step3_2.png)
+![Agent 모드가 보안 정책 변경이 필요한 네 개 파일을 분석하는 화면]({{ '/assets/images/security-expert-mode/step3_2.png' | relative_url }})
 
 </details>
 
@@ -225,7 +225,7 @@ Bob이 현재 Mode와 Skill을 읽고 정책 변경이 필요한 파일을 식�
 <details markdown="1">
 <summary>Mode와 Skill 수정 결과</summary>
 
-![수정된 Security Expert Mode의 세션 보안 규칙과 변경된 네 개 파일을 확인하는 화면](https://raw.githubusercontent.com/ce-aie-labs/bob-labs/main/assets/images/security-expert-mode/step3_3.png)
+![수정된 Security Expert Mode의 세션 보안 규칙과 변경된 네 개 파일을 확인하는 화면]({{ '/assets/images/security-expert-mode/step3_3.png' | relative_url }})
 
 </details>
 
