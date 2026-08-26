@@ -78,7 +78,6 @@ The package proposed a temporal knowledge graph, heterogeneous graph transformer
 
 These are **design and pseudo-code artifacts**. The run did not create a working environment, execute the pipeline, or benchmark it. Its statements that the methods are unused or outperform baseline GraphRAG are hypotheses to review, not verified results. The generated research Skill's helper used curated 2024-2025 fallback data, so add current primary-source citations before retaining novelty comparisons and require an implementation plus benchmark before making performance claims.
 
-<!-- Bob-verify: the Custom Mode, project-scoped paths, Skill chain, and GraphRAG artifacts above reflect the observed Korean run. Run both English prompts independently in Bob before participant use and update this section if the generated components, paths, or outputs differ. -->
 
 ## Tips
 
