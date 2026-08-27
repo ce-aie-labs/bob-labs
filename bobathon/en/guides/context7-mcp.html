@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect Context7 MCP - Bobathon Tools Guide</title>
+  <meta name="description" content="How to connect Context7 MCP to IBM Bob and consult current technical documentation">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/context7-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Context7 MCP</div>
+    <p class="eyebrow">Template 03</p>
+    <h1>Find current technical documentation</h1>
+    <p class="hero-copy">Connect Context7 so Bob can consult the latest official documentation for libraries and frameworks.</p>
+    <section class="capability-summary" aria-labelledby="context7-capabilities">
+      <h2 id="context7-capabilities">What this MCP enables</h2>
+      <ul>
+        <li>Find the latest official documentation for libraries used in the current project.</li>
+        <li>Review API usage and code examples for the correct version.</li>
+        <li>Get troubleshooting suggestions based on current documentation.</li>
+      </ul>
+    </section>
+
+    <section class="mcp-shortcut" aria-labelledby="context7-shortcut">
+      <h2 id="context7-shortcut">Try asking Bob</h2>
+      <p>You can ask Bob to connect it without editing the configuration file yourself.</p>
+
+      <pre id="prompt-add-context7" class="prompt">Connect the official Context7 MCP to the current project.
+Keep the existing MCP configuration and add only what is required.
+After configuration, verify the connection and explain how to test it.<button class="copy-button" type="button" data-copy="prompt-add-context7">Copy</button></pre>
+    </section>
+
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. Add the MCP configuration</h2>
+          <ol>
+            <li>Open the project in IBM Bob.</li>
+            <li>From the settings icon in the Bob panel, choose <strong>MCP → Edit Project MCP</strong>.</li>
+            <li>Add the <code>context7</code> entry below inside <code>mcpServers</code> in <code>.bob/mcp.json</code>.</li>
+          </ol>
+          <pre id="context7-config" class="prompt">{
+  "mcpServers": {
+    "context7": {
+      "type": "streamable-http",
+      "url": "https://mcp.context7.com/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="context7-config">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>2. Connect the server</h2>
+          <ol>
+            <li>Save the configuration and turn on <strong>Use MCP Servers</strong>.</li>
+            <li>Confirm that the <code>context7</code> server is connected in the MCP list.</li>
+          </ol>
+          <div class="info-note">
+            <strong>Do I need an API key?</strong>
+            <span>You can start the basic exercise without an API key. Add one according to the organizers' instructions only if you reach the usage limit.</span>
+          </div>
+          <div class="success"><strong>Success:</strong> The <code>context7</code> server and its available tools appear in Bob's MCP screen.</div>
+        </section>
+
+        <section>
+          <h2>3. Test documentation lookup</h2>
+          <p>Choose one technology used in the current project and ask Bob to find its latest documentation.</p>
+          <pre id="prompt-context7" class="prompt">Identify one major library used in the current project.
+Use Context7 to find the latest official documentation for that library, then explain the version and three key usage patterns.
+Do not modify the code.<button class="copy-button" type="button" data-copy="prompt-context7">Copy</button></pre>
+          <div class="success"><strong>Success:</strong> A Context7 tool runs and the response is based on official documentation.</div>
+        </section>
+
+        <section>
+          <h2>4. Use it with any technology</h2>
+          <p>Replace the text in brackets with the technology you use.</p>
+          <pre id="prompt-context7-custom" class="prompt">Use Context7 to find the latest official documentation for [library name].
+Show how to use [feature of interest] with a short example.
+Do not modify the code.<button class="copy-button" type="button" data-copy="prompt-context7-custom">Copy</button></pre>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>Tips for effective use</h3>
+        <ul>
+          <li>Specify the library name and the feature you want to learn about.</li>
+          <li>Ask the response to include the documentation source and version.</li>
+          <li>Start with lookup only and request code changes separately.</li>
+        </ul>
+        <p>If it does not connect, restart the <code>context7</code> server from the MCP screen.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

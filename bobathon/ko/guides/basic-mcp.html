@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Bob에 기본 MCP 연결하기 - Bobathon Tools Guide</title>
+  <meta name="description" content="Bob과 기본 MCP를 연결하기 위한 템플릿">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/basic-mcp.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / 기본 MCP</div>
+    <p class="eyebrow">Template 01</p>
+    <h1>Bob에 기본 MCP 연결하기</h1>
+    <p class="hero-copy">방법 A, B 중 편한 방법을 선택해서 MCP를 연결할 수 있습니다.</p>
+
+    <div class="article">
+      <article class="article-main">
+        <section id="method-chat">
+          <h2>방법 A. Bob 채팅으로 추가하기</h2>
+          <p>Bob의 <code>build-mcp-server</code> 스킬을 활용하면 필요한 기능을 자연어로 설명해 MCP 생성과 연결을 요청할 수 있습니다.</p>
+
+          <pre id="prompt-build-mcp" class="prompt">현재 프로젝트에서 사용할 MCP를 만들어서 연결해줘.
+
+- 하고 싶은 일: [예: 사내 공지 API를 검색하고 원문 가져오기]
+- 사용할 API 또는 데이터: [API 문서 URL이나 데이터 위치]
+- 필요한 인증: [없음 / API 키 / OAuth / 잘 모르겠음]
+
+build-mcp-server 스킬을 사용하고, 필요한 파일과 설정을 추가한 뒤
+실행 방법과 연결 확인 방법도 알려줘.<button class="copy-button" type="button" data-copy="prompt-build-mcp">복사</button></pre>
+
+          <div class="warning-note">
+            <strong>확인:</strong> 비밀 키는 채팅이나 코드에 그대로 입력하지 말고, Bob이 변경할 파일과 실행 명령을 먼저 확인하세요.
+          </div>
+          <div class="success"><strong>방법 A 완료:</strong> Bob의 안내대로 연결 확인까지 마쳤다면 아래 방법 B는 진행하지 않아도 됩니다.</div>
+        </section>
+        <section id="method-manual">
+          <h2>방법 B - 1. 연결 정보 확인</h2>
+          <p>채팅 대신 직접 설정하려면 아래 1~5단계만 순서대로 진행합니다.</p>
+          <p>사용하려는 MCP 안내에서 서버 이름, 연결 방식(<code>type</code>), 서버 주소(<code>url</code>)를 확인합니다. 템플릿에서 설정 코드가 제공된다면 그대로 복사해도 됩니다.</p>
+          <div class="info-note">
+            <strong>MCP란?</strong>
+            <span>Bob이 Notion이나 기술 문서 같은 외부 도구와 정보를 사용할 수 있도록 연결하는 공통 규격입니다.</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>방법 B - 2. MCP 설정 화면 열기</h2>
+          <ol>
+            <li>Bob에서 MCP를 사용할 프로젝트를 엽니다.</li>
+            <li>왼쪽 아래의 <strong>설정 아이콘</strong>을 누른 뒤 <strong>MCP</strong> 메뉴로 이동합니다.</li>
+            <li>서버 목록 오른쪽의 <strong>+ (Add MCP Server)</strong> 버튼을 누릅니다.</li>
+          </ol>
+          <figure class="screenshot-slot" data-screenshot="../../images/01_a.png" data-alt="Bob 설정의 MCP 화면에서 Add MCP Server 버튼을 찾는 모습">
+            <div><span>화면 캡처</span><strong>Bob 설정 → MCP → + 버튼</strong><code>images/01_a.png</code></div>
+            <figcaption>MCP 서버를 추가하려면 서버 목록 오른쪽의 <strong>+ 버튼</strong>을 선택합니다.</figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>방법 B - 3. 적용 범위 선택</h2>
+          <p><strong>Configuration Scope</strong>에서 MCP 설정을 사용할 범위를 선택합니다.</p>
+          <ul>
+            <li><strong>현재 프로젝트 이름</strong> (예: <code>bob_tutorial</code>): 지금 연 프로젝트에서만 사용합니다. 해커톤 실습에는 이 범위를 권장합니다.</li>
+            <li><strong>Global (All Workspaces)</strong>: Bob에서 여는 모든 프로젝트에 적용합니다. 같은 MCP를 여러 프로젝트에서 계속 사용할 때 선택하세요.</li>
+          </ul>
+          <figure class="screenshot-slot" data-screenshot="../../images/01_b.png" data-alt="Add MCP Server 창에서 Configuration Scope를 선택하는 모습">
+            <div><span>화면 캡처</span><strong>Configuration Scope 선택</strong><code>images/01_b.png</code></div>
+            <figcaption>범위를 선택한 뒤 <strong>Open Configuration File</strong>을 누릅니다.</figcaption>
+          </figure>
+          <div class="warning-note"><strong>권장:</strong> 처음 연결하거나 해커톤 프로젝트에서만 사용할 때는 현재 프로젝트 이름을 선택하세요.</div>
+        </section>
+
+        <section>
+          <h2>방법 B - 4. 설정 파일 작성</h2>
+          <p><strong>Open Configuration File</strong>을 누르면 선택한 범위의 설정 파일이 열립니다. 프로젝트 범위를 선택했다면 현재 프로젝트의 <code>.bob/mcp.json</code>이 만들어지거나 열립니다.</p>
+          <div class="path-guide">
+            <strong><code>.bob/mcp.json</code>은 어디에 있나요?</strong>
+            <p><strong>프로젝트 루트</strong>는 Bob을 열었을 때 왼쪽 <strong>파일 탐색기(Explorer)</strong>의 맨 위에 표시되는 프로젝트 폴더입니다.</p>
+            <pre class="file-tree">내-프로젝트/          ← 프로젝트 루트
+├── .bob/
+│   └── mcp.json      ← 프로젝트 MCP 설정 파일
+├── src/
+└── README.md</pre>
+            <p><code>.bob</code> 폴더가 보이지 않아도 괜찮습니다. <strong>Open Configuration File</strong>을 누르면 선택한 범위의 파일이 바로 열립니다.</p>
+          </div>
+          <p>열린 파일의 <code>mcpServers</code> 객체 안에 사용할 서버 설정을 추가하고 저장합니다. 처음 설정하는 경우에는 아래 기본형으로 시작할 수 있습니다.</p>
+          <pre id="basic-config" class="prompt">{
+  "mcpServers": {
+    "my-tool": {
+      "type": "streamable-http",
+      "url": "MCP 서버에서 안내한 URL",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="basic-config">복사</button></pre>
+          <div class="warning-note"><strong>주의:</strong> 위 코드는 원격 HTTP 방식의 기본 형태입니다. 연결하려는 MCP가 다른 설정을 안내한다면 해당 MCP의 공식 설정을 우선 사용하세요.</div>
+          <div class="info-note">
+            <strong>기존 MCP 설정이 있나요?</strong>
+            <span><code>mcpServers</code> 객체를 새로 만들거나 전체를 덮어쓰지 마세요. 기존 서버 항목의 닫는 중괄호 뒤에 쉼표를 추가하고, 그다음 줄에 새 서버 항목을 이어서 넣습니다.</span>
+          </div>
+          <p>예를 들어 Notion을 이미 사용하고 있고 Exa를 새로 연결한다면 다음과 같이 두 서버를 함께 둡니다.</p>
+          <pre id="basic-merged-config" class="prompt">{
+  "mcpServers": {
+    "notion": {
+      "type": "streamable-http",
+      "url": "https://mcp.notion.com/mcp",
+      "disabled": false
+    },
+    "exa": {
+      "type": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="basic-merged-config">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>방법 B - 5. 연결 확인</h2>
+          <ol>
+            <li>설정 파일을 저장하고 <strong>Enable MCP tools for new tasks</strong>를 켭니다.</li>
+            <li>MCP 목록에 추가한 서버가 나타나는지 확인합니다.</li>
+            <li>인증이 필요한 서버라면 <strong>Authenticate</strong>를 눌러 안내에 따라 승인합니다.</li>
+            <li>새 Bob 작업에서 해당 MCP를 사용하도록 요청해 결과를 확인합니다.</li>
+          </ol>
+          <div class="success"><strong>성공 기준:</strong> MCP 목록에 서버가 표시되고, 새 작업에서 해당 도구를 호출할 수 있습니다.</div>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>기억할 점</h3>
+        <ul>
+          <li>해커톤 실습은 프로젝트 범위를 권장합니다.</li>
+          <li>기존 <code>mcpServers</code> 항목을 지우지 않습니다.</li>
+          <li>비밀번호나 토큰은 템플릿이 명시적으로 요구하지 않는 한 설정에 넣지 않습니다.</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

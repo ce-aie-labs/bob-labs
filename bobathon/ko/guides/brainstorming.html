@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>업무 자동화 아이디어 찾기 - Bobathon Tools Guide</title>
+  <meta name="description" content="나만의 업무 자동화 아이디어를 발견하고 구체화하는 방법">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/brainstorming.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / 업무 자동화 아이디어 찾기</div>
+    <p class="eyebrow">Idea guide · 나의 업무에서 시작하기</p>
+    <h1>무엇을 자동화할지 막막할 때</h1>
+    <p class="hero-copy">거창한 아이디어보다 내가 반복하는 일, 시간이 오래 걸리는 일, 자꾸 놓치는 일에서 시작해 보세요.<br>
+    Bob과의 대화를 통해 나에게 필요한 해결책을 함께 찾을 수 있습니다.</p>
+
+    <section class="capability-summary" aria-labelledby="brainstorm-principle">
+      <h2 id="brainstorm-principle">실제로 불편함을 느꼈던 일로부터 좋은 아이디어가 시작돼요</h2>
+      <ul>
+        <li>최근 일주일의 업무에서 반복하거나 기다렸던 순간을 떠올려 보세요.</li>
+        <li>누구나 겪는 문제보다 내가 구체적으로 경험한 장면을 설명해 보세요.</li>
+        <li>아래 질문을 순서대로 따르지 말고, 지금 답하기 쉬운 것 하나만 골라 시작하세요.</li>
+      </ul>
+    </section>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>내 업무를 돌아보기</h2>
+          <p>아직 불편했던 일을 특정하지 못했다면 Bob의 질문에 답하며 찾아봅니다.</p>
+          <pre id="prompt-interest" class="prompt">내가 업무에서 자동화하면 좋을 일을 찾고 싶어.
+반복하는 일, 시간이 오래 걸리는 일, 자주 놓치는 일,
+여러 도구 사이에서 옮겨 적는 일을 떠올릴 수 있도록 한 번에 하나씩 질문해줘.
+충분히 들은 뒤 자동화할 만한 후보를 정리해줘.<button class="copy-button" type="button" data-copy="prompt-interest">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>불편했던 업무 장면에서 시작하기</h2>
+          <p>작고 사소해 보여도 자주 반복되는 불편은 좋은 자동화 후보입니다.</p>
+          <pre id="prompt-problem" class="prompt">업무 중 [언제/어디서] [어떤 일]을 할 때 불편했어.
+지금은 [현재 처리 방식]으로 해결하고 있고, 보통 [시간 또는 횟수]만큼 반복해.
+이 과정에서 정말 해결해야 할 문제가 무엇인지 질문하며 함께 파고들어 줘.
+바로 해결책을 정하지 말고 먼저 현재 업무 흐름을 정리해줘.<button class="copy-button" type="button" data-copy="prompt-problem">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>반복 업무를 자동화로 바꾸기</h2>
+          <p>현재 업무의 입력, 판단, 결과를 나누면 자동화할 부분이 더 잘 보입니다.</p>
+          <pre id="prompt-technology" class="prompt">내가 반복하는 업무는 "[업무 설명]"이야.
+이 업무를 시작하게 만드는 조건, 필요한 입력 자료, 내가 하는 판단,
+마지막 결과물로 나누어 현재 흐름을 정리해줘.
+그중 Bob이나 MCP로 자동화할 부분과 사람이 확인해야 할 부분을 구분해줘.<button class="copy-button" type="button" data-copy="prompt-technology">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>해결 방법을 여러 방향으로 펼치기</h2>
+          <p>자동화가 꼭 모든 과정을 대신할 필요는 없습니다. 알림, 정리, 초안, 연결처럼 작은 도움도 함께 탐색합니다.</p>
+          <pre id="prompt-remix" class="prompt">현재 아이디어는 "[아이디어 한 문장]"이야.
+이 아이디어의 당연한 전제 3가지를 찾아 뒤집어보고,
+완전 자동화, 일부 단계 지원, 실수 방지, 정보 요약, 도구 연결 관점에서
+서로 다른 해결 방법을 제안해줘.<button class="copy-button" type="button" data-copy="prompt-remix">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>마음에 드는 방향 좁히기</h2>
+          <p>가장 멋진 아이디어보다 실제로 시간을 줄이거나 실수를 막고, 해커톤에서 직접 보여줄 수 있는 아이디어를 찾습니다.</p>
+          <pre id="prompt-narrow" class="prompt">지금까지 나온 아이디어를 표로 정리해줘.
+각 아이디어를 절약되는 시간, 줄어드는 실수, 사용 빈도, 구현 난이도, 해커톤 시연 장면으로 비교해줘.
+대신 최종 선택은 하지 말고, 내가 선택할 수 있도록 장단점과 확인 질문을 알려줘.<button class="copy-button" type="button" data-copy="prompt-narrow">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>핵심 기능만 남기기</h2>
+          <p>아이디어를 골랐다면 모든 기능이 아니라 핵심 경험 하나만 남깁니다.</p>
+          <pre id="prompt-mvp" class="prompt">선택한 아이디어는 "[아이디어 한 문장]"이야.
+해커톤 시간 안에 핵심 가치를 보여주는 가장 작은 데모(MVP)로 줄여줘.
+반드시 필요한 기능, 과감히 뺄 기능, 사용자 시연 흐름을 정리해줘.
+아직 코드는 작성하지 마.<button class="copy-button" type="button" data-copy="prompt-mvp">복사</button></pre>
+          <div class="success"><strong>다음 단계:</strong> "나는 매번 하던 ○○ 업무를 Bob이 △△하도록 바꿔서, 시간과 실수를 줄인다"라고 설명할 수 있으면 구현을 시작해도 좋습니다.</div>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>대화가 막힐 때</h3>
+        <ul>
+          <li>"좀 더 현실적인 방향으로 바꿔줘."</li>
+          <li>"완전히 반대 관점에서도 생각해줘."</li>
+          <li>"나에게 질문하면서 같이 찾아줘."</li>
+          <li>"아직 평가하지 말고 후보를 더 늘려줘."</li>
+          <li>"10분 안에 시험해볼 방법을 알려줘."</li>
+        </ul>
+        <p>한 번에 좋은 프롬프트를 완성하려고 애쓰지 않아도 됩니다. Bob과 함께 방향을 조정하는 것이 브레인스토밍의 핵심입니다.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

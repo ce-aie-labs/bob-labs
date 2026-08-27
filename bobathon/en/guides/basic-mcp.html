@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect a basic MCP to Bob - Bobathon Tools Guide</title>
+  <meta name="description" content="A starter guide for connecting a basic MCP to Bob">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/basic-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Basic MCP</div>
+    <p class="eyebrow">Template 01</p>
+    <h1>Connect a basic MCP to Bob</h1>
+    <p class="hero-copy">Choose either method A or B to connect an MCP in the way that works best for you.</p>
+
+    <div class="article">
+      <article class="article-main">
+        <section id="method-chat">
+          <h2>Method A. Add it through Bob chat</h2>
+          <p>With Bob's <code>build-mcp-server</code> skill, you can describe what you need in natural language and ask Bob to create and connect the MCP.</p>
+
+          <pre id="prompt-build-mcp" class="prompt">Create and connect an MCP for the current project.
+
+- What I want to do: [example: search an internal announcements API and retrieve the source]
+- API or data to use: [API documentation URL or data location]
+- Authentication required: [none / API key / OAuth / not sure]
+
+Use the build-mcp-server skill, add the required files and configuration,
+then explain how to run it and verify the connection.<button class="copy-button" type="button" data-copy="prompt-build-mcp">Copy</button></pre>
+
+          <div class="warning-note">
+            <strong>Check first:</strong> Do not paste secret keys into chat or code. Review the files Bob will change and the commands it will run.
+          </div>
+          <div class="success"><strong>Method A complete:</strong> If you followed Bob's instructions and verified the connection, you can skip method B below.</div>
+        </section>
+        <section id="method-manual">
+          <h2>Method B - 1. Check the connection details</h2>
+          <p>To configure it manually instead of through chat, follow steps 1 through 5 in order.</p>
+          <p>In the MCP guide, find the server name, connection type (<code>type</code>), and server address (<code>url</code>). If configuration code is provided, you can copy it as-is.</p>
+          <div class="info-note">
+            <strong>What is MCP?</strong>
+            <span>It is a common protocol that lets Bob connect to external tools and information such as Notion and technical documentation.</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>Method B - 2. Open the MCP settings</h2>
+          <ol>
+            <li>Open the project where you want to use the MCP in Bob.</li>
+            <li>Select the <strong>Settings icon</strong> at the lower left, then open the <strong>MCP</strong> menu.</li>
+            <li>Select <strong>+ (Add MCP Server)</strong> to the right of the server list.</li>
+          </ol>
+          <figure class="screenshot-slot" data-screenshot="../../images/01_a.png" data-alt="The Add MCP Server button in Bob's MCP settings">
+            <div><span>Screenshot</span><strong>Bob Settings → MCP → + button</strong><code>images/01_a.png</code></div>
+            <figcaption>To add an MCP server, select the <strong>+ button</strong> to the right of the server list.</figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>Method B - 3. Choose the configuration scope</h2>
+          <p>Under <strong>Configuration Scope</strong>, choose where the MCP configuration will apply.</p>
+          <ul>
+            <li><strong>Current project name</strong> (for example, <code>bob_tutorial</code>): use it only in the project you currently have open. This scope is recommended for the hackathon.</li>
+            <li><strong>Global (All Workspaces)</strong>: apply it to every project opened in Bob. Choose this only when you will reuse the same MCP across multiple projects.</li>
+          </ul>
+          <figure class="screenshot-slot" data-screenshot="../../images/01_b.png" data-alt="Choosing Configuration Scope in the Add MCP Server dialog">
+            <div><span>Screenshot</span><strong>Choose Configuration Scope</strong><code>images/01_b.png</code></div>
+            <figcaption>Choose a scope, then select <strong>Open Configuration File</strong>.</figcaption>
+          </figure>
+          <div class="warning-note"><strong>Recommended:</strong> Choose the current project when connecting for the first time or using the MCP only for the hackathon.</div>
+        </section>
+
+        <section>
+          <h2>Method B - 4. Edit the configuration file</h2>
+          <p>Selecting <strong>Open Configuration File</strong> opens the configuration for your chosen scope. With project scope, Bob creates or opens <code>.bob/mcp.json</code> in the current project.</p>
+          <div class="path-guide">
+            <strong>Where is <code>.bob/mcp.json</code>?</strong>
+            <p>The <strong>project root</strong> is the project folder shown at the top of the <strong>Explorer</strong> when you open Bob.</p>
+            <pre class="file-tree">my-project/          ← project root
+├── .bob/
+│   └── mcp.json      ← project MCP configuration
+├── src/
+└── README.md</pre>
+            <p>It is fine if the <code>.bob</code> folder is not visible. Selecting <strong>Open Configuration File</strong> opens the file for the chosen scope directly.</p>
+          </div>
+          <p>Add the server configuration inside the <code>mcpServers</code> object and save the file. If this is your first server, you can start with the basic structure below.</p>
+          <pre id="basic-config" class="prompt">{
+  "mcpServers": {
+    "my-tool": {
+      "type": "streamable-http",
+      "url": "URL provided by the MCP server",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="basic-config">Copy</button></pre>
+          <div class="warning-note"><strong>Note:</strong> This is the basic shape for a remote HTTP connection. If the MCP provides different instructions, follow its official configuration.</div>
+          <div class="info-note">
+            <strong>Already have an MCP configuration?</strong>
+            <span>Do not create another <code>mcpServers</code> object or overwrite the existing one. Add a comma after the closing brace of the existing server entry, then place the new server entry on the next line.</span>
+          </div>
+          <p>For example, if Notion is already configured and you are adding Exa, keep both servers together like this.</p>
+          <pre id="basic-merged-config" class="prompt">{
+  "mcpServers": {
+    "notion": {
+      "type": "streamable-http",
+      "url": "https://mcp.notion.com/mcp",
+      "disabled": false
+    },
+    "exa": {
+      "type": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="basic-merged-config">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>Method B - 5. Verify the connection</h2>
+          <ol>
+            <li>Save the configuration file and turn on <strong>Enable MCP tools for new tasks</strong>.</li>
+            <li>Confirm that the new server appears in the MCP list.</li>
+            <li>If the server requires authentication, select <strong>Authenticate</strong> and follow the authorization steps.</li>
+            <li>In a new Bob task, ask Bob to use the MCP and check the result.</li>
+          </ol>
+          <div class="success"><strong>Success:</strong> The server appears in the MCP list and its tools can be called from a new task.</div>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>Keep in mind</h3>
+        <ul>
+          <li>Project scope is recommended for hackathon exercises.</li>
+          <li>Do not delete existing <code>mcpServers</code> entries.</li>
+          <li>Do not add passwords or tokens unless the template explicitly requires them.</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

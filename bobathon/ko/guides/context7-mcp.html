@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Context7 MCP 연결하기 - Bobathon Tools Guide</title>
+  <meta name="description" content="IBM Bob과 Context7 MCP를 연결해 최신 기술 문서를 조회하는 방법">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/context7-mcp.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / Context7 MCP</div>
+    <p class="eyebrow">Template 03</p>
+    <h1>최신 기술 문서 찾기</h1>
+    <p class="hero-copy">Context7를 연결해 Bob이 라이브러리와 프레임워크의 최신 공식 문서를 참고하게 합니다.</p>
+    <section class="capability-summary" aria-labelledby="context7-capabilities">
+      <h2 id="context7-capabilities">이 MCP를 연결하면</h2>
+      <ul>
+        <li>현재 프로젝트에서 사용하는 라이브러리의 최신 공식 문서를 찾을 수 있습니다.</li>
+        <li>정확한 버전에 맞는 API 사용법과 코드 예제를 확인할 수 있습니다.</li>
+        <li>최신 문서를 바탕으로 오류 해결 방법을 제안받을 수 있습니다.</li>
+      </ul>
+    </section>
+
+    <section class="mcp-shortcut" aria-labelledby="context7-shortcut">
+      <h2 id="context7-shortcut">Bob에게 이렇게 요청해보세요</h2>
+      <p>설정 파일을 직접 편집하지 않고 연결을 요청할 수도 있습니다.</p>
+
+      <pre id="prompt-add-context7" class="prompt">현재 프로젝트에 공식 Context7 MCP를 연결해줘.
+기존 MCP 설정은 유지하고, 필요한 설정만 추가해줘.
+설정이 끝나면 연결 상태를 확인하고 테스트 방법도 알려줘.<button class="copy-button" type="button" data-copy="prompt-add-context7">복사</button></pre>
+    </section>
+
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. MCP 설정 추가</h2>
+          <ol>
+            <li>IBM Bob에서 프로젝트를 엽니다.</li>
+            <li>Bob 패널의 설정 아이콘에서 <strong>MCP → Edit Project MCP</strong>를 선택합니다.</li>
+            <li><code>.bob/mcp.json</code>의 <code>mcpServers</code> 안에 아래 <code>context7</code> 항목을 추가합니다.</li>
+          </ol>
+          <pre id="context7-config" class="prompt">{
+  "mcpServers": {
+    "context7": {
+      "type": "streamable-http",
+      "url": "https://mcp.context7.com/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="context7-config">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>2. 서버 연결</h2>
+          <ol>
+            <li>설정을 저장하고 <strong>Use MCP Servers</strong>를 켭니다.</li>
+            <li>MCP 목록에서 <code>context7</code> 서버가 연결 상태인지 확인합니다.</li>
+          </ol>
+          <div class="info-note">
+            <strong>API 키가 필요한가요?</strong>
+            <span>기본 실습은 API 키 없이 시작할 수 있습니다. 사용량 제한에 걸린 경우에만 운영진 안내에 따라 키를 추가하세요.</span>
+          </div>
+          <div class="success"><strong>성공 기준:</strong> Bob의 MCP 화면에서 <code>context7</code> 서버와 사용 가능한 도구가 표시됩니다.</div>
+        </section>
+
+        <section>
+          <h2>3. 문서 조회 테스트</h2>
+          <p>현재 프로젝트에 사용된 기술 하나를 골라 최신 문서를 찾아보게 합니다.</p>
+          <pre id="prompt-context7" class="prompt">현재 프로젝트에서 사용하는 주요 라이브러리 하나를 확인해줘.
+Context7에서 해당 라이브러리의 최신 공식 문서를 찾아 버전과 핵심 사용법 3가지를 설명해줘.
+코드는 수정하지 마.<button class="copy-button" type="button" data-copy="prompt-context7">복사</button></pre>
+          <div class="success"><strong>성공 기준:</strong> Context7 도구가 실행되고 공식 문서를 바탕으로 한 설명이 표시됩니다.</div>
+        </section>
+
+        <section>
+          <h2>4. 원하는 기술로 활용</h2>
+          <p>대괄호 안을 참가자가 사용하는 기술로 바꿉니다.</p>
+          <pre id="prompt-context7-custom" class="prompt">Context7에서 [라이브러리 이름]의 최신 공식 문서를 찾아
+[알고 싶은 기능]의 사용법과 짧은 예제를 보여줘.
+코드는 수정하지 마.<button class="copy-button" type="button" data-copy="prompt-context7-custom">복사</button></pre>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>잘 활용하는 방법</h3>
+        <ul>
+          <li>라이브러리 이름과 알고 싶은 기능을 구체적으로 적습니다.</li>
+          <li>답변에 참고한 문서와 버전을 함께 표시해 달라고 요청합니다.</li>
+          <li>처음에는 조회만 하고 코드 수정은 별도로 요청합니다.</li>
+        </ul>
+        <p>연결되지 않으면 MCP 화면에서 <code>context7</code> 서버를 Restart하세요.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

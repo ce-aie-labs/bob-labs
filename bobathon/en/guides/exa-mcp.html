@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect Exa MCP - Bobathon Tools Guide</title>
+  <meta name="description" content="How to connect Exa MCP to IBM Bob for current web search and source retrieval">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/exa-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Exa MCP</div>
+    <p class="eyebrow">Template 04</p>
+    <h1>Search current web information</h1>
+    <p class="hero-copy">Connect Exa so Bob can search the web and inspect the full text of relevant pages.</p>
+
+    <section class="capability-summary" aria-labelledby="exa-capabilities">
+      <h2 id="exa-capabilities">What this MCP enables</h2>
+      <ul>
+        <li>Find current news, market trends, and competitor information on the web.</li>
+        <li>Read source pages and summarize key points with links.</li>
+        <li>Compare multiple sources to validate ideas or produce research findings.</li>
+      </ul>
+    </section>
+
+    <section class="mcp-shortcut" aria-labelledby="exa-shortcut">
+      <h2 id="exa-shortcut">Try asking Bob</h2>
+      <p>You can request the connection in natural language without editing the configuration file yourself.</p>
+      <pre id="prompt-add-exa" class="prompt">Connect the official Exa MCP to the current project.
+Keep the existing MCP configuration and add only what is required.
+After configuration, verify the connection and explain how to test web search.<button class="copy-button" type="button" data-copy="prompt-add-exa">Copy</button></pre>
+    </section>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. Add the MCP configuration</h2>
+          <ol>
+            <li>Open the project in IBM Bob.</li>
+            <li>From the settings icon in the Bob panel, choose <strong>MCP → Edit Project MCP</strong>.</li>
+            <li>Add the <code>exa</code> entry below inside <code>mcpServers</code> in <code>.bob/mcp.json</code>.</li>
+          </ol>
+          <pre id="exa-config" class="prompt">{
+  "mcpServers": {
+    "exa": {
+      "type": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="exa-config">Copy</button></pre>
+          <div class="info-note">
+            <strong>Already have an MCP configuration?</strong>
+            <span>Do not replace the entire <code>mcpServers</code> object. Add a comma after the existing server entry, then add only the <code>exa</code> entry.</span>
+          </div>
+          <p>For example, if Notion is already configured, keep both servers together like this.</p>
+          <pre id="exa-existing-config" class="prompt">{
+  "mcpServers": {
+    "notion": {
+      "type": "streamable-http",
+      "url": "https://mcp.notion.com/mcp",
+      "disabled": false
+    },
+    "exa": {
+      "type": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="exa-existing-config">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>2. Connect the server</h2>
+          <ol>
+            <li>Save the configuration and turn on <strong>Use MCP Servers</strong>.</li>
+            <li>Confirm that the <code>exa</code> server is connected in the MCP list.</li>
+          </ol>
+          <div class="info-note">
+            <strong>Do I need an API key?</strong>
+            <span>You can start the basic exercise without an API key. Usage may be limited without one. If you need more capacity, obtain an Exa API key and add it according to the organizers' instructions.</span>
+          </div>
+          <div class="success"><strong>Success:</strong> The <code>exa</code> server and tools such as <code>web_search_exa</code> and <code>web_fetch_exa</code> appear in Bob's MCP screen.</div>
+        </section>
+
+        <section>
+          <h2>3. Test web search</h2>
+          <p>Search a topic that requires current information and include the sources.</p>
+          <pre id="prompt-exa-search" class="prompt">Use Exa to find three major generative AI announcements from the past week.
+Put the announcement date, key point, and source link for each item in a table.
+Do not modify the code.<button class="copy-button" type="button" data-copy="prompt-exa-search">Copy</button></pre>
+          <div class="success"><strong>Success:</strong> An Exa search tool runs and the result includes dates and source links.</div>
+        </section>
+
+        <section>
+          <h2>4. Test source retrieval</h2>
+          <p>Choose one search result and ask Bob to read and summarize the source page.</p>
+          <pre id="prompt-exa-fetch" class="prompt">Choose the most important result you just found and use Exa to inspect the source page.
+Summarize three key points and their relevance to our project, and include the source link.
+Do not modify the code.<button class="copy-button" type="button" data-copy="prompt-exa-fetch">Copy</button></pre>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>Tips for effective use</h3>
+        <ul>
+          <li>Specify the time range and number of results.</li>
+          <li>Ask for source links and publication dates in every response.</li>
+          <li>Verify search results against the source before making important decisions.</li>
+        </ul>
+        <p>If it does not connect, restart the <code>exa</code> server from the MCP screen.</p>
+        <p><a href="https://github.com/exa-labs/exa-mcp-server">Official Exa MCP documentation →</a></p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Validate that every changed _labs_en(_ko)/**/*.md file has the full content
-spec in its own language, and that its bilingual sibling exists."""
+spec in its own language, and that its bilingual sibling exists.
+
+Changed bobathon/ site files (html/css/js/md) are also checked, for the
+ASCII-punctuation rule only - they carry no lab front matter or section spec."""
 
 import os
 import re
@@ -45,18 +48,33 @@ COLLECTION_ROOTS = {
     "_labs_ko": ("_labs_en", "ko", "en"),
 }
 
+# Site content outside the lab collections that still must follow the
+# ASCII-punctuation rule. These have no lab front matter or section spec, so
+# they are checked for typography only. Without this the whole bobathon/ tree
+# bypasses the punctuation gate that the lab files are held to.
+TYPOGRAPHY_ONLY_PREFIXES = ("bobathon/",)
+TYPOGRAPHY_ONLY_SUFFIXES = (".html", ".css", ".js", ".md")
+
 FRONT_MATTER_RE = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", re.DOTALL)
 
 
-def changed_lab_files(base_ref):
-    diff = subprocess.run(
+def changed_paths(base_ref):
+    return subprocess.run(
         ["git", "diff", "--name-only", "--diff-filter=ACM", f"{base_ref}...HEAD"],
         capture_output=True, text=True, check=True,
     ).stdout.splitlines()
-    return [
-        f for f in diff
-        if (f.startswith("_labs_en/") or f.startswith("_labs_ko/")) and f.endswith(".md")
-    ]
+
+
+def is_lab_file(path):
+    return (
+        path.startswith("_labs_en/") or path.startswith("_labs_ko/")
+    ) and path.endswith(".md")
+
+
+def is_typography_only_file(path):
+    return path.startswith(TYPOGRAPHY_ONLY_PREFIXES) and path.endswith(
+        TYPOGRAPHY_ONLY_SUFFIXES
+    )
 
 
 def parse_front_matter(text):
@@ -171,11 +189,18 @@ def validate_file(path, categories=None):
     return errors
 
 
+def check_typography_file(path):
+    with open(path, encoding="utf-8") as f:
+        return check_typography(path, f.read())
+
+
 def main():
     base_ref = sys.argv[1] if len(sys.argv) > 1 else "origin/main"
-    files = changed_lab_files(base_ref)
-    if not files:
-        print("No _labs_en/**/*.md or _labs_ko/**/*.md files changed - nothing to validate.")
+    paths = changed_paths(base_ref)
+    lab_files = [f for f in paths if is_lab_file(f)]
+    typography_files = [f for f in paths if is_typography_only_file(f)]
+    if not lab_files and not typography_files:
+        print("No lab or bobathon/ content files changed - nothing to validate.")
         return 0
 
     categories = load_categories()
@@ -183,17 +208,20 @@ def main():
         print(f"Warning: could not read {CATEGORIES_FILE} - skipping category validation.")
 
     all_errors = []
-    for path in files:
+    for path in lab_files:
         all_errors.extend(validate_file(path, categories))
+    for path in typography_files:
+        all_errors.extend(check_typography_file(path))
 
+    checked = len(lab_files) + len(typography_files)
     if all_errors:
         print("Content spec validation failed:\n")
         for err in all_errors:
             print(f"  - {err}")
-        print(f"\n{len(files)} file(s) checked, {len(all_errors)} problem(s) found.")
+        print(f"\n{checked} file(s) checked, {len(all_errors)} problem(s) found.")
         return 1
 
-    print(f"{len(files)} file(s) checked, content spec is complete.")
+    print(f"{checked} file(s) checked, content spec is complete.")
     return 0
 
 

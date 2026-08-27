@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Bobathon Tools Guide - IBM Bob Labs</title>
+  <meta name="description" content="Bobathon guides for reducing repetitive work and focusing on what matters">
+  <link rel="stylesheet" href="../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../en/">All labs</a>
+      <a href="index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../ko/" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-message">
+          <p class="eyebrow">IBM Bob Labs</p>
+          <h1>Bobathon</h1>
+          <div class="hero-copy">
+            <p>What work do you find yourself repeating? A report rebuilt every week, a review run for every PR, or a migration you have already done four times?</p>
+            <p>It does not have to be a grand project. Think about the work that leaves you drained simply because you have to repeat it.</p>
+            <p>Now, use IBM Bob to reduce repetitive work and focus on what matters most!</p>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="../images/landing.png" alt="Illustration of the Bob robot working at a laptop beside a code screen">
+        </figure>
+      </div>
+    </section>
+
+    <div class="page">
+      <section class="guide-section" aria-labelledby="chat-history-guide">
+        <div class="section-heading">
+          <div>
+            <h2 id="chat-history-guide">Submit your Bobathon result</h2>
+          </div>
+          <p>Export your Bobathon conversation as a JSON file.</p>
+        </div>
+
+        <div class="card-grid card-grid-wide">
+          <a class="card" href="guides/chat-history-export.html">
+            <span class="card-number">SUBMIT</span>
+            <div class="card-copy">
+              <h3>Export a Bob conversation</h3>
+              <p>Required: how to submit your Bobathon result</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+        </div>
+      </section>
+      <section class="guide-section" aria-labelledby="automation-guides">
+        <div class="section-heading">
+          <div>
+            <h2 id="automation-guides">Find an automation idea</h2>
+          </div>
+          <p>Start with a frustration you have experienced firsthand.</p>
+        </div>
+        <div class="card-grid card-grid-wide">
+          <a class="card" href="guides/brainstorming.html">
+            <span class="card-number">START</span>
+            <div class="card-copy">
+              <h3>When you are not sure what to automate</h3>
+              <p>Reflect on repetitive work and frustrating moments, then work with Bob to discover and shape a solution you actually need.</p>
+            </div>
+            <span class="card-action">Get started →</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="mcp-guides">
+        <div class="section-heading">
+          <div>
+            <h2 id="mcp-guides">MCP connection guides</h2>
+          </div>
+          <p>Connect Bob to the tools and information you use at work.</p>
+        </div>
+        <div class="card-grid card-grid-boxed">
+          <a class="card" href="guides/basic-mcp.html">
+            <span class="card-number">01</span>
+            <div class="card-copy">
+              <h3>Connect a basic MCP to Bob</h3>
+              <p>Use this when you want to connect your first tool to Bob through MCP.</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+          <a class="card" href="guides/notion-mcp.html">
+            <span class="card-number">02</span>
+            <div class="card-copy">
+              <h3>Notion MCP</h3>
+              <p>Use this when you want Bob to find and use work documents or information in Notion.</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+          <a class="card" href="guides/context7-mcp.html">
+            <span class="card-number">03</span>
+            <div class="card-copy">
+              <h3>Find current technical documentation - Context7 MCP</h3>
+              <p>Use this when you want Bob to find and consult the latest official documentation for your libraries or frameworks.</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+          <a class="card" href="guides/exa-mcp.html">
+            <span class="card-number">04</span>
+            <div class="card-copy">
+              <h3>Search the web - Exa MCP</h3>
+              <p>Use this when you want Bob to search current web and technical sources and inspect the original pages.</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+          <a class="card" href="guides/nylas-mcp.html">
+            <span class="card-number">05</span>
+            <div class="card-copy">
+              <h3>Connect email and calendars - Nylas MCP</h3>
+              <p>Use this when you want Bob to access email, calendars, and contacts as part of your workflow.</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+          <a class="card" href="guides/playwright-mcp.html">
+            <span class="card-number">06</span>
+            <div class="card-copy">
+              <h3>Automate a browser - Playwright MCP</h3>
+              <p>Use this when you want Bob to open pages, click, type, and check how a service behaves.</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+          <a class="card" href="guides/github-mcp.html">
+            <span class="card-number">07</span>
+            <div class="card-copy">
+              <h3>Review repositories and issues - GitHub MCP</h3>
+              <p>Use this when you want Bob to safely read GitHub repository, issue, and pull request information.</p>
+            </div>
+            <span class="card-action">Open →</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../assets/site.js?v=3"></script>
+</body>
+</html>

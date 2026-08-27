@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Find an automation idea - Bobathon Tools Guide</title>
+  <meta name="description" content="How to discover and shape an automation idea from your own work">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/brainstorming.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Find an automation idea</div>
+    <p class="eyebrow">Idea guide · Start with your own work</p>
+    <h1>When you are not sure what to automate</h1>
+    <p class="hero-copy">Start with work you repeat, tasks that take too long, or things you often miss-not with a grand idea.<br>
+    A conversation with Bob can help you find the solution you actually need.</p>
+
+    <section class="capability-summary" aria-labelledby="brainstorm-principle">
+      <h2 id="brainstorm-principle">Good ideas start with work that has genuinely frustrated you</h2>
+      <ul>
+        <li>Think about moments in the past week when you repeated a task or had to wait.</li>
+        <li>Describe a specific situation you experienced rather than a generic problem.</li>
+        <li>Do not follow every prompt in order. Start with the one that is easiest to answer right now.</li>
+      </ul>
+    </section>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>Reflect on your work</h2>
+          <p>If you have not identified a frustrating task yet, let Bob ask questions to help you find one.</p>
+          <pre id="prompt-interest" class="prompt">I want to find something in my work that would be useful to automate.
+Ask me one question at a time so I can recall work I repeat, work that takes too long,
+things I often miss, or information I copy between tools.
+After you have heard enough, summarize the best candidates for automation.<button class="copy-button" type="button" data-copy="prompt-interest">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>Start with a frustrating work situation</h2>
+          <p>A small frustration can be a strong automation candidate when it happens often.</p>
+          <pre id="prompt-problem" class="prompt">At work, I felt frustrated when I had to [task] [when/where].
+I currently handle it by [current process], and it usually takes or happens [time or frequency].
+Ask questions and help me investigate the real problem that needs to be solved.
+Do not jump to a solution. First, map the current workflow.<button class="copy-button" type="button" data-copy="prompt-problem">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>Turn repetitive work into an automation</h2>
+          <p>Separating inputs, decisions, and outputs makes the automatable parts easier to see.</p>
+          <pre id="prompt-technology" class="prompt">The task I repeat is "[describe the task]."
+Break the workflow into its trigger, required inputs, decisions I make,
+and final output.
+Separate the parts Bob or an MCP could automate from the parts a person should review.<button class="copy-button" type="button" data-copy="prompt-technology">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>Explore several kinds of solutions</h2>
+          <p>Automation does not need to replace the entire process. Explore smaller forms of help such as alerts, organization, drafts, and connections.</p>
+          <pre id="prompt-remix" class="prompt">The current idea is "[one-sentence idea]."
+Identify three assumptions behind this idea and reverse them.
+Suggest different approaches from the perspectives of full automation, partial assistance,
+error prevention, information summarization, and tool connection.<button class="copy-button" type="button" data-copy="prompt-remix">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>Narrow down the directions you like</h2>
+          <p>Choose an idea that saves real time or prevents mistakes and can be demonstrated during the hackathon-not simply the most impressive idea.</p>
+          <pre id="prompt-narrow" class="prompt">Put the ideas so far into a table.
+Compare each idea by time saved, mistakes prevented, frequency of use, implementation difficulty, and hackathon demo scenario.
+Do not choose for me. Show the tradeoffs and questions I should answer so I can decide.<button class="copy-button" type="button" data-copy="prompt-narrow">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>Keep only the essential capability</h2>
+          <p>Once you choose an idea, reduce it to one core experience rather than every possible feature.</p>
+          <pre id="prompt-mvp" class="prompt">The selected idea is "[one-sentence idea]."
+Reduce it to the smallest demo (MVP) that can show its core value within the hackathon.
+List the must-have capability, what to cut, and the user demo flow.
+Do not write code yet.<button class="copy-button" type="button" data-copy="prompt-mvp">Copy</button></pre>
+          <div class="success"><strong>Next step:</strong> You are ready to build when you can say, "I am changing the repeated task ○○ so Bob can △△, reducing time and mistakes."</div>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>When the conversation stalls</h3>
+        <ul>
+          <li>"Make this direction more practical."</li>
+          <li>"Consider it from the completely opposite perspective."</li>
+          <li>"Ask me questions and help me find it."</li>
+          <li>"Do not evaluate yet; generate more candidates."</li>
+          <li>"Show me how to test it in 10 minutes."</li>
+        </ul>
+        <p>You do not need to write the perfect prompt at once. The heart of brainstorming is adjusting the direction together with Bob.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

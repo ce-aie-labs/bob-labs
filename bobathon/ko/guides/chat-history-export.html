@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>채팅 기록 내보내기 - Bobathon Tools Guide</title>
+  <meta name="description" content="Bobathon에서 나눈 Bob 채팅 기록을 JSON 파일로 내보내는 방법">
+  <link rel="stylesheet" href="../../assets/style.css?v=11">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/chat-history-export.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / 채팅 기록 내보내기</div>
+    <p class="eyebrow">Bobathon Awards</p>
+    <h1>Bob 채팅 기록 내보내기</h1>
+    <p class="hero-copy">Bobathon에서 나눈 대화를 JSON 파일로 저장합니다.</p>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. 내보낼 대화 선택</h2>
+          <p><strong>Recent Tasks</strong>에서 내보낼 대화 오른쪽의 <strong>⋮</strong> 메뉴를 열고 <strong>Export</strong>를 선택합니다.</p>
+          <figure class="screenshot-slot" data-screenshot="../../images/submit_a.png" data-alt="Bob의 Recent Tasks 메뉴에서 Export를 선택하는 화면">
+            <div><span>화면 캡처</span><strong>대화 메뉴 → Export</strong><code>../images/submit_a.png</code></div>
+            <figcaption>시상 후보로 제출할 대화를 선택해 내보냅니다.</figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>2. JSON 형식 선택</h2>
+          <p>내보내기 형식에서 <strong>JSON · Structured data format (.json)</strong>을 선택합니다.</p>
+          <figure class="screenshot-slot" data-screenshot="../../images/submit_b.png" data-alt="Bob 대화 내보내기 형식에서 JSON을 선택하는 화면">
+            <div><span>화면 캡처</span><strong>JSON 형식 선택</strong><code>../images/submit_b.png</code></div>
+            <figcaption><code>.json</code> 파일이 저장되면 내보내기가 완료된 것입니다.</figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>3. 결과물 제출</h2>
+          <p>Bobathon 결과물 제출 사이트로 이동해 내보낸 JSON 파일을 첨부합니다.</p>
+          <div class="info-note">
+            <strong>Bobathon 결과물 제출</strong>
+            <span>
+              <a class="button" href="https://bobathon-eval-backend.2dubxbn992ce.us-south.codeengine.appdomain.cloud/" target="_blank" rel="noopener noreferrer">제출 사이트 열기 →</a>
+            </span>
+          </div>
+          <div class="success"><strong>확인사항:</strong> 제출 사이트에서 JSON 파일이 첨부됐는지 확인한 뒤 제출을 마칩니다.</div>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>제출 전 확인</h3>
+        <ul>
+          <li>회사·고객 정보와 개인정보가 포함되지 않았는지 확인합니다.</li>
+          <li>비밀번호, API 키, 토큰이 있다면 제출하지 않습니다.</li>
+          <li>본인이 참여한 대화만 제출합니다.</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

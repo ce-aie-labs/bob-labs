@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Exa MCP 연결하기 - Bobathon Tools Guide</title>
+  <meta name="description" content="IBM Bob과 Exa MCP를 연결해 최신 웹 정보와 원문을 검색하는 방법">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/exa-mcp.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / Exa MCP</div>
+    <p class="eyebrow">Template 04</p>
+    <h1>최신 웹 정보 검색하기</h1>
+    <p class="hero-copy">Exa를 연결해 Bob이 웹을 검색하고 필요한 페이지의 원문을 확인하게 합니다.</p>
+
+    <section class="capability-summary" aria-labelledby="exa-capabilities">
+      <h2 id="exa-capabilities">이 MCP를 연결하면</h2>
+      <ul>
+        <li>Bob이 최신 뉴스, 시장 동향, 경쟁 서비스 정보를 웹에서 찾아줘요.</li>
+        <li>검색 결과의 원문을 읽고 핵심 내용과 출처 링크를 정리해줘요.</li>
+        <li>여러 자료를 비교해 아이디어 검증이나 리서치 결과를 만들어줘요.</li>
+      </ul>
+    </section>
+
+    <section class="mcp-shortcut" aria-labelledby="exa-shortcut">
+      <h2 id="exa-shortcut">Bob에게 이렇게 요청해보세요</h2>
+      <p>설정 파일을 직접 편집하지 않고 자연어로 연결을 요청할 수 있어요.</p>
+      <pre id="prompt-add-exa" class="prompt">현재 프로젝트에 공식 Exa MCP를 연결해줘.
+기존 MCP 설정은 유지하고, 필요한 설정만 추가해줘.
+설정이 끝나면 연결 상태를 확인하고 웹 검색 테스트 방법도 알려줘.<button class="copy-button" type="button" data-copy="prompt-add-exa">복사</button></pre>
+    </section>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. MCP 설정 추가</h2>
+          <ol>
+            <li>IBM Bob에서 프로젝트를 엽니다.</li>
+            <li>Bob 패널의 설정 아이콘에서 <strong>MCP → Edit Project MCP</strong>를 선택합니다.</li>
+            <li><code>.bob/mcp.json</code>의 <code>mcpServers</code> 안에 아래 <code>exa</code> 항목을 추가합니다.</li>
+          </ol>
+          <pre id="exa-config" class="prompt">{
+  "mcpServers": {
+    "exa": {
+      "type": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="exa-config">복사</button></pre>
+          <div class="info-note">
+            <strong>기존 MCP 설정이 있나요?</strong>
+            <span><code>mcpServers</code> 객체 전체를 바꾸지 말고, 기존 서버 항목 뒤에 쉼표를 넣은 다음 <code>exa</code> 항목만 추가하세요.</span>
+          </div>
+          <p>예를 들어 Notion 설정이 이미 있다면 다음과 같이 두 서버를 함께 둡니다.</p>
+          <pre id="exa-existing-config" class="prompt">{
+  "mcpServers": {
+    "notion": {
+      "type": "streamable-http",
+      "url": "https://mcp.notion.com/mcp",
+      "disabled": false
+    },
+    "exa": {
+      "type": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="exa-existing-config">복사</button></pre>
+        </section>
+
+        <section>
+          <h2>2. 서버 연결</h2>
+          <ol>
+            <li>설정을 저장하고 <strong>Use MCP Servers</strong>를 켭니다.</li>
+            <li>MCP 목록에서 <code>exa</code> 서버가 연결 상태인지 확인합니다.</li>
+          </ol>
+          <div class="info-note">
+            <strong>API 키가 필요한가요?</strong>
+            <span>기본 실습은 API 키 없이 시작할 수 있습니다. 키 없이 사용할 때는 요청량이 제한될 수 있으며, 더 많은 사용량이 필요하면 Exa API 키를 발급받아 운영진 안내에 따라 추가하세요.</span>
+          </div>
+          <div class="success"><strong>성공 기준:</strong> Bob의 MCP 화면에서 <code>exa</code> 서버와 <code>web_search_exa</code>, <code>web_fetch_exa</code> 등의 도구가 표시됩니다.</div>
+        </section>
+
+        <section>
+          <h2>3. 웹 검색 테스트</h2>
+          <p>최근 정보가 필요한 주제를 검색하고, 결과의 출처까지 표시하게 합니다.</p>
+          <pre id="prompt-exa-search" class="prompt">Exa로 최근 일주일 동안 발표된 생성형 AI 관련 주요 소식 3가지를 찾아줘.
+각 소식의 발표 날짜, 핵심 내용, 출처 링크를 표로 정리해줘.
+코드는 수정하지 마.<button class="copy-button" type="button" data-copy="prompt-exa-search">복사</button></pre>
+          <div class="success"><strong>성공 기준:</strong> Exa 검색 도구가 실행되고 날짜와 출처 링크가 포함된 결과가 표시됩니다.</div>
+        </section>
+
+        <section>
+          <h2>4. 원문 확인 테스트</h2>
+          <p>검색 결과 중 하나를 골라 원문을 읽고 요약하게 합니다.</p>
+          <pre id="prompt-exa-fetch" class="prompt">방금 찾은 결과 중 가장 중요한 자료 하나를 골라 Exa로 원문을 확인해줘.
+핵심 내용 3가지와 우리 프로젝트에 참고할 점을 정리하고 출처 링크를 남겨줘.
+코드는 수정하지 마.<button class="copy-button" type="button" data-copy="prompt-exa-fetch">복사</button></pre>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>잘 활용하는 방법</h3>
+        <ul>
+          <li>검색 기간과 원하는 결과 수를 구체적으로 적습니다.</li>
+          <li>답변마다 출처 링크와 게시 날짜를 함께 요청합니다.</li>
+          <li>검색 결과는 중요한 의사결정 전에 원문에서 다시 확인합니다.</li>
+        </ul>
+        <p>연결되지 않으면 MCP 화면에서 <code>exa</code> 서버를 Restart하세요.</p>
+        <p><a href="https://github.com/exa-labs/exa-mcp-server">Exa MCP 공식 문서 →</a></p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>
