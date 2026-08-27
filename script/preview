@@ -62,7 +62,8 @@ cat <<BANNER
 
   English:    ${url}en/
   Korean:     ${url}ko/
-  Bobathon:   ${url}en/bobathon/
+  Bobathon:   ${url}bobathon/ko/
+  Bobathon EN: ${url}bobathon/en/
 
   ${url} redirects to /en/. Note the /bob-labs/ prefix - without it you get
   a 404, because the site is built for a project path rather than a domain root.

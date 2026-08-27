@@ -26,11 +26,11 @@
   {% if page_lang == "ko" %}
     {% assign other_lang_url = page.url | replace_first: "/ko/", "/en/" %}
     {% assign home_path = "/ko/" %}
-    {% assign bobathon_path = "/ko/bobathon/" %}
+    {% assign bobathon_path = "/bobathon/ko/" %}
   {% else %}
     {% assign other_lang_url = page.url | replace_first: "/en/", "/ko/" %}
     {% assign home_path = "/en/" %}
-    {% assign bobathon_path = "/en/bobathon/" %}
+    {% assign bobathon_path = "/bobathon/en/" %}
   {% endif %}
   <header class="site-header">
     <a href="{{ home_path | relative_url }}">IBM Bob Labs</a>
