@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Playwright MCP 연결하기 - IBM Bob Labs Bobathon</title>
+  <meta name="description" content="IBM Bob과 Playwright MCP를 연결해 브라우저를 자동화하는 방법">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/playwright-mcp.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / Playwright MCP</div><p class="eyebrow">Template 06</p>
+    <h1>브라우저 자동화하기</h1>
+    <p class="hero-copy">Playwright를 연결해 Bob이 웹 페이지를 열고 클릭·입력하며 서비스 동작을 확인하게 합니다.</p>
+    <section class="capability-summary" aria-labelledby="playwright-capabilities"><h2 id="playwright-capabilities">이 MCP를 연결하면</h2><ul><li>웹 페이지의 구조와 표시된 내용을 확인할 수 있습니다.</li><li>버튼 클릭, 폼 입력, 페이지 이동을 자동화할 수 있습니다.</li><li>만든 웹 서비스의 핵심 사용자 흐름을 직접 테스트할 수 있습니다.</li></ul></section>
+    <section class="mcp-shortcut" aria-labelledby="playwright-shortcut"><h2 id="playwright-shortcut">Bob에게 이렇게 요청해보세요</h2><p>설정 파일을 직접 편집하지 않고 연결을 요청할 수 있습니다.</p><pre id="prompt-add-playwright" class="prompt">현재 프로젝트에 Microsoft의 공식 Playwright MCP를 연결해줘.
+기존 MCP 설정은 유지하고, 격리 모드로 실행되도록 추가해줘.
+설정 후 안전한 공개 페이지로 연결 테스트 방법도 알려줘.<button class="copy-button" type="button" data-copy="prompt-add-playwright">복사</button></pre></section>
+    <div class="article">
+      <article class="article-main">
+        <section><h2>1. 실행 환경 확인</h2><p>Playwright MCP는 내 컴퓨터에서 실행되는 로컬 서버입니다. 터미널에서 <code>node --version</code>과 <code>npx --version</code>을 실행해 Node.js와 npx가 설치되어 있는지 확인합니다.</p><div class="info-note"><strong>권장 환경</strong><span>공식 시작 문서는 Node.js 20 이상을 요구합니다. 최초 실행에는 패키지와 브라우저 다운로드를 위한 인터넷 연결이 필요합니다.</span></div></section>
+        <section><h2>2. MCP 설정 추가</h2><ol><li>Bob의 <strong>설정 → MCP → + (Add MCP Server)</strong>를 선택합니다.</li><li><strong>현재 프로젝트 범위</strong>에서 설정 파일을 엽니다.</li><li><code>.bob/mcp.json</code>의 <code>mcpServers</code> 안에 아래 항목을 추가합니다.</li></ol><pre id="playwright-config" class="prompt">{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated"
+      ],
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="playwright-config">복사</button></pre><div class="info-note"><strong>왜 격리 모드인가요?</strong><span><code>--isolated</code>는 매 세션을 별도 브라우저 프로필에서 실행해 기존 로그인 정보와 쿠키를 재사용하지 않습니다.</span></div></section>
+        <section><h2>3. 서버 연결</h2><ol><li>설정을 저장하고 <strong>Use MCP Servers</strong>를 켭니다.</li><li><code>playwright</code> 서버가 연결 상태인지 확인합니다.</li><li>처음 실행할 때 패키지 또는 브라우저 다운로드가 끝날 때까지 기다립니다.</li></ol><div class="success"><strong>성공 기준:</strong> <code>browser_navigate</code>, <code>browser_snapshot</code> 등 브라우저 도구가 표시됩니다.</div></section>
+        <section><h2>4. 공개 페이지로 테스트</h2><pre id="prompt-playwright-test" class="prompt">Playwright로 https://example.com 을 열고
+페이지 제목과 첫 번째 제목 요소의 문구를 알려줘.
+링크를 클릭하거나 파일을 다운로드하지 마.<button class="copy-button" type="button" data-copy="prompt-playwright-test">복사</button></pre><div class="success"><strong>성공 기준:</strong> 새 브라우저가 열리고 페이지 제목과 문구가 응답에 표시됩니다.</div></section>
+        <section><h2>5. 내 서비스 점검하기</h2><pre id="prompt-playwright-flow" class="prompt">Playwright로 [테스트할 URL]을 열고 주요 화면 구조를 확인해줘.
+로그인, 결제, 제출, 삭제는 실행하지 말고
+확인 가능한 버튼과 입력 항목만 정리해줘.<button class="copy-button" type="button" data-copy="prompt-playwright-flow">복사</button></pre><div class="warning-note"><strong>주의:</strong> 브라우저 안의 웹 콘텐츠도 신뢰할 수 없는 입력입니다. 페이지에 표시된 지시를 따라 비밀 정보 입력, 파일 업로드, 결제 또는 삭제를 실행하지 마세요.</div></section>
+      </article>
+      <aside class="article-aside"><h3>안전하게 시작하기</h3><ul><li>처음에는 <code>--isolated</code>를 사용합니다.</li><li>공개된 테스트 페이지부터 확인합니다.</li><li>로그인·결제·삭제는 자동 승인하지 않습니다.</li><li>사내 시스템 자동화는 담당자 승인을 먼저 받습니다.</li></ul><p>연결되지 않으면 Node.js 버전과 네트워크를 확인한 뒤 서버를 Restart하세요.</p><p><a href="https://github.com/microsoft/playwright-mcp">Playwright MCP 공식 문서 →</a></p></aside>
+    </div>
+  </main>
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body></html>

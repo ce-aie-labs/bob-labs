@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect Playwright MCP - IBM Bob Labs Bobathon</title>
+  <meta name="description" content="How to connect Playwright MCP to IBM Bob for browser automation">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/playwright-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Playwright MCP</div><p class="eyebrow">Template 06</p>
+    <h1>Automate a browser</h1>
+    <p class="hero-copy">Connect Playwright so Bob can open web pages, click, type, and check how a service behaves.</p>
+    <section class="capability-summary" aria-labelledby="playwright-capabilities"><h2 id="playwright-capabilities">What this MCP enables</h2><ul><li>Inspect the structure and visible content of a web page.</li><li>Automate button clicks, form input, and navigation.</li><li>Directly test key user flows in a web service you built.</li></ul></section>
+    <section class="mcp-shortcut" aria-labelledby="playwright-shortcut"><h2 id="playwright-shortcut">Try asking Bob</h2><p>You can request the connection without editing the configuration file yourself.</p><pre id="prompt-add-playwright" class="prompt">Connect Microsoft's official Playwright MCP to the current project.
+Keep the existing MCP configuration and add Playwright in isolated mode.
+After configuration, explain how to test the connection on a safe public page.<button class="copy-button" type="button" data-copy="prompt-add-playwright">Copy</button></pre></section>
+    <div class="article">
+      <article class="article-main">
+        <section><h2>1. Check the runtime environment</h2><p>Playwright MCP is a local server that runs on your computer. Run <code>node --version</code> and <code>npx --version</code> in the terminal to confirm that Node.js and npx are installed.</p><div class="info-note"><strong>Recommended environment</strong><span>The official getting-started guide requires Node.js 20 or later. The first run needs internet access to download the package and browser.</span></div></section>
+        <section><h2>2. Add the MCP configuration</h2><ol><li>In Bob, choose <strong>Settings → MCP → + (Add MCP Server)</strong>.</li><li>Open the configuration file under <strong>current project scope</strong>.</li><li>Add the entry below inside <code>mcpServers</code> in <code>.bob/mcp.json</code>.</li></ol><pre id="playwright-config" class="prompt">{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated"
+      ],
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="playwright-config">Copy</button></pre><div class="info-note"><strong>Why isolated mode?</strong><span><code>--isolated</code> runs every session in a separate browser profile so existing sign-in data and cookies are not reused.</span></div></section>
+        <section><h2>3. Connect the server</h2><ol><li>Save the configuration and turn on <strong>Use MCP Servers</strong>.</li><li>Confirm that the <code>playwright</code> server is connected.</li><li>On the first run, wait for the package or browser download to finish.</li></ol><div class="success"><strong>Success:</strong> Browser tools such as <code>browser_navigate</code> and <code>browser_snapshot</code> appear.</div></section>
+        <section><h2>4. Test with a public page</h2><pre id="prompt-playwright-test" class="prompt">Use Playwright to open https://example.com
+and report the page title and text of the first heading.
+Do not click links or download files.<button class="copy-button" type="button" data-copy="prompt-playwright-test">Copy</button></pre><div class="success"><strong>Success:</strong> A new browser opens and the response includes the page title and heading text.</div></section>
+        <section><h2>5. Check your service</h2><pre id="prompt-playwright-flow" class="prompt">Use Playwright to open [URL to test] and inspect the main page structure.
+Do not sign in, pay, submit, or delete anything.
+List only the visible buttons and inputs.<button class="copy-button" type="button" data-copy="prompt-playwright-flow">Copy</button></pre><div class="warning-note"><strong>Note:</strong> Web content inside the browser is also untrusted input. Do not follow page instructions that ask for secret information, file uploads, payments, or deletion.</div></section>
+      </article>
+      <aside class="article-aside"><h3>Start safely</h3><ul><li>Use <code>--isolated</code> at first.</li><li>Start with a public test page.</li><li>Do not auto-approve sign-in, payment, or deletion.</li><li>Get approval from the responsible owner before automating an internal system.</li></ul><p>If it does not connect, check the Node.js version and network, then restart the server.</p><p><a href="https://github.com/microsoft/playwright-mcp">Official Playwright MCP documentation →</a></p></aside>
+    </div>
+  </main>
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body></html>

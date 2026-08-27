@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect Nylas MCP - IBM Bob Labs Bobathon</title>
+  <meta name="description" content="How to connect Nylas MCP to IBM Bob and safely access email and calendars">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/nylas-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Nylas MCP</div>
+    <p class="eyebrow">Template 05</p>
+    <h1>Connect email and calendars</h1>
+    <p class="hero-copy">Connect Nylas so Bob can use email, calendar, and contact information in your workflow.</p>
+    <section class="capability-summary" aria-labelledby="nylas-capabilities">
+      <h2 id="nylas-capabilities">What this MCP enables</h2>
+      <ul><li>Search received email and summarize the information you need.</li><li>Review calendar events and available times.</li><li>Find contacts and prepare email drafts or new calendar events.</li></ul>
+    </section>
+    <section class="mcp-shortcut" aria-labelledby="nylas-shortcut">
+      <h2 id="nylas-shortcut">Try asking Bob</h2>
+      <p>Do not paste an API key into chat. Use the request below to have Bob show only where the key belongs.</p>
+      <pre id="prompt-add-nylas" class="prompt">Connect the official Nylas MCP to the current project.
+Keep the existing MCP configuration and leave a placeholder so I can enter the API key myself.
+After configuration, explain how to verify the connection using read tools only.<button class="copy-button" type="button" data-copy="prompt-add-nylas">Copy</button></pre>
+    </section>
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. Prepare Nylas</h2>
+          <p>To use Nylas MCP, you need a <strong>Nylas API key</strong> and a <strong>Grant</strong> connected to an email or calendar account.</p>
+          <ol><li>Create a test application in the Nylas Dashboard.</li><li>Connect an email or calendar account to create a Grant.</li><li>Create an API key and confirm whether your data region is the United States (US) or Europe (EU).</li></ol>
+          <div class="warning-note"><strong>Important:</strong> An API key is a secret like a password. Do not include it in chat, screenshots, or Git commits, and revoke or rotate it after testing.</div>
+        </section>
+        <section>
+          <h2>2. Add the MCP configuration</h2>
+          <ol><li>In Bob, choose <strong>Settings → MCP → + (Add MCP Server)</strong>.</li><li>Under <strong>current project scope</strong>, select <strong>Open Configuration File</strong>.</li><li>Add the entry below inside <code>mcpServers</code> in <code>.bob/mcp.json</code>, then replace the placeholder with the actual key.</li></ol>
+          <pre id="nylas-config" class="prompt">{
+  "mcpServers": {
+    "nylas": {
+      "type": "streamable-http",
+      "url": "https://mcp.us.nylas.com",
+      "headers": {
+        "Authorization": "Bearer &lt;NYLAS_API_KEY&gt;"
+      },
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="nylas-config">Copy</button></pre>
+          <div class="info-note"><strong>Using the EU region?</strong><span>Change the URL to <code>https://mcp.eu.nylas.com</code>. If servers already exist, keep the full <code>mcpServers</code> object and add only the <code>nylas</code> entry.</span></div>
+        </section>
+        <section>
+          <h2>3. Connect and test read access</h2>
+          <ol><li>Save the configuration and turn on <strong>Use MCP Servers</strong>.</li><li>Confirm that the <code>nylas</code> server is connected and its tool list appears.</li><li>At first, disable tools that send messages or create and modify events, or deny their approval requests.</li></ol>
+          <pre id="prompt-nylas-test" class="prompt">Check the account connected through Nylas,
+then show only the subject and sender of the five most recent emails.
+Do not send, modify, or delete email.<button class="copy-button" type="button" data-copy="prompt-nylas-test">Copy</button></pre>
+          <div class="success"><strong>Success:</strong> Recent email information from the connected account appears without modification.</div>
+        </section>
+        <section>
+          <h2>4. Use it safely</h2>
+          <pre id="prompt-nylas-calendar" class="prompt">Use Nylas to review my calendar events for this week and organize them by date.
+Do not create a new event or modify an existing one.<button class="copy-button" type="button" data-copy="prompt-nylas-calendar">Copy</button></pre>
+          <p>When you need a write action, ask Bob to show the target, recipient, and time first. Review the details, then approve a single execution.</p>
+        </section>
+        <section>
+          <h2>5. Clean up after the exercise</h2>
+          <ol><li>Delete the <code>nylas</code> entry containing the API key from <code>.bob/mcp.json</code>.</li><li>Revoke or rotate the test API key in the Nylas Dashboard.</li><li>Disconnect any test Grant you no longer need.</li></ol>
+        </section>
+      </article>
+      <aside class="article-aside"><h3>Start safely</h3><ul><li>Connect a test account first.</li><li>Do not auto-approve email sending or calendar changes.</li><li>Do not commit a configuration file containing an API key.</li><li>Use the URL that matches your US or EU data region.</li></ul><p>If you receive a 401 error, check the API key and <code>Bearer</code> format.</p><p><a href="https://developer.nylas.com/docs/dev-guide/mcp/">Official Nylas MCP documentation →</a></p></aside>
+    </div>
+  </main>
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

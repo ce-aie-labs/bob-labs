@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Export chat history - Bobathon Tools Guide</title>
+  <meta name="description" content="How to export a Bob chat from Bobathon as a JSON file">
+  <link rel="stylesheet" href="../../assets/style.css?v=11">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/chat-history-export.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Export chat history</div>
+    <p class="eyebrow">Bobathon Awards</p>
+    <h1>Export your Bob chat history</h1>
+    <p class="hero-copy">Save your Bobathon conversation as a JSON file.</p>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. Choose the conversation to export</h2>
+          <p>In <strong>Recent Tasks</strong>, open the <strong>⋮</strong> menu beside the conversation you want to export and choose <strong>Export</strong>.</p>
+          <figure class="screenshot-slot" data-screenshot="../../images/submit_a.png" data-alt="Selecting Export from Bob's Recent Tasks menu">
+            <div><span>Screenshot</span><strong>Conversation menu → Export</strong><code>../images/submit_a.png</code></div>
+            <figcaption>Choose and export the conversation you want to submit for award consideration.</figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>2. Choose JSON format</h2>
+          <p>For the export format, choose <strong>JSON · Structured data format (.json)</strong>.</p>
+          <figure class="screenshot-slot" data-screenshot="../../images/submit_b.png" data-alt="Choosing JSON as the Bob conversation export format">
+            <div><span>Screenshot</span><strong>Choose JSON format</strong><code>../images/submit_b.png</code></div>
+            <figcaption>The export is complete when the <code>.json</code> file has been saved.</figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>3. Submit your result</h2>
+          <p>Open the Bobathon submission site and attach the exported JSON file.</p>
+          <div class="info-note">
+            <strong>Submit a Bobathon result</strong>
+            <span>
+              <a class="button" href="https://bobathon-eval-backend.2dubxbn992ce.us-south.codeengine.appdomain.cloud/" target="_blank" rel="noopener noreferrer">Open submission site →</a>
+            </span>
+          </div>
+          <div class="success"><strong>Check:</strong> Confirm that the JSON file is attached on the submission site, then finish your submission.</div>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>Before submitting</h3>
+        <ul>
+          <li>Confirm that the conversation contains no company, customer, or personal information.</li>
+          <li>Do not submit it if it contains passwords, API keys, or tokens.</li>
+          <li>Submit only conversations in which you participated.</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

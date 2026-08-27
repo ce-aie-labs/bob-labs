@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect GitHub MCP - IBM Bob Labs Bobathon</title>
+  <meta name="description" content="How to connect the official GitHub MCP to IBM Bob in read-only mode">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/github-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / GitHub MCP</div><p class="eyebrow">Template 07</p>
+    <h1>Connect a GitHub repository</h1>
+    <p class="hero-copy">Connect the official GitHub MCP in read-only mode to review repository, issue, and pull request information.</p>
+    <section class="capability-summary" aria-labelledby="github-capabilities"><h2 id="github-capabilities">What this MCP enables</h2><ul><li>Find and summarize repository files and commit information.</li><li>Review the status and discussion of issues and pull requests.</li><li>Summarize progress and remaining work across multiple tasks.</li></ul></section>
+    <section class="mcp-shortcut" aria-labelledby="github-shortcut"><h2 id="github-shortcut">Try asking Bob</h2><p>Start with the read-only URL for the official remote server.</p><pre id="prompt-add-github" class="prompt">Connect the official remote GitHub MCP to the current project in read-only mode.
+Keep the existing MCP configuration and do not put tokens in the configuration file or chat.
+After configuration, explain OAuth authentication and how to verify the connection.<button class="copy-button" type="button" data-copy="prompt-add-github">Copy</button></pre></section>
+    <div class="article">
+      <article class="article-main">
+        <section><h2>1. Add a read-only configuration</h2><ol><li>In Bob, choose <strong>Settings → MCP → + (Add MCP Server)</strong>.</li><li>Under <strong>current project scope</strong>, select <strong>Open Configuration File</strong>.</li><li>Add the entry below inside <code>mcpServers</code> in <code>.bob/mcp.json</code>.</li></ol><pre id="github-config" class="prompt">{
+  "mcpServers": {
+    "github": {
+      "type": "streamable-http",
+      "url": "https://api.githubcopilot.com/mcp/readonly",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="github-config">Copy</button></pre><div class="info-note"><strong>Why use the read-only URL?</strong><span><code>/readonly</code> excludes tools that change GitHub state—such as creating issues, editing files, or merging pull requests—at the server level.</span></div></section>
+        <section><h2>2. Authenticate with GitHub</h2><ol><li>Save the configuration and turn on <strong>Use MCP Servers</strong>.</li><li>Select <strong>Authenticate</strong> beside the <code>github</code> server.</li><li>In the browser, review the GitHub account and requested permissions, then approve them.</li><li>Organization repositories may require approval under organization policy or from an administrator.</li></ol><div class="warning-note"><strong>Important:</strong> Do not paste a GitHub password or personal access token into chat or the configuration file. Sign in only through Bob's OAuth page.</div><div class="success"><strong>Success:</strong> The <code>github</code> server is connected and repository, issue, and pull request read tools appear.</div></section>
+        <section><h2>3. Verify connection information</h2><pre id="prompt-github-me" class="prompt">Use GitHub MCP to identify the currently authenticated user,
+then show only five accessible repository names.
+Do not modify repositories, issues, or pull requests.<button class="copy-button" type="button" data-copy="prompt-github-me">Copy</button></pre><div class="success"><strong>Success:</strong> The signed-in user and accessible repositories are displayed.</div></section>
+        <section><h2>4. Review repository status</h2><pre id="prompt-github-status" class="prompt">In GitHub [owner/repository], find up to five open issues and five open pull requests.
+Put the number, title, author, latest update date, and link in a table.
+Do not add comments or change status.<button class="copy-button" type="button" data-copy="prompt-github-status">Copy</button></pre></section>
+        <section><h2>5. When you need write access</h2><p>Change to the base URL <code>https://api.githubcopilot.com/mcp/</code> only after you have fully reviewed the target with the read-only connection. Before any change, have Bob show the branch, repository, issue number, and planned action again, then approve each write action yourself.</p><div class="warning-note"><strong>Note:</strong> <code>/x/all</code> enables every toolset. Do not use it unless you have a clear reason.</div></section>
+        <section><h2>6. Disconnect after the exercise</h2><ol><li>Reset <code>github</code> authentication from Bob's MCP screen.</li><li>Delete or disable the <code>github</code> entry in <code>.bob/mcp.json</code>.</li><li>Remove connections you no longer need from the authorized applications list in your GitHub account.</li></ol></section>
+      </article>
+      <aside class="article-aside"><h3>Start safely</h3><ul><li>Start with the <code>/readonly</code> URL.</li><li>Review the account and permissions on the OAuth page.</li><li>Do not auto-approve write tools.</li><li>Follow your organization's repository policies.</li></ul><p>If private repositories are not visible, check your account permissions and the organization's OAuth policy.</p><p><a href="https://github.com/github/github-mcp-server">Official GitHub MCP documentation →</a></p></aside>
+    </div>
+  </main>
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body></html>

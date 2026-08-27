@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>GitHub MCP 연결하기 - IBM Bob Labs Bobathon</title>
+  <meta name="description" content="IBM Bob과 공식 GitHub MCP를 읽기 전용으로 연결하는 방법">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/github-mcp.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / GitHub MCP</div><p class="eyebrow">Template 07</p>
+    <h1>GitHub 저장소 연결하기</h1>
+    <p class="hero-copy">공식 GitHub MCP를 읽기 전용으로 연결해 저장소, 이슈, Pull Request 정보를 확인합니다.</p>
+    <section class="capability-summary" aria-labelledby="github-capabilities"><h2 id="github-capabilities">이 MCP를 연결하면</h2><ul><li>저장소의 파일과 커밋 정보를 찾아 요약할 수 있습니다.</li><li>이슈와 Pull Request의 상태와 논의를 확인할 수 있습니다.</li><li>여러 작업의 진행 상황과 남은 할 일을 정리할 수 있습니다.</li></ul></section>
+    <section class="mcp-shortcut" aria-labelledby="github-shortcut"><h2 id="github-shortcut">Bob에게 이렇게 요청해보세요</h2><p>처음에는 공식 원격 서버의 읽기 전용 주소로 연결합니다.</p><pre id="prompt-add-github" class="prompt">현재 프로젝트에 공식 원격 GitHub MCP를 읽기 전용으로 연결해줘.
+기존 MCP 설정은 유지하고, 토큰을 설정 파일이나 채팅에 넣지 마.
+설정 후 OAuth 인증과 연결 확인 방법도 알려줘.<button class="copy-button" type="button" data-copy="prompt-add-github">복사</button></pre></section>
+    <div class="article">
+      <article class="article-main">
+        <section><h2>1. 읽기 전용 설정 추가</h2><ol><li>Bob의 <strong>설정 → MCP → + (Add MCP Server)</strong>를 선택합니다.</li><li><strong>현재 프로젝트 범위</strong>에서 <strong>Open Configuration File</strong>을 누릅니다.</li><li><code>.bob/mcp.json</code>의 <code>mcpServers</code> 안에 아래 항목을 추가합니다.</li></ol><pre id="github-config" class="prompt">{
+  "mcpServers": {
+    "github": {
+      "type": "streamable-http",
+      "url": "https://api.githubcopilot.com/mcp/readonly",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="github-config">복사</button></pre><div class="info-note"><strong>왜 읽기 전용 URL인가요?</strong><span><code>/readonly</code>는 이슈 생성, 파일 수정, PR 병합처럼 GitHub 상태를 바꾸는 도구를 서버 수준에서 제외합니다.</span></div></section>
+        <section><h2>2. GitHub 인증</h2><ol><li>설정을 저장하고 <strong>Use MCP Servers</strong>를 켭니다.</li><li><code>github</code> 서버 옆의 <strong>Authenticate</strong>를 선택합니다.</li><li>브라우저에서 사용할 GitHub 계정과 요청된 권한을 확인하고 승인합니다.</li><li>조직 저장소라면 조직 정책 또는 관리자의 승인이 필요할 수 있습니다.</li></ol><div class="warning-note"><strong>중요:</strong> GitHub 비밀번호나 Personal Access Token을 채팅 또는 설정 파일에 붙여 넣지 마세요. Bob의 OAuth 인증 화면에서만 로그인합니다.</div><div class="success"><strong>성공 기준:</strong> <code>github</code> 서버가 연결 상태이고 저장소·이슈·Pull Request 읽기 도구가 표시됩니다.</div></section>
+        <section><h2>3. 연결 정보 확인</h2><pre id="prompt-github-me" class="prompt">GitHub MCP로 현재 인증된 사용자 이름을 확인하고,
+접근 가능한 저장소 이름 5개만 보여줘.
+저장소, 이슈, Pull Request를 수정하지 마.<button class="copy-button" type="button" data-copy="prompt-github-me">복사</button></pre><div class="success"><strong>성공 기준:</strong> 로그인한 사용자와 접근 가능한 저장소가 표시됩니다.</div></section>
+        <section><h2>4. 저장소 현황 살펴보기</h2><pre id="prompt-github-status" class="prompt">GitHub의 [소유자/저장소]에서 열린 이슈와 Pull Request를 각각 5개까지 확인해줘.
+번호, 제목, 작성자, 최근 업데이트 날짜, 링크를 표로 정리해줘.
+댓글을 달거나 상태를 변경하지 마.<button class="copy-button" type="button" data-copy="prompt-github-status">복사</button></pre></section>
+        <section><h2>5. 쓰기 기능이 필요할 때</h2><p>읽기 전용 연결로 작업 대상을 충분히 확인한 뒤에만 기본 URL <code>https://api.githubcopilot.com/mcp/</code>로 바꾸세요. 변경 전 브랜치, 저장소, 이슈 번호와 실행할 작업을 Bob이 다시 보여주게 하고 각 쓰기 작업을 직접 승인합니다.</p><div class="warning-note"><strong>주의:</strong> <code>/x/all</code>은 모든 도구 모음을 활성화합니다. 필요한 이유가 명확하지 않다면 사용하지 마세요.</div></section>
+        <section><h2>6. 실습 후 연결 해제</h2><ol><li>Bob의 MCP 화면에서 <code>github</code> 인증을 초기화합니다.</li><li><code>.bob/mcp.json</code>에서 <code>github</code> 항목을 삭제하거나 비활성화합니다.</li><li>GitHub 계정의 승인된 애플리케이션 목록에서 더 이상 필요 없는 연결을 해제합니다.</li></ol></section>
+      </article>
+      <aside class="article-aside"><h3>안전하게 시작하기</h3><ul><li><code>/readonly</code> URL부터 사용합니다.</li><li>OAuth 화면에서 계정과 권한을 확인합니다.</li><li>쓰기 도구는 자동 승인하지 않습니다.</li><li>조직 저장소 정책을 따릅니다.</li></ul><p>비공개 저장소가 보이지 않으면 계정 권한과 조직의 OAuth 정책을 확인하세요.</p><p><a href="https://github.com/github/github-mcp-server">GitHub MCP 공식 문서 →</a></p></aside>
+    </div>
+  </main>
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body></html>

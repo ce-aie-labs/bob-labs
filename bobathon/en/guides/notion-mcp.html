@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect Notion MCP - Bobathon Tools Guide</title>
+  <meta name="description" content="How to connect and verify Notion MCP safely with IBM Bob">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/notion-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Notion MCP</div>
+    <p class="eyebrow">Template 02</p>
+    <h1>Connect Notion MCP</h1>
+    <p class="hero-copy">Connect IBM Bob to Notion through OAuth, then verify it safely with read-only requests.</p>
+    <section class="capability-summary" aria-labelledby="notion-capabilities">
+      <h2 id="notion-capabilities">What this MCP enables</h2>
+      <ul>
+        <li>Find and summarize documents and meeting notes in Notion.</li>
+        <li>Organize ideas or work results in a new Notion page.</li>
+        <li>Review or update tasks and statuses in a project database.</li>
+      </ul>
+    </section>
+
+    <section class="mcp-shortcut" aria-labelledby="notion-shortcut">
+      <h2 id="notion-shortcut">Try asking Bob</h2>
+      <p>You can ask Bob to connect it without editing the configuration file yourself.</p>
+
+      <pre id="prompt-add-notion" class="prompt">Connect the official Notion MCP to the current project.
+Keep the existing MCP configuration and add only what is required.
+After configuration, explain how to authenticate and verify the connection.<button class="copy-button" type="button" data-copy="prompt-add-notion">Copy</button></pre>
+    </section>
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. Add the Notion configuration</h2>
+          <div class="info-note">
+            <strong>Is this your first time opening MCP settings?</strong>
+            <span>The <a href="basic-mcp.html">basic MCP connection guide</a> shows <strong>Add MCP Server</strong>, scope selection, and the location of <code>.bob/mcp.json</code> with screenshots.</span>
+          </div>
+          <ol>
+            <li>In Bob, choose <strong>Settings → MCP → + (Add MCP Server)</strong>.</li>
+            <li>For Bobathon, choose <strong>current project scope</strong>, then select <strong>Open Configuration File</strong>.</li>
+            <li>Add the configuration below to <code>.bob/mcp.json</code>. If a configuration already exists, add only the <code>notion</code> entry inside <code>mcpServers</code>.</li>
+          </ol>
+          <pre id="notion-config" class="prompt">{
+  "mcpServers": {
+    "notion": {
+      "type": "streamable-http",
+      "url": "https://mcp.notion.com/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="notion-config">Copy</button></pre>
+        </section>
+
+        <section>
+          <h2>2. Authenticate with Notion</h2>
+          <div class="info-note">
+            <strong>What is OAuth?</strong>
+            <span>OAuth lets you approve Bob's access from a Notion sign-in page without entering your Notion password or token directly into Bob.</span>
+          </div>
+          <ol>
+            <li>Save the configuration and turn on <strong>Enable MCP tools for new tasks</strong>.</li>
+            <li>Select <strong>Authenticate</strong> beside the <code>notion</code> server. If the button is disabled, sign in to Bob first.</li>
+            <li>In the Notion authorization page that opens in your browser, choose the workspace to use.</li>
+            <li>Confirm that you opened this page directly by selecting <strong>Authenticate</strong> in Bob and that the redirect address is <code>http://127.0.0.1:.../callback</code>. Then check <strong>I know and trust this URL</strong> and select <strong>Continue</strong>.</li>
+          </ol>
+          <figure class="screenshot-slot" data-screenshot="../../images/02_a.png" data-alt="The Authenticate button for the notion server in Bob MCP settings">
+            <div><span>Screenshot</span><strong>Authenticate button for the notion server</strong><code>images/02_a.png</code></div>
+            <figcaption>If <strong>Authenticate</strong> is gray and disabled, you need to sign in to Bob.</figcaption>
+          </figure>
+          <figure class="screenshot-slot screenshot-compact" data-screenshot="../../images/02_b.png" data-alt="Checking the workspace and local callback address on the Notion MCP authorization page">
+            <div><span>Screenshot</span><strong>Check the Notion workspace and callback address</strong><code>images/02_b.png</code></div>
+            <figcaption>Confirm the workspace and <code>127.0.0.1</code> callback address, then approve access.</figcaption>
+          </figure>
+          <div class="success"><strong>Success:</strong> The <code>notion</code> server appears as connected in Bob's MCP screen.</div>
+        </section>
+
+        <section>
+          <h2>3. Start with read tools only</h2>
+          <p>Notion MCP provides both read and write tools within the connected user's access. Start by enabling only read tools in Bob.</p>
+          <ol>
+            <li>Expand the <code>notion</code> server in Bob's MCP screen to open the tool list.</li>
+            <li><strong>Read tools:</strong> Enable only tools whose names include <code>search</code>, <code>fetch</code>, <code>get</code>, <code>list</code>, or <code>query</code>.</li>
+            <li><strong>Write tools:</strong> Disable tools whose names include <code>create</code>, <code>update</code>, <code>move</code>, or <code>duplicate</code>.</li>
+            <li>Do not enable <strong>Always allow</strong> or automatic approval for write actions.</li>
+          </ol>
+          <div class="warning-note"><strong>Important:</strong> This is a safeguard that prevents write-tool use in Bob. Notion OAuth itself does not become read-only, so use write features only on a separate test page.</div>
+        </section>
+
+        <section>
+          <h2>4. Verify the connection</h2>
+          <p>First, verify the connection with a request that does not read or modify content.</p>
+          <pre id="prompt-connection" class="prompt">Show the currently connected Notion workspace and user information.
+Do not read or modify content. Return connection information only.<button class="copy-button" type="button" data-copy="prompt-connection">Copy</button></pre>
+          <div class="success"><strong>Success:</strong> The connected workspace and user information are displayed.</div>
+        </section>
+
+        <section>
+          <h2>5. Test read access</h2>
+          <p>Once connected, search only for page titles you can access.</p>
+          <pre id="prompt-read" class="prompt">Find only five page titles I can access in my Notion.
+Do not modify page content.<button class="copy-button" type="button" data-copy="prompt-read">Copy</button></pre>
+          <div class="success"><strong>Success:</strong> Five accessible page titles are displayed without any changes.</div>
+        </section>
+
+        <section>
+          <h2>6. Disconnect after Bobathon</h2>
+          <p>If you used a shared computer or do not want to leave the connection active after Bobathon, disconnect it in this order.</p>
+          <ol>
+            <li>In Bob, open <strong>Settings → MCP</strong> and select <strong>Reset auth</strong> for the <code>notion</code> server. This clears the Notion OAuth credentials stored in Bob.</li>
+            <li>Delete the <code>notion</code> entry from <code>.bob/mcp.json</code> or set <code>"disabled": true</code>. If you are not using other MCPs, turn off <strong>Enable MCP tools for new tasks</strong>.</li>
+            <li>To review the connection in Notion, go to <strong>Settings → Connections → Notion MCP → Manage</strong> and select <strong>View all MCP clients</strong>.</li>
+            <li>Find <strong>IBM Bob</strong> and the local callback address in the list. If <strong>Disconnect</strong> appears in your connection management screen, select it to remove your personal connection.</li>
+          </ol>
+          <figure class="screenshot-slot screenshot-medium" data-screenshot="../../images/02_c.png" data-alt="Selecting View all MCP clients on the Notion MCP management page">
+            <div><span>Screenshot</span><strong>Notion MCP → Manage</strong><code>images/02_c.png</code></div>
+            <figcaption>Use <strong>View all MCP clients</strong> to review clients connected to the current workspace.</figcaption>
+          </figure>
+          <figure class="screenshot-slot screenshot-medium" data-screenshot="../../images/02_d.png" data-alt="IBM Bob shown in Notion's list of all MCP clients">
+            <div><span>Screenshot</span><strong>Check IBM Bob connection status</strong><code>images/02_d.png</code></div>
+            <figcaption>The list shows <strong>IBM Bob</strong> and its <code>127.0.0.1</code> callback connection.</figcaption>
+          </figure>
+          <div class="warning-note"><strong>Note:</strong> <strong>Restart</strong> restarts only the server and does not clear authentication. <strong>Disconnect all users</strong> in Notion's management screen is an administrator action that disconnects the entire workspace. Participants should remove only their own personal connection.</div>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>Start safely</h3>
+        <ul>
+          <li>Do not put a Notion password or API token in the configuration.</li>
+          <li>Do not add an <code>Authorization</code> header.</li>
+          <li>Initially enable read tools only and do not auto-approve write tools.</li>
+          <li>A company workspace may require administrator approval.</li>
+        </ul>
+        <p>If <strong>Authenticate</strong> is disabled, sign in to Bob first. If it still does not appear after sign-in, restart the <code>notion</code> server.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>
