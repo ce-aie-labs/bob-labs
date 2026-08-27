@@ -42,16 +42,16 @@ Every content decision is made against these five.
 
 ```
 🏠 Asset Library            /en/ and /ko/ - every lab, filtered by work, stack and difficulty
-🏃 Bobathon                 /en/bobathon/ (and /ko/) - the event: process, rubric, submission
+🏃 Bobathon                 /bobathon/en/ and /bobathon/ko/ - bilingual tools and participation guides
 ⚙️  Setup                    Install · login · permissions · one first prompt
 💡 Prompt Cookbook          Prompts by situation (one copy button)
 ```
 
-**Bobathon is the event page**, and it absorbs what earlier drafts split across "Challenge Labs", "Bring Your Own Work" and "Showcase" - one page holding the process a participant follows, how the work is judged, and the submit button. Those were three names for one thing, and a participant mid-session should not have to work out which one they are on.
+**Bobathon is a self-contained bilingual guide site** under `bobathon/`. English lives at `/bobathon/en/` and Korean at `/bobathon/ko/`, with mirrored landing and guide routes.
 
 **Guided and Challenge are lab difficulties, unrelated to the Bobathon.** A `difficulty: Challenge` lab states the goal and hides the prompt behind `<details>` so you write it yourself; it is practice, not the event. The homepage filter surfaces them.
 
-The submit button points at an external form (Microsoft or Google Forms), set in `_config.yml` under `bobathon.submit_url`. GitHub Pages is a static site with no backend, and requiring a GitHub account would exclude the customers this event is for. While the URL is empty the button renders disabled with a note, rather than linking somewhere broken.
+Submission instructions and supporting tool guides live inside the Bobathon site rather than in the Jekyll lab layout.
 
 ---
 
@@ -180,7 +180,7 @@ There is one sentence we give participants:
 | 5:00-5:30 | Write up submission (Before/After) |
 | 5:30-6:30 | Showcase |
 
-Everything from "Pick your work" onward runs off the [Bobathon page](/en/bobathon/): the process, the rubric, and the submission.
+Everything from "Pick your work" onward runs off the Bobathon guide ([English](/bobathon/en/) / [Korean](/bobathon/ko/)): preparation, tool setup, and submission guidance.
 
 For a half-day event, cut Guided Labs rather than the Challenge block - the bridge is what makes Bring Your Own Work survivable.
 
@@ -192,7 +192,7 @@ Keep the burden minimal. Only one thing is required.
 Usually 30 min  →  Bob 7 min
 ```
 
-Everything else - Bob chat history, repository link, what went wrong and what fixed it - is optional but is what turns a submission into a reusable lab. The full list and the submit button live on the [Bobathon page](/en/bobathon/).
+Everything else - Bob chat history, repository link, what went wrong and what fixed it - is optional but is what turns a submission into a reusable lab. The supporting instructions live on the Bobathon guide ([English](/bobathon/en/) / [Korean](/bobathon/ko/)).
 
 ### Rubric
 
@@ -249,6 +249,7 @@ _data/          ui.yml - site-chrome translation strings (badge labels, nav)
 _layouts/       Jekyll page templates
 _includes/      Jekyll partials (e.g. the lab card)
 assets/         Site CSS and fonts
+bobathon/       English and Korean Bobathon guide pages, shared CSS, scripts and images
 ko/             Korean homepage (index.md), served at /ko/
 script/preview  Build and serve the site locally
 ```
