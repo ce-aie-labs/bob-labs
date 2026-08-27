@@ -144,7 +144,7 @@ git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels
 <details markdown="1">
 <summary>예제 프로젝트 Clone 결과</summary>
 
-![터미널에서 예제 branch를 clone하고 탐색기에서 galaxium-travels 프로젝트를 확인하는 화면]({{ '/assets/images/security-expert-mode/step2_3.png' | relative_url }})
+![터미널에서 예제 branch를 clone하고 탐색기에서 galaxium-travels 프로젝트를 확인하는 화면]({{ '/assets/images/security-expert-mode/step2_2.png' | relative_url }})
 
 </details>
 
@@ -157,7 +157,7 @@ galaxium-travels 라는 프로젝트에 보안 점검이 필요해
 <details markdown="1">
 <summary>보안 점검 프롬프트 붙여 넣기</summary>
 
-![보안 점검 프롬프트를 복사해 Bob의 새 작업 입력창에 붙여 넣는 화면]({{ '/assets/images/security-expert-mode/step2_2.png' | relative_url }})
+![보안 점검 프롬프트를 복사해 Bob의 새 작업 입력창에 붙여 넣는 화면]({{ '/assets/images/security-expert-mode/step2_3.png' | relative_url }})
 
 </details>
 
