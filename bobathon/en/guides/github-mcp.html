@@ -44,7 +44,7 @@ After configuration, explain OAuth authentication and how to verify the connecti
       "disabled": false
     }
   }
-}<button class="copy-button" type="button" data-copy="github-config">Copy</button></pre><div class="info-note"><strong>Why use the read-only URL?</strong><span><code>/readonly</code> excludes tools that change GitHub state—such as creating issues, editing files, or merging pull requests—at the server level.</span></div></section>
+}<button class="copy-button" type="button" data-copy="github-config">Copy</button></pre><div class="info-note"><strong>Why use the read-only URL?</strong><span><code>/readonly</code> excludes tools that change GitHub state-such as creating issues, editing files, or merging pull requests-at the server level.</span></div></section>
         <section><h2>2. Authenticate with GitHub</h2><ol><li>Save the configuration and turn on <strong>Use MCP Servers</strong>.</li><li>Select <strong>Authenticate</strong> beside the <code>github</code> server.</li><li>In the browser, review the GitHub account and requested permissions, then approve them.</li><li>Organization repositories may require approval under organization policy or from an administrator.</li></ol><div class="warning-note"><strong>Important:</strong> Do not paste a GitHub password or personal access token into chat or the configuration file. Sign in only through Bob's OAuth page.</div><div class="success"><strong>Success:</strong> The <code>github</code> server is connected and repository, issue, and pull request read tools appear.</div></section>
         <section><h2>3. Verify connection information</h2><pre id="prompt-github-me" class="prompt">Use GitHub MCP to identify the currently authenticated user,
 then show only five accessible repository names.
