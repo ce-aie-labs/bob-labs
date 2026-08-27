@@ -194,23 +194,16 @@ Usually 30 min  →  Bob 7 min
 
 Everything else - Bob chat history, repository link, what went wrong and what fixed it - is optional but is what turns a submission into a reusable lab. The supporting instructions live on the Bobathon guide ([English](/bobathon/en/) / [Korean](/bobathon/ko/)).
 
-### Rubric
+### Judging
 
-| Criterion | Points |
-|---|---|
-| Was it genuinely repetitive work | 20 |
-| Was Bob used well | 30 |
-| Was there real time saved | 20 |
-| Can someone else reuse it | 30 |
-
-The weighting toward reusability (30) and applicability (30) is deliberate.
+The judging criteria are set with the event and carried on the Bobathon guide ([English](/bobathon/en/) / [Korean](/bobathon/ko/)) rather than fixed here, so they can change per event without editing this spec.
 What this event produces is not a ranking of people - it is **assets**.
 
 ---
 
 ## Roadmap
 
-- **Phase 1 - Skeleton**: Setup page · 10 Guided Labs · 2 Challenge Labs · 3 Cookbook categories · Bring Your Own Work template · rubric
+- **Phase 1 - Skeleton**: Setup page · 10 Guided Labs · 2 Challenge Labs · 3 Cookbook categories · Bring Your Own Work template · Bobathon guide
 - **Phase 2 - Asset build-out**: All P0 (18 labs) · more Challenge Labs · all Cookbook categories · Showcase
 - **Phase 3 - Ongoing operation**: Feedback pipeline · P1/P2 assets · stack filters and search
 
