@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>Connect AgentMail MCP - IBM Bob Labs Bobathon</title>
+  <meta name="description" content="How to connect AgentMail MCP to IBM Bob and safely use an email inbox for an agent">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <!-- Bob-verify: Run the AgentMail OAuth flow and prompts in IBM Bob before participant use. -->
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <a href="../../../en/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="Main navigation">
+      <a href="../../../en/">All labs</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../ko/guides/agentmail-mcp.html" hreflang="ko">KO</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / AgentMail MCP</div>
+    <p class="eyebrow">Template 08</p>
+    <h1>Give Bob an agent email inbox</h1>
+    <p class="hero-copy">Connect AgentMail so Bob can create a dedicated inbox, review messages, and prepare replies and outgoing email.</p>
+
+    <div class="warning-note capability-warning"><strong>Important:</strong> This does not connect an existing personal or company mailbox. It creates a separate agent email address and inbox in AgentMail.</div>
+
+    <section class="capability-summary" aria-labelledby="agentmail-capabilities">
+      <h2 id="agentmail-capabilities">What this MCP enables</h2>
+      <ul>
+        <li>Create a dedicated email address and inbox for Bob to use.</li>
+        <li>Search incoming messages and threads, then summarize the information you need.</li>
+        <li>Automate email drafts, replies, forwarding, and attachment review.</li>
+      </ul>
+    </section>
+
+    <section class="mcp-shortcut" aria-labelledby="agentmail-shortcut">
+      <h2 id="agentmail-shortcut">Try asking Bob</h2>
+      <p>Connect the official remote MCP through OAuth and begin with read tools only.</p>
+      <pre id="prompt-add-agentmail" class="prompt">Connect the official AgentMail MCP to the current project.
+Keep the existing MCP configuration and add only what is required for OAuth.
+After connecting, do not create, send, or delete any email.
+Explain how to check only the authenticated identity and available inboxes.<button class="copy-button" type="button" data-copy="prompt-add-agentmail">Copy</button></pre>
+    </section>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. Understand what AgentMail connects</h2>
+          <p><a href="https://www.agentmail.to/">AgentMail</a> does not import a personal Gmail or company mailbox. It provides a separate inbox that an AI agent can use to receive and send email.</p>
+          <p>If you need to access existing email, calendars, and contacts, the <a href="nylas-mcp.html">Nylas MCP guide</a> is a better fit.</p>
+          <ol>
+            <li>Sign up or sign in to the <a href="https://console.agentmail.to/">AgentMail Console</a>.</li>
+            <li>Start with a test organization and inbox instead of company data.</li>
+            <li>If you belong to multiple organizations, identify the one you will use for Bobathon.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>2. Add the AgentMail configuration</h2>
+          <div class="info-note">
+            <strong>Opening MCP settings for the first time?</strong>
+            <span>The <a href="basic-mcp.html">basic MCP connection guide</a> shows <strong>Add MCP Server</strong>, scope selection, and the location of <code>.bob/mcp.json</code> with screenshots.</span>
+          </div>
+          <ol>
+            <li>In Bob, choose <strong>Settings -> MCP -> + (Add MCP Server)</strong>.</li>
+            <li>For Bobathon, choose <strong>current project scope</strong>, then select <strong>Open Configuration File</strong>.</li>
+            <li>Add the <code>agentmail</code> entry below inside <code>mcpServers</code> in <code>.bob/mcp.json</code>.</li>
+          </ol>
+          <pre id="agentmail-config" class="prompt">{
+  "mcpServers": {
+    "agentmail": {
+      "type": "streamable-http",
+      "url": "https://mcp.agentmail.to/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="agentmail-config">Copy</button></pre>
+          <div class="warning-note"><strong>Note:</strong> If other servers already exist, keep the full <code>mcpServers</code> object and add only the <code>agentmail</code> entry. Do not put an API key in the configuration when using OAuth.</div>
+        </section>
+
+        <section>
+          <h2>3. Authenticate with AgentMail</h2>
+          <ol>
+            <li>Save the configuration, then open <strong>Settings</strong> in Bob, select the <strong>MCP</strong> tab, and turn on <strong>Use MCP Servers (Enable MCP tools for new tasks)</strong>.</li>
+            <li>Select <strong>Authenticate</strong> beside the <code>agentmail</code> server.</li>
+            <li>Sign in on the AgentMail Console page that opens and review the requested access.</li>
+            <li>If you belong to multiple AgentMail organizations, choose the organization to connect and approve access.</li>
+          </ol>
+          <div class="success"><strong>Success:</strong> The <code>agentmail</code> server appears as connected in Bob and its tool list is available.</div>
+        </section>
+
+        <section class="agentmail-examples">
+          <h2>4. Create a new inbox and send a test email</h2>
+          <p>Use the following prompts in order to verify the AgentMail connection with Bob.</p>
+
+          <h3>(1) Create a new inbox</h3>
+          <pre id="prompt-agentmail-inbox" class="prompt">Create one new AgentMail inbox for a Bobathon test.
+When it is ready, show me the generated email address and display name.<button class="copy-button" type="button" data-copy="prompt-agentmail-inbox">Copy</button></pre>
+          <div class="warning-note"><strong>Check:</strong> Bob creates a new inbox and shows its AgentMail email address.</div>
+
+          <h3>(2) Send a test email to yourself</h3>
+          <p>Replace <code>[my email address]</code> with an actual email address that you can check.</p>
+          <pre id="prompt-agentmail-send" class="prompt">Send a simple test email from the AgentMail inbox we just created to my email address.
+
+- Recipient: [my email address]
+- Subject: Bobathon AgentMail connection test
+- Body: The AgentMail MCP connection is working.
+
+Show me the recipient, subject, and body before sending and wait for my confirmation.
+After I confirm, send the email exactly once.<button class="copy-button" type="button" data-copy="prompt-agentmail-send">Copy</button></pre>
+          <div class="warning-note"><strong>Check:</strong> Review the recipient and content before approving the email.</div>
+
+          <h3>(3) Confirm delivery</h3>
+          <p>Check your email inbox for the test message. (If it is not there, check your spam folder as well.)</p>
+          <p>You can also open the <a href="https://console.agentmail.to/">AgentMail Console</a>, select the inbox you created, and check <strong>Sent</strong> to confirm that the message was sent.</p>
+          <figure class="screenshot-slot" data-screenshot="../../images/08_a.png" data-alt="Checking the created inbox and Sent menu in the AgentMail Console">
+            <div><span>Screenshot</span><strong>Check sent mail in the AgentMail Console</strong><code>images/08_a.png</code></div>
+            <figcaption>Open the inbox you created, then use <strong>Sent</strong> to confirm that the test email was sent.</figcaption>
+          </figure>
+          <div class="warning-note"><strong>Note:</strong> You can use various MCP tools for additional tasks, such as searching for and summarizing today's news.</div>
+        </section>
+
+        <section>
+          <h2>5. Clean up after the exercise</h2>
+          <ol>
+            <li>First confirm whether you still need the test inbox and its messages.</li>
+            <li>If deletion is required, have Bob show the exact target again and approve the action once.</li>
+            <li>Reset the <code>agentmail</code> authentication in Bob's MCP screen.</li>
+            <li>Delete the <code>agentmail</code> entry from <code>.bob/mcp.json</code> or set <code>"disabled": true</code>.</li>
+          </ol>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>Start safely</h3>
+        <ul>
+          <li>Keep personal or company mailboxes separate from an AgentMail inbox.</li>
+          <li>Use a test inbox and an email address that you can check yourself.</li>
+          <li>Review the recipient, subject, and body before sending.</li>
+          <li>Do not auto-approve email sending or deletion.</li>
+        </ul>
+        <p>If authentication does not open, check your Bob sign-in and AgentMail account, then restart the <code>agentmail</code> server.</p>
+        <p><a href="https://docs.agentmail.to/integrations/mcp">Official AgentMail MCP documentation →</a></p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>

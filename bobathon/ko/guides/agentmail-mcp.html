@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <title>AgentMail MCP 연결하기 - IBM Bob Labs Bobathon</title>
+  <meta name="description" content="IBM Bob과 AgentMail MCP를 연결해 에이전트용 이메일함을 안전하게 사용하는 방법">
+  <link rel="stylesheet" href="../../assets/style.css?v=10">
+</head>
+<body>
+  <!-- Bob-verify: Run the AgentMail OAuth flow and prompts in IBM Bob before participant use. -->
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="site-header">
+    <a href="../../../ko/">IBM Bob Labs</a>
+    <nav class="site-header-nav" aria-label="주요 메뉴">
+      <a href="../../../ko/">전체 랩</a>
+      <a href="../index.html" aria-current="page">Bobathon</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="../../en/guides/agentmail-mcp.html" hreflang="en">EN</a>
+      <button id="theme-toggle" type="button" aria-label="흑백 테마 전환">◐</button>
+    </nav>
+  </header>
+
+  <main id="content" class="page">
+    <div class="breadcrumb"><a href="../index.html">홈</a> / AgentMail MCP</div>
+    <p class="eyebrow">Template 08</p>
+    <h1>Bob에 에이전트용 이메일 연결하기</h1>
+    <p class="hero-copy">AgentMail을 연결해 Bob이 전용 이메일함을 만들고, 메시지를 확인하고, 답장과 발송을 준비하게 합니다.</p>
+
+    <div class="warning-note capability-warning"><strong>주의:</strong> 기존 개인 또는 회사 메일함을 연결하는 것이 아니라, AgentMail에서 별도의 에이전트용 이메일 주소와 받은편지함을 만드는 방식입니다.</div>
+
+    <section class="capability-summary" aria-labelledby="agentmail-capabilities">
+      <h2 id="agentmail-capabilities">이 MCP를 연결하면</h2>
+      <ul>
+        <li>Bob이 사용할 전용 이메일 주소와 받은편지함을 만들 수 있습니다.</li>
+        <li>수신 메시지와 스레드를 검색하고 필요한 내용을 요약할 수 있습니다.</li>
+        <li>이메일 초안, 답장, 전달, 첨부 파일 확인 같은 이메일 업무를 자동화할 수 있습니다.</li>
+      </ul>
+    </section>
+
+    <section class="mcp-shortcut" aria-labelledby="agentmail-shortcut">
+      <h2 id="agentmail-shortcut">Bob에게 이렇게 요청해보세요</h2>
+      <p>공식 원격 MCP를 OAuth로 연결하고, 처음에는 읽기 도구로만 확인합니다.</p>
+      <pre id="prompt-add-agentmail" class="prompt">현재 프로젝트에 공식 AgentMail MCP를 연결해줘.
+기존 MCP 설정은 유지하고 OAuth 방식으로 필요한 설정만 추가해줘.
+연결 후에는 메일을 만들거나 보내거나 삭제하지 말고,
+인증 정보와 접근 가능한 받은편지함을 확인하는 방법만 알려줘.<button class="copy-button" type="button" data-copy="prompt-add-agentmail">복사</button></pre>
+    </section>
+
+    <div class="article">
+      <article class="article-main">
+        <section>
+          <h2>1. AgentMail 용도 확인</h2>
+          <p><a href="https://www.agentmail.to/">AgentMail</a>은 개인 Gmail이나 회사 메일함을 가져오는 서비스가 아닙니다. AI 에이전트가 직접 이메일을 받고 보낼 수 있도록 별도의 이메일함을 제공하는 서비스입니다.</p>
+          <p>기존 메일, 일정, 연락처를 조회하려는 경우에는 <a href="nylas-mcp.html">Nylas MCP 가이드</a>가 더 적합합니다.</p>
+          <ol>
+            <li><a href="https://console.agentmail.to/">AgentMail Console</a>에 가입하거나 로그인합니다.</li>
+            <li>회사 데이터 대신 테스트용 조직과 이메일함으로 먼저 실습합니다.</li>
+            <li>여러 조직에 속해 있다면 Bobathon에 사용할 조직을 미리 확인합니다.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>2. AgentMail 설정 추가</h2>
+          <div class="info-note">
+            <strong>MCP 설정 화면을 처음 여나요?</strong>
+            <span><a href="basic-mcp.html">기본 MCP 연결 안내</a>에서 <strong>Add MCP Server</strong>, 범위 선택, <code>.bob/mcp.json</code> 위치를 이미지와 함께 먼저 확인할 수 있습니다.</span>
+          </div>
+          <ol>
+            <li>Bob의 <strong>설정 -> MCP -> + (Add MCP Server)</strong>를 선택합니다.</li>
+            <li>Bobathon에서는 <strong>현재 프로젝트 범위</strong>를 선택하고 <strong>Open Configuration File</strong>을 누릅니다.</li>
+            <li><code>.bob/mcp.json</code>의 <code>mcpServers</code> 안에 아래 <code>agentmail</code> 항목을 추가합니다.</li>
+          </ol>
+          <pre id="agentmail-config" class="prompt">{
+  "mcpServers": {
+    "agentmail": {
+      "type": "streamable-http",
+      "url": "https://mcp.agentmail.to/mcp",
+      "disabled": false
+    }
+  }
+}<button class="copy-button" type="button" data-copy="agentmail-config">복사</button></pre>
+          <div class="warning-note"><strong>주의:</strong> 기존 서버가 있다면 <code>mcpServers</code> 전체를 덮어쓰지 말고 <code>agentmail</code> 항목만 추가합니다. OAuth 연결에서는 API 키를 설정 파일에 넣지 않습니다.</div>
+        </section>
+
+        <section>
+          <h2>3. AgentMail 인증</h2>
+          <ol>
+            <li>설정을 저장한 뒤 Bob의 <strong>Settings</strong>에서 <strong>MCP</strong> 탭으로 이동하고 <strong>Use MCP Servers (Enable MCP tools for new tasks)</strong>를 켭니다.</li>
+            <li><code>agentmail</code> 서버 옆의 <strong>Authenticate</strong>를 선택합니다.</li>
+            <li>브라우저에 열린 AgentMail Console에서 로그인하고 요청된 접근 권한을 확인합니다.</li>
+            <li>여러 AgentMail 조직에 속해 있다면 사용할 조직을 선택하고 연결을 승인합니다.</li>
+          </ol>
+          <div class="success"><strong>성공 기준:</strong> Bob의 MCP 화면에서 <code>agentmail</code> 서버가 연결 상태이고 도구 목록이 표시됩니다.</div>
+        </section>
+
+        <section class="agentmail-examples">
+          <h2>4. 새 받은편지함을 만들고 테스트 메일 보내기</h2>
+          <p>Bob에게 아래 프롬프트를 순서대로 요청해 AgentMail 연결을 확인합니다.</p>
+
+          <h3>(1) 새 받은편지함 만들기</h3>
+          <pre id="prompt-agentmail-inbox" class="prompt">AgentMail에 Bobathon 테스트용 받은편지함을 새로 하나 만들어줘.
+완료되면 생성된 이메일 주소와 표시 이름을 알려줘.<button class="copy-button" type="button" data-copy="prompt-agentmail-inbox">복사</button></pre>
+          <div class="warning-note"><strong>확인:</strong> Bob이 새 받은편지함을 만들고 생성된 AgentMail 이메일 주소를 알려줍니다.</div>
+
+          <h3>(2) 내 이메일로 테스트 메일 보내기</h3>
+          <p><code>[내 이메일 주소]</code>를 본인이 직접 확인할 수 있는 실제 이메일 주소로 바꿔 입력합니다.</p>
+          <pre id="prompt-agentmail-send" class="prompt">방금 만든 AgentMail 받은편지함에서 내 이메일 주소로 간단한 테스트 메일을 보내줘.
+
+- 받는 사람: [내 이메일 주소]
+- 제목: Bobathon AgentMail 연결 테스트
+- 내용: AgentMail MCP 연결이 정상적으로 완료되었습니다.
+
+보내기 전에 수신자, 제목, 본문을 먼저 보여주고 내 확인을 받아.
+내가 확인하면 메일을 한 번만 보내줘.<button class="copy-button" type="button" data-copy="prompt-agentmail-send">복사</button></pre>
+          <div class="warning-note"><strong>확인:</strong> 수신자와 내용을 확인한 뒤 메일 발송을 승인합니다.</div>
+
+          <h3>(3) 전송 결과 확인</h3>
+          <p>본인의 이메일 받은편지함에서 테스트 메일이 도착했는지 확인합니다. (메일이 보이지 않으면 스팸함도 확인하세요.)</p>
+          <p><a href="https://console.agentmail.to/">AgentMail Console</a>에 직접 접속해 생성한 받은편지함을 열고 <strong>Sent</strong>에서 메일이 발송되었는지도 확인할 수 있습니다.</p>
+          <figure class="screenshot-slot" data-screenshot="../../images/08_a.png" data-alt="AgentMail Console에서 생성한 받은편지함과 Sent 메뉴를 확인하는 화면">
+            <div><span>화면 캡처</span><strong>AgentMail Console에서 발송 기록 확인</strong><code>images/08_a.png</code></div>
+            <figcaption>생성한 받은편지함을 연 뒤 <strong>Sent</strong>에서 테스트 메일의 발송 여부를 확인합니다.</figcaption>
+          </figure>
+          <div class="warning-note"><strong>참고:</strong> 다양한 MCP 도구를 이용해 오늘 뉴스를 검색하고 요약하는 등 여러 추가 작업을 해 볼 수 있습니다.</div>
+        </section>
+
+        <section>
+          <h2>5. 실습 후 정리</h2>
+          <ol>
+            <li>테스트 받은편지함과 메시지가 더 이상 필요 없는지 먼저 확인합니다.</li>
+            <li>삭제가 필요하면 Bob이 삭제 대상을 다시 보여주게 한 뒤 한 번만 승인합니다.</li>
+            <li>Bob의 MCP 화면에서 <code>agentmail</code> 인증을 초기화합니다.</li>
+            <li><code>.bob/mcp.json</code>에서 <code>agentmail</code> 항목을 삭제하거나 <code>"disabled": true</code>로 변경합니다.</li>
+          </ol>
+        </section>
+      </article>
+
+      <aside class="article-aside">
+        <h3>안전하게 시작하기</h3>
+        <ul>
+          <li>개인 또는 회사 메일함과 AgentMail 전용 이메일함을 구분합니다.</li>
+          <li>테스트용 받은편지함과 본인이 확인할 수 있는 이메일 주소를 사용합니다.</li>
+          <li>발송 전 수신자, 제목, 본문을 확인합니다.</li>
+          <li>메일 발송과 삭제를 자동 승인하지 않습니다.</li>
+        </ul>
+        <p>인증 화면이 열리지 않으면 Bob 로그인 상태와 AgentMail 계정을 확인한 뒤 <code>agentmail</code> 서버를 Restart하세요.</p>
+        <p><a href="https://docs.agentmail.to/integrations/mcp">AgentMail MCP 공식 문서 →</a></p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">IBM Bob Labs - Bobathon</footer>
+  <script src="../../assets/site.js?v=3"></script>
+</body>
+</html>
