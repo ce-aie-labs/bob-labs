@@ -13,6 +13,33 @@ expected_saving: 2시간 → 25분
 
 보안 체크리스트는 코드 전체에 일관되게 적용되고 엔지니어가 검토할 증거를 남길 때 유용하다. 회사 규칙을 목적별 Skill로 만들고, 코드베이스 전체에 pipeline으로 적용하며, 소스 코드는 바꾸지 않고 개선 보고서만 작성하는 프로젝트 전용 Custom Mode를 구성한다.
 
+### 튜토리얼 개요
+
+이 튜토리얼에서는 먼저 Bob의 기본 Mode와 도구 권한을 살펴본다. 그다음 회사 보안 규칙을 적용하는 프로젝트 전용 Security Expert Mode와 Skill을 만들고, 예제 프로젝트를 감사해 취약점 및 개선 코드 보고서를 생성한다. 마지막으로 회사 정책이 변경된 상황을 가정해 기존 Mode와 Skill을 수정하고, 변경된 규칙이 전체 보안 감사 절차에 일관되게 반영됐는지 검토한다.
+
+<div class="tutorial-flow" role="list" aria-label="튜토리얼 진행 순서">
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">01</span>
+    <strong>Bob 설정 확인</strong>
+    <span>기본 Mode와 자동 승인 권한을 살펴본다.</span>
+  </div>
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">02</span>
+    <strong>보안 환경 생성</strong>
+    <span>Custom Mode, Skill, Rule을 만든다.</span>
+  </div>
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">03</span>
+    <strong>프로젝트 감사</strong>
+    <span>예제 코드를 점검하고 보고서를 검토한다.</span>
+  </div>
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">04</span>
+    <strong>정책 변경 반영</strong>
+    <span>Mode와 Skill을 수정하고 결과를 검증한다.</span>
+  </div>
+</div>
+
 ## 프롬프트
 
 Bob이 `.bob/`을 만들 수 있는 작업 디렉터리에서 네 단계를 실행한다. 먼저 Bob의 기본 모드와 자동 승인 설정을 확인하고, 감사를 신뢰하거나 사용하기 전에 생성하거나 수정한 제어 항목부터 검토할 것.

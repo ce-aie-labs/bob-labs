@@ -13,6 +13,33 @@ expected_saving: 2 hours → 25 min
 
 A security checklist is useful only when it is applied consistently across the codebase and leaves evidence an engineer can review. Build a project-scoped Custom Mode that separates company security rules into purpose-specific Skills, runs them as a pipeline, and writes a remediation report without changing source code.
 
+### Tutorial overview
+
+In this tutorial, you first inspect Bob's built-in Modes and tool permissions. You then create a project-scoped Security Expert Mode and Skills that apply company security rules, use them to audit a sample project, and generate a vulnerability and remediation report. Finally, you update the existing Mode and Skills for a company policy change and verify that the revised rules are reflected consistently across the audit workflow.
+
+<div class="tutorial-flow" role="list" aria-label="Tutorial steps">
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">01</span>
+    <strong>Inspect Bob settings</strong>
+    <span>Review built-in Modes and automatic approval.</span>
+  </div>
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">02</span>
+    <strong>Build the security environment</strong>
+    <span>Create a Custom Mode, Skills, and Rules.</span>
+  </div>
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">03</span>
+    <strong>Audit the project</strong>
+    <span>Review the sample code and generated report.</span>
+  </div>
+  <div class="tutorial-flow__step" role="listitem">
+    <span class="tutorial-flow__number">04</span>
+    <strong>Apply a policy change</strong>
+    <span>Update the Mode and Skills and verify the result.</span>
+  </div>
+</div>
+
 ## Prompt
 
 Run these four steps from a working directory where Bob may create `.bob/`. First inspect Bob's built-in Modes and automatic approval settings. Review every generated or modified control before trusting or using the audit results.

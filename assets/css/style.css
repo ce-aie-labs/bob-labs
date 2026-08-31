@@ -408,6 +408,131 @@ a {
   height: auto;
 }
 
+.tutorial-flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin: 24px 0 8px;
+}
+
+.tutorial-flow::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: var(--primary);
+}
+
+.tutorial-flow__step {
+  position: relative;
+  min-width: 0;
+  min-height: 184px;
+  padding: 72px 20px 24px;
+}
+
+.tutorial-flow__step::before {
+  content: "";
+  position: absolute;
+  inset: 20px 0 0;
+  z-index: 0;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--primary);
+}
+
+.tutorial-flow__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: -9px;
+  z-index: 2;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid var(--primary);
+  border-right: 2px solid var(--primary);
+  transform: rotate(45deg);
+}
+
+.tutorial-flow__number {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 14px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.tutorial-flow__step strong,
+.tutorial-flow__step > span:last-child {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.tutorial-flow__step strong {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.tutorial-flow__step > span:last-child {
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+@media (max-width: 760px) {
+  .tutorial-flow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-left: 4px;
+  }
+
+  .tutorial-flow::before {
+    top: 20px;
+    bottom: 20px;
+    left: 20px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .tutorial-flow__step {
+    min-height: 112px;
+    padding: 24px 20px 24px 76px;
+  }
+
+  .tutorial-flow__step::before {
+    inset: 0 0 0 20px;
+    border-top: 1px solid var(--hairline);
+    border-left: 3px solid var(--primary);
+  }
+
+  .tutorial-flow__step:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -10px;
+    left: 15px;
+    transform: rotate(135deg);
+  }
+
+  .tutorial-flow__number {
+    top: 16px;
+    left: 0;
+  }
+}
+
 .lab-detail pre {
   position: relative;
   background: var(--surface-1);
