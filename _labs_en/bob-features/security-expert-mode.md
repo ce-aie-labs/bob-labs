@@ -61,6 +61,8 @@ Write every generated Skill and file in English.
 
 Wait for Bob to finish. In the Todo list, confirm that Mode design, Skill creation, Custom Mode creation, and final validation are complete.
 
+The generated Modes, Skills, filenames, and file count may differ from this example depending on the Bob version and the result of the run.
+
 The translated draft expects the following project assets based on the verified Korean run:
 
 ```text
@@ -75,9 +77,17 @@ The translated draft expects the following project assets based on the verified 
 - `vulnerability-report`: Records the finding, violated rule, severity, evidence, and proposed remediation.
 - `custom_modes.yaml`: Defines **Security Expert** (`security-expert`) and connects its role, instructions, tool scope, and Skill execution order.
 
-Generated filenames and counts may vary by Bob version. Verify the responsibilities rather than only the count: complete code scanning, rule validation, and report generation should be separated and connected in the Custom Mode.
+Verify the responsibilities rather than only the count: complete code scanning, rule validation, and report generation should be separated and connected in the Custom Mode.
 
 This step demonstrates how a detailed description of real work can become reusable project assets. Skills preserve repeatable procedures, while `custom_modes.yaml` combines the role, instructions, tool scope, and Skill sequence into one way of working. Unlike a one-time chat response, the `.bob/` files can be reviewed, versioned, shared, and reused by a team.
+
+
+- **Mode**: A working environment that defines Bob's role, instructions, and access to tools and Skills. In this lab, Security Expert Mode limits Bob to the work needed for security auditing and report generation.
+- **Skill**: A reusable unit that stores the procedure and decision criteria for a repeatable task. A larger workflow can be divided into focused Skills such as code scanning, rule validation, and report generation.
+- **MCP server**: A standardized interface through which Bob can connect to external systems or tools. For example, Bob can use allowed MCP tools when it needs information or functionality from an issue tracker, database, or internal API.
+- **Rule**: A shared principle or constraint that Bob must follow within the project. Rules can capture coding standards, security policies, or files that must not be modified so that the guidance applies consistently across Modes and Skills.
+
+A Mode defines the role and scope of the overall job, Skills provide the procedures performed within it, and Rules provide requirements that must always be followed. An MCP server is the connection point when the job requires external information or functionality. Not every project needs all four components; this run creates a Mode and Skills.
 
 **Checkpoint:** Confirm that Bob created **Security Expert** (`security-expert`) and inspect every generated file. Verify that the Mode performs code scanning, rule validation, and report generation in order. Edit access must be limited to a report such as `vulnerability-and-remediation.md`; it must not grant permission to modify source code. Select **Security Expert** in the Mode picker before continuing.
 
