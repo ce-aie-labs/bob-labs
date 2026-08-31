@@ -108,6 +108,7 @@ Verify the responsibilities rather than only the count: complete code scanning, 
 
 This step demonstrates how a detailed description of real work can become reusable project assets. Skills preserve repeatable procedures, while `custom_modes.yaml` combines the role, instructions, tool scope, and Skill sequence into one way of working. Unlike a one-time chat response, the `.bob/` files can be reviewed, versioned, shared, and reused by a team.
 
+For anyone new to these, here is a short summary of the components used in `.bob/`:
 
 - **Mode**: A working environment that defines Bob's role, instructions, and access to tools and Skills. In this lab, Security Expert Mode limits Bob to the work needed for security auditing and report generation.
 - **Skill**: A reusable unit that stores the procedure and decision criteria for a repeatable task. A larger workflow can be divided into focused Skills such as code scanning, rule validation, and report generation.
