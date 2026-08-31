@@ -7,6 +7,7 @@ duration: 25분
 stack: Any
 work_replaced: 코드베이스 전체에 보안 규칙을 수동 적용
 expected_saving: 2시간 → 25분
+pin: 1
 ---
 
 ## 문제

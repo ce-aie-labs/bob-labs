@@ -7,6 +7,7 @@ duration: 25 min
 stack: Any
 work_replaced: Manually applying security rules across a codebase
 expected_saving: 2 hours → 25 min
+pin: 1
 ---
 
 ## Problem
