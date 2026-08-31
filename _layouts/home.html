@@ -91,8 +91,21 @@ layout: default
     </div>
   {% endif %}
 
+  {% comment %}
+    Labs render in the collection's default order (alphabetical by path),
+    except any lab carrying a `pin:` number is lifted to the front, ordered by
+    that number ascending (pin: 1 comes first). Pin a lab by adding `pin: N` to
+    its front matter in both language files. This is display order only - it
+    does not affect filtering, which reads every card regardless of position.
+  {% endcomment %}
+  {% assign pinned = labs | where_exp: "lab", "lab.pin" | sort: "pin" %}
+  {% assign unpinned = labs | where_exp: "lab", "lab.pin == nil" %}
+
   <div class="lab-grid">
-    {% for lab in labs %}
+    {% for lab in pinned %}
+      {% include lab-card.html lab=lab %}
+    {% endfor %}
+    {% for lab in unpinned %}
       {% include lab-card.html lab=lab %}
     {% endfor %}
   </div>
